@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\HP\\Desktop\\Advanced Dot Net Training\\Advanced Training\\AMI Frontend\\AMI Frontend.csproj": {}
+    "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\AMI Frontend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\HP\\Desktop\\Advanced Dot Net Training\\Advanced Training\\AMI Frontend\\AMI Frontend.csproj": {
+    "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\AMI Frontend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Desktop\\Advanced Dot Net Training\\Advanced Training\\AMI Frontend\\AMI Frontend.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\AMI Frontend.csproj",
         "projectName": "AMI Frontend",
-        "projectPath": "C:\\Users\\HP\\Desktop\\Advanced Dot Net Training\\Advanced Training\\AMI Frontend\\AMI Frontend.csproj",
+        "projectPath": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\AMI Frontend.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\Desktop\\Advanced Dot Net Training\\Advanced Training\\AMI Frontend\\obj\\",
+        "outputPath": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -50,6 +50,12 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.4, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

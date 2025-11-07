@@ -1,0 +1,132 @@
+﻿@{
+    ViewBag.Title = "Register";
+    Layout = null; // remove this line if you already use a shared _Layout.cshtml
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="register-card row shadow-lg rounded-4 overflow-hidden w-100" style="max-width: 900px;">
+        <!-- Left Panel -->
+        <div class="col-md-6 left-panel d-flex flex-column justify-content-center text-white p-5">
+            <h1 class="fw-bold">Join the Smart Grid 🌍</h1>
+            <p>Be part of the future of sustainable energy. Create your account to start managing your meters efficiently.</p>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="col-md-6 right-panel bg-white p-5">
+            <h3 class="text-center mb-4 fw-semibold">Create Account</h3>
+
+            <form id="registerForm">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Create a password" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="displayName" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="displayName" placeholder="Your name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="text" class="form-control" id="phone" placeholder="Optional">
+                </div>
+
+                <div class="mb-3">
+                    <label for="role" class="form-label">Role</label>
+                    <select class="form-select" id="role">
+                        <option value="User">User</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-energy w-100 py-2 fw-semibold">Register</button>
+            </form>
+
+            <div class="text-center mt-3">
+                <p>Already have an account? <a href="/Account/Login" class="text-decoration-none fw-semibold text-success">Login here</a></p>
+            </div>
+
+            <p class="error-message text-center mt-2">@ViewBag.Error</p>
+        </div>
+    </div>
+</div>
+
+<!-- Styles -->
+<style>
+    body {
+        background: linear-gradient(135deg, #00b3d8 0%, #00d084 100%);
+        font-family: "Inter", system-ui, sans-serif;
+    }
+
+    .left-panel {
+        background: linear-gradient(160deg, #00b3d8, #00d084);
+        color: #fff;
+    }
+
+    .btn-energy {
+        background: linear-gradient(90deg, #00b3d8, #00d084);
+        border: none;
+        color: white;
+        transition: all 0.2s ease-in-out;
+    }
+
+        .btn-energy:hover {
+            background: linear-gradient(90deg, #00d084, #00b3d8);
+            transform: translateY(-2px);
+        }
+
+    .form-control:focus {
+        border-color: #00b3d8;
+        box-shadow: 0 0 0 0.25rem rgba(0,179,216,0.25);
+    }
+
+    .error-message {
+        color: #dc3545;
+        font-size: 0.9rem;
+    }
+
+    @@media (max-width: 768px) {
+        .left-panel {
+            display: none;
+        }
+
+        .right-panel {
+            padding: 2rem 1.5rem;
+        }
+    }
+</style>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $("#registerForm").submit(function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: "https://localhost:7199/api/auth/register",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+                email: $("#email").val(),
+                password: $("#password").val(),
+                displayName: $("#displayName").val(),
+                phone: $("#phone").val(),
+                role: $("#role").val()
+            }),
+            success: function () {
+                alert("✅ Registration successful! Redirecting to login...");
+                window.location.href = "/Account/Login";
+            },
+            error: function (xhr) {
+                alert("Registration failed: " + xhr.status + " " + xhr.statusText);
+            }
+        });
+    });
+</script>

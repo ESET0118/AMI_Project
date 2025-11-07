@@ -1,0 +1,286 @@
+﻿@{
+    ViewBag.Title = "Meters";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid py-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="fw-bold text-dark">
+            <i class="bi bi-speedometer2 text-primary"></i> Meter Management
+        </h4>
+        <div>
+            <button id="addMeterBtn" class="btn btn-primary btn-sm me-2">
+                <i class="bi bi-plus-lg"></i> Add Meter
+            </button>
+            <button id="refreshMeters" class="btn btn-success btn-sm">
+                <i class="bi bi-arrow-clockwise"></i> Refresh
+            </button>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card shadow-sm border-0 rounded-4 mb-3">
+        <div class="card-body d-flex gap-3 align-items-center flex-wrap">
+            <input type="text" id="searchSerial" class="form-control w-25" placeholder="Enter Serial No" style="z-index:1000;">
+            <select id="statusFilter" class="form-select w-25">
+                <option value="">-- All --</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+                <option value="Decommissioned">Decommissioned</option>
+            </select>
+            <button id="searchBtn" class="btn btn-primary">
+                <i class="bi bi-search"></i> Search
+            </button>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body">
+            <table class="table table-striped align-middle text-center" id="meterTable">
+                <thead class="table-light">
+                    <tr>
+                        <th>Serial No</th>
+                        <th>Consumer</th>
+                        <th>IP Address</th>
+                        <th>Manufacturer</th>
+                        <th>Firmware</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Install Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="meterTableBody">
+                    <tr><td colspan="9" class="text-muted py-4">Loading meters...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Add/Edit Modal -->
+<div class="modal fade" id="meterModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="meterModalTitle">Add Meter</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="meterForm">
+                    <input type="hidden" id="editSerialNo" />
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Meter Serial No</label>
+                            <input type="text" id="meterSerialNo" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Consumer Name</label>
+                            <input type="text" id="consumerName" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">IP Address</label>
+                            <input type="text" id="ipAddress" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Manufacturer</label>
+                            <input type="text" id="manufacturer" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Firmware</label>
+                            <input type="text" id="firmware" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Category</label>
+                            <input type="text" id="category" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Status</label>
+                            <select id="status" class="form-select">
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                                <option value="Decommissioned">Decommissioned</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Install Date (UTC)</label>
+                            <input type="date" id="installTsUtc" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" id="saveMeterBtn" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    const apiBase = "https://localhost:7199/api/meters"; // ✅ Backend API base URL
+    let allMeters = [];
+
+    $(document).ready(function () {
+        loadMeters();
+
+        $("#refreshMeters").click(loadMeters);
+        $("#searchBtn").click(filterMeters);
+        $("#statusFilter").change(filterMeters);
+
+        // Allow pressing Enter in search box
+        $("#searchSerial").on("keypress", function (e) {
+            if (e.which === 13) {
+                e.preventDefault();
+                filterMeters();
+            }
+        });
+
+        $("#addMeterBtn").click(() => openModal());
+        $("#saveMeterBtn").click(saveMeter);
+    });
+
+    function loadMeters() {
+        $("#meterTableBody").html("<tr><td colspan='9' class='text-muted text-center py-4'>Loading...</td></tr>");
+        $.get(apiBase)
+            .done(data => {
+                allMeters = data;
+                renderMeters(data.items || data); // Handles both {items:[]} or []
+            })
+            .fail(() => {
+                $("#meterTableBody").html("<tr><td colspan='9' class='text-danger text-center py-4'>Error loading meters.</td></tr>");
+            });
+    }
+
+    function renderMeters(items) {
+        if (!items || items.length === 0) {
+            $("#meterTableBody").html("<tr><td colspan='9' class='text-muted text-center py-4'>No meters found.</td></tr>");
+            return;
+        }
+
+        const rows = items.map(m => `
+            <tr>
+                <td>${m.meterSerialNo}</td>
+                <td>${m.consumerName || '-'}</td>
+                <td>${m.ipAddress}</td>
+                <td>${m.manufacturer}</td>
+                <td>${m.firmware || '-'}</td>
+                <td>${m.category}</td>
+                <td><span class="badge ${m.status === 'Active' ? 'bg-success' : 'bg-secondary'}">${m.status}</span></td>
+                <td>${m.installTsUtc ? new Date(m.installTsUtc).toLocaleDateString() : '-'}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-primary me-1" onclick="editMeter('${m.meterSerialNo}')"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deleteMeter('${m.meterSerialNo}')"><i class="bi bi-trash"></i></button>
+                </td>
+            </tr>
+        `).join("");
+        $("#meterTableBody").html(rows);
+    }
+
+    function filterMeters() {
+        const term = $("#searchSerial").val();
+        const status = $("#statusFilter").val();
+
+        $("#meterTableBody").html("<tr><td colspan='9' class='text-muted text-center py-4'>Searching...</td></tr>");
+
+        const params = new URLSearchParams();
+        if (term) params.append("SerialNo", term);
+        if (status) params.append("Status", status);
+
+        $.get(`${apiBase}?${params.toString()}`)
+            .done(data => {
+                allMeters = data;
+                renderMeters(data.items || data);
+            })
+            .fail(() => {
+                $("#meterTableBody").html("<tr><td colspan='9' class='text-danger text-center py-4'>Error fetching filtered data.</td></tr>");
+            });
+    }
+
+    function openModal(meter = null) {
+        if (meter) {
+            $("#meterModalTitle").text("Edit Meter");
+            $("#editSerialNo").val(meter.meterSerialNo);
+            $("#meterSerialNo").val(meter.meterSerialNo).prop("disabled", true);
+            $("#consumerName").val(meter.consumerName);
+            $("#ipAddress").val(meter.ipAddress);
+            $("#manufacturer").val(meter.manufacturer);
+            $("#firmware").val(meter.firmware);
+            $("#category").val(meter.category);
+            $("#status").val(meter.status);
+            $("#installTsUtc").val(meter.installTsUtc ? meter.installTsUtc.split('T')[0] : "");
+        } else {
+            $("#meterModalTitle").text("Add Meter");
+            $("#meterForm")[0].reset();
+            $("#editSerialNo").val("");
+            $("#meterSerialNo").prop("disabled", false);
+        }
+        new bootstrap.Modal(document.getElementById('meterModal')).show();
+    }
+
+    function editMeter(serialNo) {
+        $.get(`${apiBase}/${serialNo}`)
+            .done(meter => openModal(meter))
+            .fail(() => alert("Error fetching meter data."));
+    }
+
+    function saveMeter() {
+        const serialNo = $("#editSerialNo").val();
+        const meter = {
+            meterSerialNo: $("#meterSerialNo").val(),
+            consumerName: $("#consumerName").val(),
+            ipAddress: $("#ipAddress").val(),
+            manufacturer: $("#manufacturer").val(),
+            firmware: $("#firmware").val(),
+            category: $("#category").val(),
+            status: $("#status").val(),
+            installTsUtc: $("#installTsUtc").val()
+        };
+
+        if (serialNo) {
+            $.ajax({
+                url: `${apiBase}/${serialNo}`,
+                type: "PUT",
+                contentType: "application/json",
+                data: JSON.stringify(meter),
+                success: () => {
+                    alert("Meter updated successfully!");
+                    loadMeters();
+                    bootstrap.Modal.getInstance(document.getElementById('meterModal')).hide();
+                },
+                error: () => alert("Error updating meter.")
+            });
+        } else {
+            $.ajax({
+                url: apiBase,
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(meter),
+                success: () => {
+                    alert("Meter added successfully!");
+                    loadMeters();
+                    bootstrap.Modal.getInstance(document.getElementById('meterModal')).hide();
+                },
+                error: () => alert("Error adding meter.")
+            });
+        }
+    }
+
+    function deleteMeter(serialNo) {
+        if (!confirm("Delete this meter?")) return;
+        $.ajax({
+            url: `${apiBase}/${serialNo}`,
+            type: "DELETE",
+            success: () => {
+                alert("Meter deleted successfully!");
+                loadMeters();
+            },
+            error: () => alert("Error deleting meter.")
+        });
+    }
+</script>

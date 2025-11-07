@@ -1,0 +1,37 @@
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\AMI Frontend.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\AMI Frontend.AssemblyInfoInputs.cache
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\AMI Frontend.AssemblyInfo.cs
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\AMI Frontend.csproj.CoreCompileInputs.cache
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\AMI Frontend.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\AMI Frontend.RazorAssemblyInfo.cache
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\AMI Frontend.RazorAssemblyInfo.cs
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\AMI Frontend.sourcelink.json
+C:\Users\HP\Desktop\AMI\AMI Frontend\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\HP\Desktop\AMI\AMI Frontend\bin\Debug\net8.0\appsettings.json
+C:\Users\HP\Desktop\AMI\AMI Frontend\bin\Debug\net8.0\AMI Frontend.staticwebassets.runtime.json
+C:\Users\HP\Desktop\AMI\AMI Frontend\bin\Debug\net8.0\AMI Frontend.staticwebassets.endpoints.json
+C:\Users\HP\Desktop\AMI\AMI Frontend\bin\Debug\net8.0\AMI Frontend.exe
+C:\Users\HP\Desktop\AMI\AMI Frontend\bin\Debug\net8.0\AMI Frontend.deps.json
+C:\Users\HP\Desktop\AMI\AMI Frontend\bin\Debug\net8.0\AMI Frontend.runtimeconfig.json
+C:\Users\HP\Desktop\AMI\AMI Frontend\bin\Debug\net8.0\AMI Frontend.dll
+C:\Users\HP\Desktop\AMI\AMI Frontend\bin\Debug\net8.0\AMI Frontend.pdb
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\scopedcss\bundle\AMI Frontend.styles.css
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\scopedcss\projectbundle\AMI Frontend.bundle.scp.css
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\AMI Frontend.dll
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\refint\AMI Frontend.dll
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\AMI Frontend.pdb
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\AMI Frontend.genruntimeconfig.cache
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\ref\AMI Frontend.dll
+C:\Users\HP\Desktop\AMI\AMI Frontend\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\AMI Frontend.csproj.AssemblyReference.cache
+C:\Users\HP\Desktop\AMI\AMI Frontend\obj\Debug\net8.0\AMI Fron.93C45F06.Up2Date

@@ -1,0 +1,210 @@
+﻿@{
+    ViewBag.Title = "Tariff Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="fw-bold text-dark">
+            <i class="bi bi-cash-coin text-success"></i> Tariff Management
+        </h4>
+        <div>
+            <button id="addTariffBtn" class="btn btn-primary btn-sm me-2">
+                <i class="bi bi-plus-lg"></i> Add Tariff
+            </button>
+            <button id="refreshTariffs" class="btn btn-success btn-sm">
+                <i class="bi bi-arrow-clockwise"></i> Refresh
+            </button>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body">
+            <table class="table table-striped align-middle text-center" id="tariffTable">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Effective From</th>
+                        <th>Effective To</th>
+                        <th>Base Rate (₹)</th>
+                        <th>Tax Rate (%)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tariffTableBody">
+                    <tr><td colspan="7" class="text-muted py-4">Loading tariffs...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="tariffModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalTitle">Add Tariff</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="tariffForm">
+                    <input type="hidden" id="tariffId">
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Effective From</label>
+                        <input type="date" id="effectiveFrom" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Effective To</label>
+                        <input type="date" id="effectiveTo" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Base Rate (₹)</label>
+                        <input type="number" step="0.01" id="baseRate" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tax Rate (%)</label>
+                        <input type="number" step="0.01" id="taxRate" class="form-control" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" id="saveTariffBtn">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap + jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    const baseUrl = "https://localhost:7264/Tariff"; // frontend routes proxy backend
+
+    function loadTariffs() {
+        $("#tariffTableBody").html("<tr><td colspan='7' class='text-center text-muted py-4'>Loading...</td></tr>");
+        $.ajax({
+            url: `${baseUrl}/GetAll`,
+            method: "GET",
+            headers: { "Authorization": "Bearer " + localStorage.getItem("jwtToken") },
+            success: function (data) {
+                if (!data || data.length === 0) {
+                    $("#tariffTableBody").html("<tr><td colspan='7' class='text-center text-muted py-4'>No tariffs found.</td></tr>");
+                    return;
+                }
+
+                let rows = data.map(t => `
+                    <tr>
+                        <td>${t.tariffId}</td>
+                        <td>${t.name}</td>
+                        <td>${t.effectiveFrom}</td>
+                        <td>${t.effectiveTo || '-'}</td>
+                        <td>${t.baseRate}</td>
+                        <td>${t.taxRate}</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm me-2" onclick="editTariff(${t.tariffId})">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteTariff(${t.tariffId})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join("");
+                $("#tariffTableBody").html(rows);
+            },
+            error: function () {
+                $("#tariffTableBody").html("<tr><td colspan='7' class='text-center text-danger py-4'>Error loading tariffs.</td></tr>");
+            }
+        });
+    }
+
+    function resetForm() {
+        $("#tariffId").val("");
+        $("#name").val("");
+        $("#effectiveFrom").val("");
+        $("#effectiveTo").val("");
+        $("#baseRate").val("");
+        $("#taxRate").val("");
+    }
+
+    function editTariff(id) {
+        $.ajax({
+            url: `https://localhost:7199/api/tariffs/${id}`,
+            method: "GET",
+            success: function (t) {
+                $("#modalTitle").text("Edit Tariff");
+                $("#tariffId").val(t.tariffId);
+                $("#name").val(t.name);
+                $("#effectiveFrom").val(t.effectiveFrom);
+                $("#effectiveTo").val(t.effectiveTo);
+                $("#baseRate").val(t.baseRate);
+                $("#taxRate").val(t.taxRate);
+                new bootstrap.Modal(document.getElementById("tariffModal")).show();
+            },
+            error: function () {
+                alert("Failed to load tariff details.");
+            }
+        });
+    }
+
+    function deleteTariff(id) {
+        if (!confirm("Are you sure you want to delete this tariff?")) return;
+        $.ajax({
+            url: `https://localhost:7199/api/tariffs/${id}`,
+            method: "DELETE",
+            success: function () {
+                loadTariffs();
+            },
+            error: function () {
+                alert("Error deleting tariff.");
+            }
+        });
+    }
+
+    $("#addTariffBtn").click(() => {
+        resetForm();
+        $("#modalTitle").text("Add Tariff");
+        new bootstrap.Modal(document.getElementById("tariffModal")).show();
+    });
+
+    $("#saveTariffBtn").click(() => {
+        const id = $("#tariffId").val();
+        const data = {
+            name: $("#name").val(),
+            effectiveFrom: $("#effectiveFrom").val(),
+            effectiveTo: $("#effectiveTo").val() || null,
+            baseRate: parseFloat($("#baseRate").val()),
+            taxRate: parseFloat($("#taxRate").val())
+        };
+
+        const method = id ? "PUT" : "POST";
+        const url = id
+            ? `https://localhost:7199/api/tariffs/${id}`
+            : `https://localhost:7199/api/tariffs`;
+
+        $.ajax({
+            url,
+            method,
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function () {
+                $("#tariffModal").modal("hide");
+                loadTariffs();
+            },
+            error: function () {
+                alert("Error saving tariff.");
+            }
+        });
+    });
+
+    $(document).ready(loadTariffs);
+    $("#refreshTariffs").click(loadTariffs);
+</script>

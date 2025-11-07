@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Meter Readings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-4">
+    <h4 class="fw-bold text-dark mb-3">
+        <i class="bi bi-lightning-charge text-warning"></i>
+        Readings for Meter <span class="text-primary">@ViewBag.SerialNo</span>
+    </h4>
+
+    <table class="table table-striped align-middle text-center">
+        <thead class="table-light">
+            <tr>
+                <th>Reading Date</th>
+                <th>Value (kWh)</th>
+            </tr>
+        </thead>
+        <tbody id="readingTableBody">
+            <tr><td colspan="2" class="text-muted py-3">Loading readings...</td></tr>
+        </tbody>
+    </table>
+
+    <a href="/Meters" class="btn btn-secondary mt-3">
+        <i class="bi bi-arrow-left"></i> Back to Meters
+    </a>
+</div>
+
+<script>
+    const serialNo = '@ViewBag.SerialNo';
+    const apiUrl = `https://localhost:7199/api/meterreading/meter/${serialNo}`;
+
+    $(document).ready(function () {
+        $.get(apiUrl, function (data) {
+            if (!data || data.length === 0) {
+                $("#readingTableBody").html("<tr><td colspan='2' class='text-center text-muted'>No readings available.</td></tr>");
+                return;
+            }
+
+            const rows = data.map(r => `
+                <tr>
+                    <td>${new Date(r.readingDateTime).toLocaleString()}</td>
+                    <td>${r.readingValue}</td>
+                </tr>
+            `).join("");
+            $("#readingTableBody").html(rows);
+        }).fail(() => {
+            $("#readingTableBody").html("<tr><td colspan='2' class='text-danger text-center'>Failed to load readings.</td></tr>");
+        });
+    });
+</script>

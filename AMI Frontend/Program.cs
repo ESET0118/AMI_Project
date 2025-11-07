@@ -1,4 +1,4 @@
-namespace AMI_Frontend
+﻿namespace AMI_Frontend
 {
     public class Program
     {
@@ -6,17 +6,36 @@ namespace AMI_Frontend
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // -------------------------------
+            // 🔧 Configure Services
+            // -------------------------------
             builder.Services.AddControllersWithViews();
+
+            // ✅ Add HttpClient support for API calls
+            builder.Services.AddHttpClient();
+
+            // ✅ Add Session for storing JWTs or user info
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours(1);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            // -------------------------------
+            // ⚙️ Configure Middleware
+            // -------------------------------
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+            }
+            else
+            {
+                // Show detailed errors while developing
+                app.UseDeveloperExceptionPage();
             }
 
             app.UseHttpsRedirection();
@@ -24,11 +43,17 @@ namespace AMI_Frontend
 
             app.UseRouting();
 
+            // ✅ Enable session before auth
+            app.UseSession();
+
             app.UseAuthorization();
 
+            // -------------------------------
+            // 🚀 Route Configuration
+            // -------------------------------
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Account}/{action=Login}/{id?}");
 
             app.Run();
         }

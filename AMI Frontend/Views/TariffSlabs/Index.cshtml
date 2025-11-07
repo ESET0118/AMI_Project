@@ -1,0 +1,203 @@
+﻿@{
+    ViewBag.Title = "Tariff Slabs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="fw-bold text-dark"><i class="bi bi-lightning-charge"></i> Tariff Slabs</h4>
+        <div>
+            <button id="addSlabBtn" class="btn btn-primary btn-sm me-2">
+                <i class="bi bi-plus-circle"></i> Add Slab
+            </button>
+            <button id="refreshSlabs" class="btn btn-success btn-sm">
+                <i class="bi bi-arrow-clockwise"></i> Refresh
+            </button>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body">
+            <table class="table table-hover align-middle text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Tariff ID</th>
+                        <th>From (kWh)</th>
+                        <th>To (kWh)</th>
+                        <th>Rate (₹)</th>
+                        <th>Sequence</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="slabTableBody">
+                    <tr><td colspan="7" class="text-muted py-4">Loading slabs...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 🟦 Modal for Add/Edit Slab -->
+<div class="modal fade" id="slabModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="modalTitle">Add Tariff Slab</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="slabForm">
+                    <input type="hidden" id="TariffSlabId" />
+
+                    <div class="mb-3">
+                        <label class="form-label">Tariff ID</label>
+                        <input type="number" id="TariffId" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">From (kWh)</label>
+                        <input type="number" id="FromKwh" class="form-control" step="0.01" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">To (kWh)</label>
+                        <input type="number" id="ToKwh" class="form-control" step="0.01" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Rate (₹ per kWh)</label>
+                        <input type="number" id="RatePerKwh" class="form-control" step="0.01" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Sequence</label>
+                        <input type="number" id="Sequence" class="form-control" required />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100" id="saveSlabBtn">
+                        <i class="bi bi-save"></i> Save
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const apiBase = "https://localhost:7199/api/tariffslab";
+
+    // 🟢 Load slabs
+    function loadSlabs() {
+        $("#slabTableBody").html("<tr><td colspan='7' class='text-center text-muted py-4'>Loading...</td></tr>");
+
+        $.ajax({
+            url: apiBase,
+            method: "GET",
+            success: function (data) {
+                if (!data || data.length === 0) {
+                    $("#slabTableBody").html("<tr><td colspan='7' class='text-center text-muted py-4'>No tariff slabs found.</td></tr>");
+                    return;
+                }
+
+                let rows = data.map(s => `
+                    <tr>
+                        <td>${s.tariffSlabId}</td>
+                        <td>${s.tariffId}</td>
+                        <td>${s.fromKwh}</td>
+                        <td>${s.toKwh}</td>
+                        <td>${s.ratePerKwh}</td>
+                        <td>${s.sequence}</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm me-2 editBtn" data-id="${s.tariffSlabId}">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm deleteBtn" data-id="${s.tariffSlabId}">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>`).join("");
+
+                $("#slabTableBody").html(rows);
+            },
+            error: function () {
+                $("#slabTableBody").html("<tr><td colspan='7' class='text-center text-danger py-4'>Error loading slabs.</td></tr>");
+            }
+        });
+    }
+
+    // 🟣 Add new slab
+    $("#addSlabBtn").click(() => {
+        $("#slabForm")[0].reset();
+        $("#TariffSlabId").val("");
+        $("#modalTitle").text("Add Tariff Slab");
+        new bootstrap.Modal(document.getElementById("slabModal")).show();
+    });
+
+    // 🟡 Edit existing slab
+    $(document).on("click", ".editBtn", function () {
+        const id = $(this).data("id");
+        $.get(`${apiBase}/${id}`, function (s) {
+            $("#TariffSlabId").val(s.tariffSlabId);
+            $("#TariffId").val(s.tariffId);
+            $("#FromKwh").val(s.fromKwh);
+            $("#ToKwh").val(s.toKwh);
+            $("#RatePerKwh").val(s.ratePerKwh);
+            $("#Sequence").val(s.sequence);
+            $("#modalTitle").text("Edit Tariff Slab");
+            new bootstrap.Modal(document.getElementById("slabModal")).show();
+        });
+    });
+
+    // 🧩 Save (Add or Update)
+    $("#slabForm").submit(function (e) {
+        e.preventDefault();
+
+        const slab = {
+            tariffSlabId: $("#TariffSlabId").val() || 0,
+            tariffId: parseInt($("#TariffId").val()),
+            fromKwh: parseFloat($("#FromKwh").val()),
+            toKwh: parseFloat($("#ToKwh").val()),
+            ratePerKwh: parseFloat($("#RatePerKwh").val()),
+            sequence: parseInt($("#Sequence").val())
+        };
+
+        const isEdit = slab.tariffSlabId && slab.tariffSlabId > 0;
+        const method = isEdit ? "PUT" : "POST";
+        const url = isEdit ? `${apiBase}/${slab.tariffSlabId}` : apiBase;
+
+        $.ajax({
+            url,
+            method,
+            contentType: "application/json",
+            data: JSON.stringify(slab),
+            success: function () {
+                $("#slabModal").modal("hide");
+                loadSlabs();
+            },
+            error: function (xhr) {
+                alert("Error saving tariff slab: " + xhr.responseText);
+            }
+        });
+    });
+
+
+    // 🔴 Delete
+    $(document).on("click", ".deleteBtn", function () {
+        const id = $(this).data("id");
+        if (!confirm("Are you sure you want to delete this slab?")) return;
+
+        $.ajax({
+            url: `${apiBase}/${id}`,
+            method: "DELETE",
+            success: loadSlabs,
+            error: () => alert("Error deleting tariff slab.")
+        });
+    });
+
+    // 🔄 Refresh
+    $("#refreshSlabs").click(loadSlabs);
+    $(document).ready(loadSlabs);
+</script>

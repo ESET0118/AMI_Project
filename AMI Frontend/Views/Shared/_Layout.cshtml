@@ -1,49 +1,201 @@
-﻿<!DOCTYPE html>
+﻿@*
+    Shared Layout for AMI Frontend
+    Includes responsive sidebar, navbar, and content section
+*@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - AMI_Frontend</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/AMI_Frontend.styles.css" asp-append-version="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title - AMI Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+
+    <style>
+        body {
+            font-family: "Inter", system-ui, sans-serif;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(180deg, #00b3d8, #00d084);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            color: #fff;
+            transition: all 0.3s ease;
+            padding-top: 70px;
+        }
+
+            .sidebar .nav-link {
+                color: #ffffffcc;
+                padding: 12px 20px;
+                display: flex;
+                align-items: center;
+                font-weight: 500;
+                transition: background 0.2s ease;
+            }
+
+                .sidebar .nav-link:hover,
+                .sidebar .nav-link.active {
+                    background-color: rgba(255, 255, 255, 0.15);
+                    color: #fff;
+                }
+
+                .sidebar .nav-link i {
+                    margin-right: 10px;
+                    font-size: 1.1rem;
+                }
+
+        /* Top Navbar */
+        .topbar {
+            margin-left: 250px;
+            height: 60px;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 25px;
+            position: sticky;
+            top: 0;
+            z-index: 1020;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+            transition: margin-left 0.3s ease;
+        }
+
+        /* Responsive Sidebar */
+        @@media (max-width: 991px) {
+            .sidebar
+
+        {
+            left: -250px;
+        }
+
+        .sidebar.active {
+            left: 0;
+            z-index: 1030;
+        }
+
+        .topbar {
+            margin-left: 0;
+        }
+
+        .main-content {
+            margin-left: 0;
+        }
+
+        .sidebar-toggle {
+            display: block !important;
+        }
+
+        }
+
+        .sidebar-toggle {
+            background: none;
+            border: none;
+            color: #00b3d8;
+            font-size: 1.5rem;
+            display: none;
+        }
+
+        .logout-btn {
+            background: #fff;
+            border: none;
+            color: #00b3d8;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+            .logout-btn:hover {
+                background: #00b3d8;
+                color: #fff;
+            }
+    </style>
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AMI_Frontend</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="px-3 mb-4">
+            <h4 class="fw-bold text-white">⚡ AMI System</h4>
+        </div>
+
+        <nav class="nav flex-column">
+            <a class="nav-link" href="/Dashboard/Index"><i class="bi bi-speedometer2"></i> Dashboard</a>
+            <a class="nav-link" href="/Users/Index"><i class="bi bi-people"></i> Users</a>
+            <a class="nav-link" href="/Consumers/Index"><i class="bi bi-person-vcard"></i> Consumers</a>
+            <a class="nav-link" href="/Meters/Index"><i class="bi bi-cpu"></i> Meters</a>
+            <a class="nav-link" href="/OrgUnit/Index"><i class="bi bi-diagram-3"></i> Org Unit</a>
+            <a class="nav-link" href="/Tariff/Index"><i class="bi bi-cash"></i> Tariff</a>
+            <a class="nav-link" href="/TariffSlabs/Index"><i class="bi bi-layers"></i> Tariff Slabs</a>
+            <a class="nav-link" href="/TODRules/Index"><i class="bi bi-clock-history"></i> TOD Rules</a>
+            <a class="nav-link" href="/UploadMeter/Index"><i class="bi bi-upload"></i> Upload Meter</a>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - AMI_Frontend - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- Top Navbar -->
+    <div class="topbar d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-3">
+            <button class="sidebar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
+            <h5 class="fw-semibold mb-0">AMI Dashboard</h5>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+        <div class="d-flex align-items-center">
+            <span id="userName" class="text-muted me-3">Welcome, User</span>
+            <button id="logoutBtn" class="logout-btn">Logout</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        @RenderBody()
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Sidebar toggle
+        $("#sidebarToggle").click(function () {
+            $("#sidebar").toggleClass("active");
+        });
+
+        // Highlight active tab
+        $(function () {
+            const path = window.location.pathname.toLowerCase();
+            $(".sidebar .nav-link").each(function () {
+                if (path.includes($(this).attr("href").toLowerCase())) {
+                    $(this).addClass("active");
+                }
+            });
+        });
+
+        // Display user name (mock)
+        $(document).ready(function () {
+            const token = localStorage.getItem("jwtToken");
+            if (!token) {
+                window.location.href = "/Account/Login";
+            } else {
+                $("#userName").text("Welcome, Energy User");
+            }
+        });
+
+        // Logout
+        $("#logoutBtn").click(function () {
+            localStorage.removeItem("jwtToken");
+            window.location.href = "/Account/Login";
+        });
+    </script>
 </body>
 </html>

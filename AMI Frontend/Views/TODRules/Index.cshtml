@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "TOD Rules";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="fw-bold">Time of Day (TOD) Rules</h4>
+        <button id="refreshTOD" class="btn btn-success btn-sm">
+            <i class="bi bi-arrow-clockwise"></i> Refresh
+        </button>
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Rule ID</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Rate Multiplier</th>
+                    </tr>
+                </thead>
+                <tbody id="todTableBody">
+                    <tr><td colspan="4" class="text-center text-muted py-4">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function loadTODRules() {
+        $("#todTableBody").html("<tr><td colspan='4' class='text-center text-muted py-4'>Loading...</td></tr>");
+        $.ajax({
+            url: "/api/todrules",
+            method: "GET",
+            headers: { "Authorization": "Bearer " + localStorage.getItem("jwtToken") },
+            success: function (data) {
+                let rows = "";
+                data.forEach(r => {
+                    rows += `
+                        <tr>
+                            <td>${r.ruleId}</td>
+                            <td>${r.startTime}</td>
+                            <td>${r.endTime}</td>
+                            <td>${r.multiplier}</td>
+                        </tr>`;
+                });
+                $("#todTableBody").html(rows || "<tr><td colspan='4' class='text-center text-muted py-4'>No TOD rules found.</td></tr>");
+            },
+            error: function () {
+                $("#todTableBody").html("<tr><td colspan='4' class='text-center text-danger py-4'>Error loading TOD rules.</td></tr>");
+            }
+        });
+    }
+
+    $(document).ready(loadTODRules);
+    $("#refreshTOD").click(loadTODRules);
+</script>
