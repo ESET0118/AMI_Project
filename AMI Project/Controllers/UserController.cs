@@ -1,41 +1,67 @@
-﻿using AMI_Project.Data;
+﻿using AMI_Project.Models;
+using AMI_Project.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AMI_Project.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize] // ✅ Protects endpoint with JWT
+    [Authorize] // Protect all endpoints with JWT
     public class UsersController : ControllerBase
     {
-        private readonly AMIDbContext _context;
+        private readonly IUserServices _userService;
 
-        public UsersController(AMIDbContext context)
+        public UsersController(IUserServices userService)
         {
-            _context = context;
+            _userService = userService;
         }
 
-        // -------------------------------
         // GET: api/users
-        // -------------------------------
         [HttpGet]
         public async Task<IActionResult> GetUsers(CancellationToken ct)
         {
-            var users = await _context.Users
-                .Include(u => u.Roles)
-                .Select(u => new
-                {
-                    u.UserId,
-                    u.Email,
-                    u.DisplayName,
-                    Role = u.Roles.Select(r => r.Name).FirstOrDefault() ?? "N/A",
-                    u.CreatedAt
-                })
-                .ToListAsync(ct);
+            var users = await _userService.GetAllUsersAsync(ct); // We'll add this method
+            var result = users.Select(u => new
+            {
+                u.UserId,
+                u.Email,
+                u.DisplayName,
+                Role = u.Roles.Select(r => r.Name).FirstOrDefault() ?? "N/A",
+                u.CreatedAt
+            });
 
-            return Ok(users);
+            return Ok(result);
+        }
+
+        // GET: api/users/{id}
+        [HttpGet("{id:long}")]
+        public async Task<IActionResult> GetUser(long id, CancellationToken ct)
+        {
+            var user = await _userService.GetByIdAsync(id, ct);
+            if (user == null) return NotFound();
+
+            return Ok(new
+            {
+                user.UserId,
+                user.Email,
+                user.DisplayName,
+                Role = user.Roles.Select(r => r.Name).FirstOrDefault() ?? "N/A",
+                user.CreatedAt
+            });
+        }
+
+        // POST: api/users
+        [HttpPost]
+        public async Task<IActionResult> CreateUser([FromBody] User user, CancellationToken ct)
+        {
+            if (await _userService.EmailExistsAsync(user.Email, ct))
+                return BadRequest(new { Message = "Email already exists." });
+
+            await _userService.AddAsync(user, ct);
+            await _userService.SaveChangesAsync(ct);
+
+            return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
         }
     }
 }

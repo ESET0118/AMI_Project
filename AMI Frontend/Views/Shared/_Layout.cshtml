@@ -9,28 +9,264 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewBag.Title - AMI Dashboard</title>
 
+    <!-- Bootstrap CSS & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
-        body {
-            font-family: "Inter", system-ui, sans-serif;
-            background-color: #f8f9fa;
-            min-height: 100vh;
-            overflow-x: hidden;
+        :root {
+            --primary-color: #00d084;
+            --secondary-color: #00b3d8;
+            --bg-light: #f8f9fa;
+            --bg-dark: #0d1b1e;
+            --text-dark: #212529;
+            --text-light: #f1f1f1;
+            --sidebar-dark: rgba(10, 20, 25, 0.85);
+            --sidebar-light: linear-gradient(180deg, rgba(0,179,216,0.75), rgba(0,208,132,0.75));
+            --header-height: 45px;
         }
 
-        /* Sidebar styling */
-        .sidebar {
-            width: 250px;
-            background: linear-gradient(180deg, #00b3d8, #00d084);
+        body {
+            font-family: "Inter", system-ui, sans-serif;
+            background: linear-gradient(135deg, #e9f7ef, #c2f0e0, #d6f5ff);
+            background-attachment: fixed;
+            color: var(--text-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+            /* === DARK MODE === */
+            body.dark-mode {
+                background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+                color: #eafaf2;
+            }
+
+                /* Sidebar */
+                body.dark-mode .sidebar {
+                    background: var(--sidebar-dark);
+                    box-shadow: 2px 0 15px rgba(0, 255, 180, 0.05);
+                }
+
+                    body.dark-mode .sidebar .nav-link {
+                        color: #b8b8b8;
+                    }
+
+                        body.dark-mode .sidebar .nav-link.active,
+                        body.dark-mode .sidebar .nav-link:hover {
+                            color: #fff;
+                            background: rgba(0, 255, 180, 0.2);
+                        }
+
+                /* Topbar */
+                body.dark-mode .topbar {
+                    background: rgba(20, 35, 40, 0.9);
+                    color: #eafaf2;
+                    box-shadow: 0 2px 10px rgba(0, 255, 200, 0.1);
+                }
+
+                body.dark-mode .logout-btn {
+                    background: rgba(255, 255, 255, 0.1);
+                    color: #eafaf2;
+                }
+
+                    body.dark-mode .logout-btn:hover {
+                        background: var(--primary-color);
+                        color: #fff;
+                    }
+
+                /* Cards, tables, modals, forms */
+                body.dark-mode .card,
+                body.dark-mode .table,
+                body.dark-mode .modal-content,
+                body.dark-mode .form-control,
+                body.dark-mode .list-group-item {
+                    background-color: rgba(25, 40, 45, 0.95) !important;
+                    color: #eafaf2 !important;
+                    border-color: rgba(255, 255, 255, 0.1) !important;
+                    transition: all 0.3s ease;
+                }
+
+                    /* Green glow hover for cards/tables */
+                    body.dark-mode .card:hover,
+                    body.dark-mode .table:hover {
+                        box-shadow: 0 0 15px rgba(0, 255, 150, 0.6), 0 0 25px rgba(0, 255, 150, 0.3);
+                    }
+
+                    /* Table headers */
+                    body.dark-mode .table thead {
+                        background-color: rgba(0, 255, 180, 0.15) !important;
+                        color: #eafaf2 !important;
+                        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                    }
+
+                    /* Table rows */
+                    body.dark-mode .table tbody tr {
+                        color: #e2e2e2 !important;
+                        background-color: rgba(255, 255, 255, 0.03);
+                    }
+
+                body.dark-mode .table-striped > tbody > tr:nth-of-type(odd) {
+                    background-color: rgba(255, 255, 255, 0.05);
+                }
+
+                body.dark-mode .table tbody tr:hover {
+                    background-color: rgba(0, 255, 150, 0.1);
+                }
+
+                /* Text and links */
+                body.dark-mode a,
+                body.dark-mode .text-muted {
+                    color: #9dd9c3 !important;
+                }
+
+                body.dark-mode h1,
+                body.dark-mode h2,
+                body.dark-mode h3,
+                body.dark-mode h4,
+                body.dark-mode h5,
+                body.dark-mode h6,
+                body.dark-mode label,
+                body.dark-mode p,
+                body.dark-mode span {
+                    color: #eafaf2 !important;
+                }
+
+                /* Buttons */
+                body.dark-mode .btn-outline-secondary {
+                    color: #eafaf2;
+                    border-color: rgba(255, 255, 255, 0.3);
+                }
+
+                    body.dark-mode .btn-outline-secondary:hover {
+                        background: rgba(255, 255, 255, 0.15);
+                    }
+
+                body.dark-mode .btn-outline-primary {
+                    color: #00b3d8;
+                    border-color: #00b3d8;
+                }
+
+                    body.dark-mode .btn-outline-primary:hover {
+                        background-color: #00b3d8;
+                        color: #fff;
+                    }
+
+                body.dark-mode .btn-outline-success {
+                    color: #00d084;
+                    border-color: #00d084;
+                }
+
+                    body.dark-mode .btn-outline-success:hover {
+                        background-color: #00d084;
+                        color: #fff;
+                    }
+
+                /* Inputs */
+                body.dark-mode input.form-control,
+                body.dark-mode select.form-select,
+                body.dark-mode textarea.form-control {
+                    background-color: rgba(20, 35, 40, 0.95);
+                    color: #eafaf2;
+                    border: 1px solid rgba(255, 255, 255, 0.15);
+                }
+
+                body.dark-mode input::placeholder {
+                    color: rgba(255, 255, 255, 0.6);
+                }
+
+                /* Modal header/footer */
+                body.dark-mode .modal-header {
+                    background-color: rgba(0, 255, 150, 0.1);
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                }
+
+                body.dark-mode .modal-footer {
+                    background-color: rgba(20, 35, 40, 0.95);
+                    border-top: 1px solid rgba(255, 255, 255, 0.1);
+                }
+
+                /* Scrollbar */
+                body.dark-mode ::-webkit-scrollbar {
+                    width: 8px;
+                }
+
+                body.dark-mode ::-webkit-scrollbar-track {
+                    background: rgba(20, 35, 40, 0.95);
+                }
+
+                body.dark-mode ::-webkit-scrollbar-thumb {
+                    background: rgba(0, 208, 132, 0.6);
+                    border-radius: 6px;
+                }
+
+                    body.dark-mode ::-webkit-scrollbar-thumb:hover {
+                        background: rgba(0, 208, 132, 0.9);
+                    }
+
+        /* Energy Header */
+        .energy-header {
             position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: rgba(0, 208, 132, 0.75);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 15px rgba(0, 255, 180, 0.5);
+            color: white;
+            text-align: center;
+            padding-top: 8px;
+            font-weight: 600;
+            letter-spacing: 0.6px;
+            z-index: 2000;
+        }
+
+            .energy-header span {
+                text-shadow: 0 0 6px rgba(255, 255, 255, 0.7);
+            }
+
+        .energy-flow {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #fff, transparent);
+            background-size: 200% 100%;
+            animation: flow 2s linear infinite;
+            filter: drop-shadow(0 0 6px rgba(0, 255, 150, 0.9));
+        }
+        @@keyframes flow {
+            0%
+
+        {
+            background-position: 200% 0;
+        }
+
+        100% {
+            background-position: -200% 0;
+        }
+
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: var(--sidebar-light);
+            position: fixed;
+            top: var(--header-height);
             bottom: 0;
             left: 0;
             color: #fff;
             transition: all 0.3s ease;
             padding-top: 70px;
+            backdrop-filter: blur(12px);
+            box-shadow: 2px 0 15px rgba(0, 255, 180, 0.2);
+            border-right: 1px solid rgba(255, 255, 255, 0.15);
         }
 
             .sidebar .nav-link {
@@ -39,42 +275,98 @@
                 display: flex;
                 align-items: center;
                 font-weight: 500;
-                transition: background 0.2s ease;
+                transition: background 0.2s ease, color 0.2s ease;
             }
-
-                .sidebar .nav-link:hover,
-                .sidebar .nav-link.active {
-                    background-color: rgba(255, 255, 255, 0.15);
-                    color: #fff;
-                }
 
                 .sidebar .nav-link i {
                     margin-right: 10px;
                     font-size: 1.1rem;
                 }
 
-        /* Top Navbar */
+        /* Topbar */
         .topbar {
             margin-left: 250px;
             height: 60px;
-            background: #fff;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(6px);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 25px;
             position: sticky;
-            top: 0;
+            top: var(--header-height);
             z-index: 1020;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            color: var(--secondary-color);
+        }
+
+            .theme-toggle label {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                margin-bottom: 0;
+            }
+
+        .toggle-label span {
+            width: 42px;
+            height: 22px;
+            background: #ccc;
+            border-radius: 20px;
+            position: relative;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+
+            .toggle-label span::before {
+                content: '';
+                width: 18px;
+                height: 18px;
+                background: white;
+                border-radius: 50%;
+                position: absolute;
+                top: 2px;
+                left: 2px;
+                transition: transform 0.3s;
+            }
+
+        #themeSwitch:checked + .toggle-label span {
+            background: var(--primary-color);
+        }
+
+            #themeSwitch:checked + .toggle-label span::before {
+                transform: translateX(20px);
+            }
+
+        .logout-btn {
+            background: #fff;
+            border: none;
+            color: var(--secondary-color);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+            .logout-btn:hover {
+                background: var(--secondary-color);
+                color: #fff;
+            }
+
+        /* Main content */
         .main-content {
             margin-left: 250px;
             padding: 30px;
+            margin-top: calc(var(--header-height) + 10px);
             transition: margin-left 0.3s ease;
         }
 
-        /* Responsive Sidebar */
         @@media (max-width: 991px) {
             .sidebar
 
@@ -104,34 +396,25 @@
         .sidebar-toggle {
             background: none;
             border: none;
-            color: #00b3d8;
+            color: var(--secondary-color);
             font-size: 1.5rem;
             display: none;
         }
-
-        .logout-btn {
-            background: #fff;
-            border: none;
-            color: #00b3d8;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-weight: 600;
-        }
-
-            .logout-btn:hover {
-                background: #00b3d8;
-                color: #fff;
-            }
     </style>
 </head>
 
 <body>
+    <!-- Energy Header -->
+    <header class="energy-header">
+        <span>🌱 Smart AMI Dashboard — Empowering Green Energy Monitoring</span>
+        <div class="energy-flow"></div>
+    </header>
+
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="px-3 mb-4">
             <h4 class="fw-bold text-white">⚡ AMI System</h4>
         </div>
-
         <nav class="nav flex-column">
             <a class="nav-link" href="/Dashboard/Index"><i class="bi bi-speedometer2"></i> Dashboard</a>
             <a class="nav-link" href="/Users/Index"><i class="bi bi-people"></i> Users</a>
@@ -141,7 +424,7 @@
             <a class="nav-link" href="/Tariff/Index"><i class="bi bi-cash"></i> Tariff</a>
             <a class="nav-link" href="/TariffSlabs/Index"><i class="bi bi-layers"></i> Tariff Slabs</a>
             <a class="nav-link" href="/TODRules/Index"><i class="bi bi-clock-history"></i> TOD Rules</a>
-            <a class="nav-link" href="/UploadMeter/Index"><i class="bi bi-upload"></i> Upload Meter</a>
+            <a class="nav-link" href="/MetersCsv/Upload"><i class="bi bi-upload"></i> Upload Meter</a>
         </nav>
     </div>
 
@@ -151,7 +434,11 @@
             <button class="sidebar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
             <h5 class="fw-semibold mb-0">AMI Dashboard</h5>
         </div>
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center gap-3">
+            <div class="theme-toggle">
+                <input type="checkbox" id="themeSwitch" hidden>
+                <label for="themeSwitch" class="toggle-label">🌞 <span></span> 🌙</label>
+            </div>
             <span id="userName" class="text-muted me-3">Welcome, User</span>
             <button id="logoutBtn" class="logout-btn">Logout</button>
         </div>
@@ -161,9 +448,6 @@
     <main class="main-content">
         @RenderBody()
     </main>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         // Sidebar toggle
@@ -195,6 +479,17 @@
         $("#logoutBtn").click(function () {
             localStorage.removeItem("jwtToken");
             window.location.href = "/Account/Login";
+        });
+
+        // Dark Mode Toggle with Persistence
+        const toggle = document.getElementById("themeSwitch");
+        if (localStorage.getItem("theme") === "dark") {
+            document.body.classList.add("dark-mode");
+            toggle.checked = true;
+        }
+        toggle.addEventListener("change", () => {
+            document.body.classList.toggle("dark-mode");
+            localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
         });
     </script>
 </body>

@@ -1,7 +1,6 @@
 ﻿using AMI_Project.DTOs.Meter;
-using AMI_Project.Helpers;
 using Microsoft.AspNetCore.Http;
-
+using AMI_Project.Helpers;
 
 namespace AMI_Project.Services.Interfaces
 {
@@ -11,9 +10,9 @@ namespace AMI_Project.Services.Interfaces
         Task<MeterReadDto?> GetBySerialAsync(string serialNo, CancellationToken ct);
         Task<MeterReadDto> CreateAsync(MeterCreateDto dto, CancellationToken ct);
         Task<MeterReadDto> UpdateAsync(string serialNo, MeterUpdateDto dto, CancellationToken ct);
+        Task<PagedResult<MeterReadDto>> GetAllMetersAsync(CancellationToken ct);
+
         Task DeleteAsync(string serialNo, CancellationToken ct);
 
-        // ✅ NEW
-        Task<object> UploadCsvAsync(IFormFile file, CancellationToken ct);
     }
 }

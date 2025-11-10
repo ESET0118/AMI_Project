@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Headers;
 
 namespace AMI_Frontend.Controllers
 {
@@ -12,23 +13,40 @@ namespace AMI_Frontend.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
+        // Renders the Razor page
         public IActionResult Index() => View();
 
-        [HttpGet("/api/users")]
-        public async Task<IActionResult> GetUsers()
+        // Proxy endpoint for Razor JS to call backend API
+        [HttpGet("/Users/GetAll")]
+        public async Task<IActionResult> GetAll()
         {
-            var client = _httpClientFactory.CreateClient();
-            var token = HttpContext.Session.GetString("JWTToken");
+            try
+            {
+                var token = HttpContext.Session.GetString("JWTToken");
+                if (string.IsNullOrEmpty(token))
+                {
+                    return Unauthorized(new { Message = "JWT token is missing. Please login again." });
+                }
 
-            client.DefaultRequestHeaders.Authorization =
-                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                var client = _httpClientFactory.CreateClient();
+                client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", token);
 
-            var response = await client.GetAsync(_apiBaseUrl);
-            if (!response.IsSuccessStatusCode)
-                return StatusCode((int)response.StatusCode, "Failed to fetch users");
+                var response = await client.GetAsync(_apiBaseUrl);
 
-            var content = await response.Content.ReadAsStringAsync();
-            return Content(content, "application/json");
+                if (!response.IsSuccessStatusCode)
+                {
+                    var error = await response.Content.ReadAsStringAsync();
+                    return StatusCode((int)response.StatusCode, error);
+                }
+
+                var content = await response.Content.ReadAsStringAsync();
+                return Content(content, "application/json");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = ex.Message });
+            }
         }
     }
 }

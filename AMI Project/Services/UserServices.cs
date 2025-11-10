@@ -1,14 +1,20 @@
 using AMI_Project.Data;
 using AMI_Project.Models;
-using AMI_Project.Repositories.Interfaces;
+using AMI_Project.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace AMI_Project.Repositories
+namespace AMI_Project.Services
 {
-    public class UserRepository : IUserRepository
+    public class UserServices : IUserServices
     {
         private readonly AMIDbContext _context;
-        public UserRepository(AMIDbContext context) => _context = context;
+        public UserServices(AMIDbContext context) => _context = context;
+
+        public async Task<IEnumerable<User>> GetAllUsersAsync(CancellationToken ct)
+        {
+            return await _context.Users.Include(u => u.Roles).ToListAsync(ct);
+        }
+
 
         public async Task<User?> GetByEmailAsync(string email, CancellationToken ct)
             => await _context.Users.Include(u => u.Roles)

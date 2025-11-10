@@ -1,4 +1,5 @@
 ﻿using AMI_Project.Data;
+using AMI_Project.Mappings;
 using AMI_Project.Repositories;
 using AMI_Project.Repositories.Interfaces;
 using AMI_Project.Services;
@@ -8,6 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
+using AMI_Project.Helpers;
 
 namespace AMI.Extensions
 {
@@ -55,6 +60,7 @@ namespace AMI.Extensions
                     Description = "Advanced Metering Infrastructure API"
                 });
 
+                // ✅ Enable Bearer token authentication in Swagger
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
@@ -79,6 +85,9 @@ namespace AMI.Extensions
                         Array.Empty<string>()
                     }
                 });
+
+                // ✅ Handle [FromForm] IFormFile uploads
+                c.OperationFilter<FileUploadOperationFilter>();
             });
         }
 
@@ -91,7 +100,7 @@ namespace AMI.Extensions
             services.AddScoped<ITariffRepository, TariffRepository>();
             services.AddScoped<ITariffSlabRepository, TariffSlabRepository>();
             services.AddScoped<IBillRepository, BillRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserServices, UserServices>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
             // Services
@@ -100,7 +109,10 @@ namespace AMI.Extensions
             services.AddScoped<IOrgUnitService, OrgUnitService>();
             services.AddScoped<ITariffService, TariffService>();
             services.AddScoped<IBillingService, BillingService>();
+            services.AddScoped<IMeterCsvService, MeterCsvService>();
             services.AddScoped<IAuthService, AuthService>();
+
+            services.AddAutoMapper(typeof(MappingProfile));
         }
     }
 }

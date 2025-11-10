@@ -1,80 +1,98 @@
 ﻿using AMI.Extensions;
 using AMI_Project.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// --------------------------------------------------
-// 🧱 1️⃣ Configure Services
-// --------------------------------------------------
+// ----------------------
+// Database
+// ----------------------
 builder.Services.ConfigureSqlContext(builder.Configuration);
-builder.Services.ConfigureSwagger();
-builder.Services.RegisterServices();
-builder.Services.ConfigureJwt(builder.Configuration);
 
+// ----------------------
+// Application Services
+// ----------------------
+builder.Services.RegisterServices();
+
+// ----------------------
+// Controllers
+// ----------------------
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
-        // Prevent circular references in Swagger JSON
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-        options.JsonSerializerOptions.MaxDepth = 3;
+        options.JsonSerializerOptions.MaxDepth = 5;
+        options.JsonSerializerOptions.WriteIndented = true;
     });
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddAuthorization();
-builder.Services.AddAutoMapper(typeof(AMI_Project.Mappings.MappingProfile));
-
-// CORS (Frontend)
-builder.Services.AddCors(options =>
+// ----------------------
+// JWT Authentication
+// ----------------------
+builder.Services.AddAuthentication(options =>
 {
-    options.AddPolicy("AllowFrontend", policy =>
-        policy.WithOrigins("https://localhost:7264")
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials());
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],      // from appsettings.json
+        ValidAudience = builder.Configuration["Jwt:Audience"],  // from appsettings.json
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
 });
 
-// --------------------------------------------------
-// 🚀 2️⃣ Build Application
-// --------------------------------------------------
+// ----------------------
+// Swagger
+// ----------------------
+builder.Services.ConfigureSwagger();
+builder.Services.AddEndpointsApiExplorer();
+
+// ----------------------
+// CORS
+// ----------------------
+builder.Services.ConfigureCors(); // Uses "AllowFrontend"
+
+// ----------------------
+// Build App
+// ----------------------
 var app = builder.Build();
 
-// --------------------------------------------------
-// 🧩 3️⃣ Middleware Pipeline
-// --------------------------------------------------
+// ----------------------
+// Middleware Order Matters!
+// ----------------------
 if (app.Environment.IsDevelopment())
 {
-    // Developer exception page for detailed errors
     app.UseDeveloperExceptionPage();
-
-    // Enable Swagger UI
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "AMI API v1");
-        c.RoutePrefix = "swagger"; // Swagger UI served at /swagger
-    });
-
-    // Auto-migrate DB (optional)
-    using (var scope = app.Services.CreateScope())
-    {
-        var db = scope.ServiceProvider.GetRequiredService<AMIDbContext>();
-        await db.Database.MigrateAsync();
-    }
 }
 
 app.UseHttpsRedirection();
-
 app.UseCors("AllowFrontend");
 
-app.UseAuthentication();
+app.UseAuthentication(); // ✅ Must come BEFORE UseAuthorization
 app.UseAuthorization();
 
-//Optional: enable global exception middleware if needed
- app.UseMiddleware<AMI.Middleware.ExceptionHandlerMiddleware>();
+// ----------------------
+// Swagger UI
+// ----------------------
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "AMI API v1");
+});
 
+// ----------------------
+// Map Controllers
+// ----------------------
 app.MapControllers();
 
 app.Run();

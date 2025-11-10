@@ -15,7 +15,15 @@ namespace AMI_Project.Controllers
             _meterService = meterService;
         }
 
-        // ✅ GET all meters (with optional filters)
+        // GET: /api/meters/all
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllMeters(CancellationToken ct)
+        {
+            var result = await _meterService.GetAllMetersAsync(ct);
+            return Ok(result);
+        }
+
+        // GET: /api/meters
         [HttpGet]
         public async Task<IActionResult> GetMeters([FromQuery] MeterFilterDto filter, CancellationToken ct)
         {
@@ -23,7 +31,7 @@ namespace AMI_Project.Controllers
             return Ok(result);
         }
 
-        // ✅ GET by serial number
+        // GET: /api/meters/{serialNo}
         [HttpGet("{serialNo}")]
         public async Task<IActionResult> GetMeterBySerial(string serialNo, CancellationToken ct)
         {
@@ -33,7 +41,7 @@ namespace AMI_Project.Controllers
             return Ok(meter);
         }
 
-        // ✅ POST - Create
+        // POST: /api/meters
         [HttpPost]
         public async Task<IActionResult> CreateMeter([FromBody] MeterCreateDto dto, CancellationToken ct)
         {
@@ -41,7 +49,7 @@ namespace AMI_Project.Controllers
             return CreatedAtAction(nameof(GetMeterBySerial), new { serialNo = created.MeterSerialNo }, created);
         }
 
-        // ✅ PUT - Update
+        // PUT: /api/meters/{serialNo}
         [HttpPut("{serialNo}")]
         public async Task<IActionResult> UpdateMeter(string serialNo, [FromBody] MeterUpdateDto dto, CancellationToken ct)
         {
@@ -49,7 +57,7 @@ namespace AMI_Project.Controllers
             return Ok(updated);
         }
 
-        // ✅ DELETE
+        // DELETE: /api/meters/{serialNo}
         [HttpDelete("{serialNo}")]
         public async Task<IActionResult> DeleteMeter(string serialNo, CancellationToken ct)
         {
@@ -57,18 +65,7 @@ namespace AMI_Project.Controllers
             return NoContent();
         }
 
-        // ✅ NEW: CSV Upload for bulk add/update
-        [HttpPost("upload")]
-        [Consumes("multipart/form-data")] // ✅ Swagger needs this
-        public async Task<ActionResult<MeterUploadResultDto>> UploadMeters([FromForm] IFormFile file, CancellationToken ct)
-        {
-            if (file == null || file.Length == 0)
-                return BadRequest("CSV file is required.");
 
-            var result = await _meterService.UploadCsvAsync(file, ct);
-            return Ok(result);
-        }
-
-
+        
     }
 }

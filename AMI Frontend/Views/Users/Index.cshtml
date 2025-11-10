@@ -31,19 +31,16 @@
     </div>
 </div>
 
-<!-- Bootstrap + jQuery -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    // 🔹 Function to load all users
+    // Load users via proxy
     function loadUsers() {
         $("#userTableBody").html("<tr><td colspan='5' class='text-center text-muted py-4'>Loading...</td></tr>");
 
         $.ajax({
-            url: "https://localhost:7199/api/users", // ✅ Backend API
+            url: "/Users/GetAll",
             method: "GET",
-            headers: { "Authorization": "Bearer " + localStorage.getItem("jwtToken") },
             success: function (data) {
                 if (!data || data.length === 0) {
                     $("#userTableBody").html("<tr><td colspan='5' class='text-center text-muted py-4'>No users found.</td></tr>");
@@ -65,12 +62,15 @@
             },
             error: function (xhr) {
                 console.error(xhr);
-                $("#userTableBody").html("<tr><td colspan='5' class='text-center text-danger py-4'>Error loading users.</td></tr>");
+                let msg = "Error loading users.";
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    msg = xhr.responseJSON.message;
+                }
+                $("#userTableBody").html(`<tr><td colspan='5' class='text-center text-danger py-4'>${msg}</td></tr>`);
             }
         });
     }
 
-    // 🔹 Load users on page ready + refresh button
     $(document).ready(loadUsers);
     $("#refreshUsers").click(loadUsers);
 </script>
