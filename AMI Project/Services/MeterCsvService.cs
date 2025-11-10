@@ -1,78 +1,104 @@
-﻿using AMI_Project.Data;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using System.Text;
+﻿using AMI_Project.DTOs.Meters;
 using AMI_Project.Models;
-public class MeterCsvService : IMeterCsvService
+using AMI_Project.Repositories.Interfaces;
+using AMI_Project.Services.Interfaces;
+using CsvHelper;
+using CsvHelper.Configuration;
+using System.Globalization;
+
+namespace AMI_Project.Services
 {
-    private readonly AMIDbContext _context;
-
-    public MeterCsvService(AMIDbContext context)
+    public class MeterCsvService : IMeterCsvService
     {
-        _context = context;
-    }
+        private readonly IMeterRepository _meterRepository;
+        private readonly IConsumerRepository _consumerRepository;
 
-    public async Task<MeterUploadResultDto> UploadCsvAsync(IFormFile file)
-    {
-        if (file == null || file.Length == 0)
-            throw new ArgumentException("CSV file is required");
-
-        int added = 0, updated = 0;
-        using var reader = new StreamReader(file.OpenReadStream(), Encoding.UTF8);
-        var lines = new List<string>();
-        while (!reader.EndOfStream)
+        public MeterCsvService(IMeterRepository meterRepository, IConsumerRepository consumerRepository)
         {
-            var line = await reader.ReadLineAsync();
-            if (!string.IsNullOrWhiteSpace(line))
-                lines.Add(line.Trim());
+            _meterRepository = meterRepository;
+            _consumerRepository = consumerRepository;
         }
 
-        if (lines.Count <= 1) throw new Exception("CSV must have header + data rows");
-
-        var headers = lines[0].Split(',').Select(h => h.Trim().ToLower()).ToArray();
-        for (int i = 1; i < lines.Count; i++)
+        public async Task<MeterCsvUploadResult> UploadAndImportAsync(MeterUploadResultDto dto, CancellationToken ct)
         {
-            var cols = lines[i].Split(',').Select(c => c.Trim()).ToArray();
-            var dict = headers.Zip(cols, (h, c) => new { h, c }).ToDictionary(x => x.h, x => x.c);
+            if (dto.CsvFile == null || dto.CsvFile.Length == 0)
+                throw new ArgumentException("Invalid CSV file.");
 
-            var serial = dict["meterserialno"];
-            if (string.IsNullOrEmpty(serial)) continue;
+            var result = new MeterCsvUploadResult();
+            var meters = new List<Meter>();
+            var warnings = new List<string>();
 
-            var existing = await _context.Meters.FirstOrDefaultAsync(m => m.MeterSerialNo == serial);
-            if (existing == null)
+            // Get all valid ConsumerIds from DB
+            var validConsumerIds = (await _consumerRepository.GetAllAsync(ct))
+                .Select(c => c.ConsumerId)
+                .ToHashSet();
+
+            using (var stream = new StreamReader(dto.CsvFile.OpenReadStream()))
+            using (var csv = new CsvReader(stream, new CsvConfiguration(CultureInfo.InvariantCulture)
             {
-                _context.Meters.Add(new Meter
+                HasHeaderRecord = true,
+                TrimOptions = TrimOptions.Trim,
+                MissingFieldFound = null,
+                HeaderValidated = null
+            }))
+            {
+                var records = csv.GetRecordsAsync<MeterCsvRecord>();
+
+                await foreach (var record in records.WithCancellation(ct))
                 {
-                    MeterSerialNo = serial,
-                    IpAddress = dict["ipaddress"],
-                    Iccid = dict["iccid"],
-                    Imsi = dict["imsi"],
-                    Manufacturer = dict["manufacturer"],
-                    Category = dict["category"],
-                    Firmware = dict.ContainsKey("firmware") ? dict["firmware"] : null,
-                    Status = "Active"
-                });
-                added++;
+                    long? consumerId = null;
+
+                    if (record.ConsumerId != null)
+                    {
+                        if (validConsumerIds.Contains(record.ConsumerId.Value))
+                        {
+                            consumerId = record.ConsumerId;
+                        }
+                        else
+                        {
+                            warnings.Add($"Meter '{record.MeterSerialNo}': ConsumerId {record.ConsumerId} does not exist. Setting ConsumerId = null.");
+                        }
+                    }
+
+                    var meter = new Meter
+                    {
+                        MeterSerialNo = record.MeterSerialNo,
+                        IpAddress = record.IpAddress,
+                        Iccid = record.Iccid,
+                        Imsi = record.Imsi,
+                        Manufacturer = record.Manufacturer,
+                        Firmware = record.Firmware,
+                        Category = record.Category,
+                        ConsumerId = consumerId
+                    };
+
+                    meters.Add(meter);
+                }
             }
-            else
-            {
-                existing.IpAddress = dict["ipaddress"];
-                existing.Iccid = dict["iccid"];
-                existing.Imsi = dict["imsi"];
-                existing.Manufacturer = dict["manufacturer"];
-                existing.Category = dict["category"];
-                if (dict.ContainsKey("firmware")) existing.Firmware = dict["firmware"];
-                updated++;
-            }
+
+            // Save to database
+            foreach (var m in meters)
+                await _meterRepository.AddAsync(m, ct);
+
+            await _meterRepository.SaveChangesAsync(ct);
+
+            result.ImportedMeters = meters;
+            result.Warnings = warnings;
+
+            return result;
         }
 
-        await _context.SaveChangesAsync();
-
-        return new MeterUploadResultDto
+        // CSV mapping class
+        private class MeterCsvRecord
         {
-            Message = "CSV processed successfully",
-            Added = added,
-            Updated = updated
-        };
+            public string MeterSerialNo { get; set; } = string.Empty;
+            public string IpAddress { get; set; } = string.Empty;
+            public string Iccid { get; set; } = string.Empty;
+            public string Imsi { get; set; } = string.Empty;
+            public string Manufacturer { get; set; } = string.Empty;
+            public string? Firmware { get; set; }
+            public string Category { get; set; } = string.Empty;
+            public long? ConsumerId { get; set; }
+        }
     }
 }

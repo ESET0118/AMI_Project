@@ -8,8 +8,8 @@
         <h4 class="fw-bold">Upload Meter Data</h4>
     </div>
 
-    <div class="card shadow-sm border-0 rounded-4 p-4">
-        <form id="uploadForm" enctype="multipart/form-data">
+    <div class="card shadow-sm border-0 rounded-4 p-4" style="max-width: 500px;">
+        <form id="uploadForm" enctype="multipart/form-data" method="post">
             <div class="mb-3">
                 <label for="meterFile" class="form-label">Select Excel/CSV File</label>
                 <input type="file" class="form-control" id="meterFile" accept=".xlsx,.csv" required>
@@ -40,7 +40,7 @@
                 $("#uploadStatus").text("Uploading...");
 
                 $.ajax({
-                    url: "/MetersCsv/UploadMeterCsv",
+                    url: "/UploadMeter/Upload",
                     type: "POST",
                     data: formData,
                     processData: false,

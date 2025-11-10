@@ -8,49 +8,71 @@ namespace AMI_Project.Controllers
     [Route("api/[controller]")]
     public class MeterReadingController : ControllerBase
     {
-        private readonly IMeterReadingService _service;
+        private readonly IMeterReadingService _meterReadingService;
 
-        public MeterReadingController(IMeterReadingService service)
+        public MeterReadingController(IMeterReadingService meterReadingService)
         {
-            _service = service;
+            _meterReadingService = meterReadingService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll(CancellationToken ct)
-            => Ok(await _service.GetAllAsync(ct));
+        {
+            var readings = await _meterReadingService.GetAllAsync(ct);
+            return Ok(readings);
+        }
 
         [HttpGet("{id:long}")]
         public async Task<IActionResult> GetById(long id, CancellationToken ct)
         {
-            var result = await _service.GetByIdAsync(id, ct);
-            return result == null ? NotFound() : Ok(result);
+            var reading = await _meterReadingService.GetByIdAsync(id, ct);
+            if (reading == null)
+                return NotFound(new { message = $"Meter reading with ID {id} not found." });
+
+            return Ok(reading);
         }
 
         [HttpGet("meter/{serialNo}")]
         public async Task<IActionResult> GetByMeterSerialNo(string serialNo, CancellationToken ct)
         {
-            var result = await _service.GetByMeterSerialNoAsync(serialNo, ct);
-            return Ok(result);
+            var readings = await _meterReadingService.GetByMeterSerialNoAsync(serialNo, ct);
+            if (!readings.Any())
+                return NotFound(new { message = $"No readings found for meter {serialNo}." });
+
+            return Ok(readings);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] MeterReadingCreateDto dto, CancellationToken ct)
         {
-            var result = await _service.CreateAsync(dto, ct);
-            return CreatedAtAction(nameof(GetById), new { id = result.MeterReadingId }, result);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var created = await _meterReadingService.CreateAsync(dto, ct);
+            return CreatedAtAction(nameof(GetById), new { id = created.MeterReadingId }, created);
         }
 
         [HttpPut("{id:long}")]
         public async Task<IActionResult> Update(long id, [FromBody] MeterReadingUpdateDto dto, CancellationToken ct)
         {
-            var result = await _service.UpdateAsync(id, dto, ct);
-            return result == null ? NotFound() : Ok(result);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var updated = await _meterReadingService.UpdateAsync(id, dto, ct);
+            if (updated == null)
+                return NotFound(new { message = $"Meter reading with ID {id} not found." });
+
+            return Ok(updated);
         }
 
         [HttpDelete("{id:long}")]
         public async Task<IActionResult> Delete(long id, CancellationToken ct)
         {
-            await _service.DeleteAsync(id, ct);
+            var existing = await _meterReadingService.GetByIdAsync(id, ct);
+            if (existing == null)
+                return NotFound(new { message = $"Meter reading with ID {id} not found." });
+
+            await _meterReadingService.DeleteAsync(id, ct);
             return NoContent();
         }
     }

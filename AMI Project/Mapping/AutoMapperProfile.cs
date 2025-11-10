@@ -50,8 +50,20 @@ namespace AMI_Project.Mappings
             // -------------------------------------------------
             // 🔌 METER READING
             // -------------------------------------------------
-            CreateMap<MeterReading, MeterReadingReadDto>();
-            CreateMap<MeterReadingCreateDto, MeterReading>();
+            CreateMap<MeterReading, MeterReadingReadDto>()
+                .ForMember(dest => dest.MeterReadingId, opt => opt.MapFrom(src => src.MeterReadingId))
+                .ForMember(dest => dest.MeterSerialNo, opt => opt.MapFrom(src => src.MeterSerialNo))
+                .ForMember(dest => dest.ReadingDateTime, opt => opt.MapFrom(src => src.ReadingDateTime))
+                .ForMember(dest => dest.ConsumptionKwh, opt => opt.MapFrom(src => src.ConsumptionKwh))
+                .ForMember(dest => dest.Voltage, opt => opt.MapFrom(src => src.Voltage))
+                .ForMember(dest => dest.Ampere, opt => opt.MapFrom(src => src.Ampere))
+                .ForMember(dest => dest.PowerFactor, opt => opt.MapFrom(src => src.PowerFactor))
+                .ForMember(dest => dest.Frequency, opt => opt.MapFrom(src => src.Frequency))
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt));
+
+            CreateMap<MeterReadingCreateDto, MeterReading>()
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow));
+
             CreateMap<MeterReadingUpdateDto, MeterReading>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
@@ -65,6 +77,7 @@ namespace AMI_Project.Mappings
             CreateMap<OrgUnitUpdateDto, OrgUnit>()
                 .ForAllMembers(opts =>
                     opts.Condition((src, dest, srcMember) => srcMember != null));
+
             // -------------------------------------------------
             // 💡 TARIFF & SLABS
             // -------------------------------------------------

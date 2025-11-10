@@ -26,12 +26,12 @@ namespace AMI_Project.Services
         public async Task<MeterReadingReadDto?> GetByIdAsync(long id, CancellationToken ct)
         {
             var reading = await _repository.GetByIdAsync(id, ct);
-            return _mapper.Map<MeterReadingReadDto?>(reading);
+            return reading == null ? null : _mapper.Map<MeterReadingReadDto>(reading);
         }
 
-        public async Task<IEnumerable<MeterReadingReadDto>> GetByMeterSerialNoAsync(string meterSerialNo, CancellationToken ct)
+        public async Task<IEnumerable<MeterReadingReadDto>> GetByMeterSerialNoAsync(string serialNo, CancellationToken ct)
         {
-            var readings = await _repository.GetByMeterSerialNoAsync(meterSerialNo, ct);
+            var readings = await _repository.GetByMeterSerialNoAsync(serialNo, ct);
             return _mapper.Map<IEnumerable<MeterReadingReadDto>>(readings);
         }
 
@@ -51,7 +51,7 @@ namespace AMI_Project.Services
 
             _mapper.Map(dto, existing);
             var updated = await _repository.UpdateAsync(existing, ct);
-            return _mapper.Map<MeterReadingReadDto?>(updated);
+            return _mapper.Map<MeterReadingReadDto>(updated);
         }
 
         public async Task DeleteAsync(long id, CancellationToken ct)

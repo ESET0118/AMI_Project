@@ -12,5 +12,6 @@ namespace AMI_Project.DTOs.MeterReadings
         public decimal? Ampere { get; set; }
         public decimal? PowerFactor { get; set; }
         public decimal? Frequency { get; set; }
+        public DateTime CreatedAt { get; set; }   // ✅ Added to match your model
     }
 }

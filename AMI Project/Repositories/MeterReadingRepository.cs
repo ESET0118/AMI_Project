@@ -18,49 +18,48 @@ namespace AMI_Project.Repositories
         {
             return await _context.MeterReadings
                 .AsNoTracking()
-                .Include(r => r.MeterSerialNoNavigation)
+                .OrderByDescending(r => r.ReadingDateTime)
                 .ToListAsync(ct);
         }
 
         public async Task<MeterReading?> GetByIdAsync(long id, CancellationToken ct)
         {
             return await _context.MeterReadings
-                .Include(r => r.MeterSerialNoNavigation)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(r => r.MeterReadingId == id, ct);
         }
 
-        public async Task<IEnumerable<MeterReading>> GetByMeterSerialNoAsync(string meterSerialNo, CancellationToken ct)
+        public async Task<IEnumerable<MeterReading>> GetByMeterSerialNoAsync(string serialNo, CancellationToken ct)
         {
             return await _context.MeterReadings
-                .Where(r => r.MeterSerialNo == meterSerialNo)
+                .AsNoTracking()
+                .Where(r => r.MeterSerialNo == serialNo)
                 .OrderByDescending(r => r.ReadingDateTime)
                 .ToListAsync(ct);
         }
 
-        public async Task<MeterReading> AddAsync(MeterReading reading, CancellationToken ct)
+        public async Task<MeterReading> AddAsync(MeterReading entity, CancellationToken ct)
         {
-            _context.MeterReadings.Add(reading);
+            await _context.MeterReadings.AddAsync(entity, ct);
             await _context.SaveChangesAsync(ct);
-            return reading;
+            return entity;
         }
 
-        public async Task<MeterReading?> UpdateAsync(MeterReading reading, CancellationToken ct)
+        public async Task<MeterReading> UpdateAsync(MeterReading entity, CancellationToken ct)
         {
-            var existing = await _context.MeterReadings.FindAsync(new object[] { reading.MeterReadingId }, ct);
-            if (existing == null) return null;
-
-            _context.Entry(existing).CurrentValues.SetValues(reading);
+            _context.MeterReadings.Update(entity);
             await _context.SaveChangesAsync(ct);
-            return existing;
+            return entity;
         }
 
         public async Task DeleteAsync(long id, CancellationToken ct)
         {
-            var reading = await _context.MeterReadings.FindAsync(new object[] { id }, ct);
-            if (reading == null) return;
-
-            _context.MeterReadings.Remove(reading);
-            await _context.SaveChangesAsync(ct);
+            var entity = await _context.MeterReadings.FindAsync(new object[] { id }, ct);
+            if (entity != null)
+            {
+                _context.MeterReadings.Remove(entity);
+                await _context.SaveChangesAsync(ct);
+            }
         }
     }
 }

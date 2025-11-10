@@ -1,26 +1,13 @@
 using AMI_Project.Models;
-using AMI_Project.Helpers;
+using System.Threading;
 
-namespace AMI_Project.Repositories
+namespace AMI_Project.Repositories.Interfaces
 {
     public interface IMeterRepository
     {
-        Task<PagedResult<Meter>> GetMetersAsync(
-            string? serialNo,
-            string? status,
-            long? consumerId,
-            DateTime? fromInstall,
-            DateTime? toInstall,
-            int page,
-            int pageSize,
-            CancellationToken ct);
-
-        Task<Meter?> GetBySerialAsync(string serialNo, CancellationToken ct);
         Task AddAsync(Meter meter, CancellationToken ct);
-        Task UpdateAsync(Meter meter, CancellationToken ct);
-        Task DeleteAsync(string serialNo, CancellationToken ct);
-
-        Task AddOrUpdateBulkAsync(IEnumerable<Meter> meters, CancellationToken ct);
-        Task<bool> ConsumerExistsAsync(long consumerId, CancellationToken ct);
+        Task SaveChangesAsync(CancellationToken ct);
+        Task<Meter?> GetByIdAsync(string meterSerialNo, CancellationToken ct);
+        Task<IEnumerable<Meter>> GetAllAsync(CancellationToken ct);
     }
 }

@@ -1,6 +1,9 @@
 ﻿@{
     ViewBag.Title = "Meters";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Base URL for Meter Readings
+    var meterReadingsUrlTemplate = Url.Action("Index", "MeterReadings", new { serialNo = "__SERIAL__" });
 }
 <style>
     /* Gradient Buttons */
@@ -60,18 +63,15 @@
             transform: translateY(-2px);
         }
 
-    /* Small button adjustments */
     .btn-sm {
         padding: 0.35rem 0.75rem;
         font-size: 0.85rem;
     }
 
-    /* Icon spacing */
     .btn i {
         margin-right: 4px;
     }
 
-    /* Modal header */
     .modal-header.bg-primary {
         background: linear-gradient(135deg, #4e73df, #224abe);
     }
@@ -148,7 +148,6 @@
             <div class="modal-body">
                 <form id="meterForm">
                     <input type="hidden" id="editSerialNo" />
-
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label">Meter Serial No</label>
@@ -201,7 +200,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    const apiBase = "https://localhost:7199/api/meters"; // ✅ Backend API base URL
+    const apiBase = "https://localhost:7199/api/meters"; // Backend API base URL
+    const meterReadingsUrlTemplate = '@meterReadingsUrlTemplate';
     let allMeters = [];
 
     $(document).ready(function () {
@@ -228,7 +228,7 @@
         $.get(apiBase)
             .done(data => {
                 allMeters = data;
-                renderMeters(data.items || data); // Handles both {items:[]} or []
+                renderMeters(data.items || data);
             })
             .fail(() => {
                 $("#meterTableBody").html("<tr><td colspan='9' class='text-danger text-center py-4'>Error loading meters.</td></tr>");
@@ -241,22 +241,33 @@
             return;
         }
 
-        const rows = items.map(m => `
+        const rows = items.map(m => {
+            const readingsUrl = meterReadingsUrlTemplate.replace('__SERIAL__', m.meterSerialNo);
+            return `
             <tr>
                 <td>${m.meterSerialNo}</td>
                 <td>${m.consumerName || '-'}</td>
-                <td>${m.ipAddress}</td>
-                <td>${m.manufacturer}</td>
+                <td>${m.ipAddress || '-'}</td>
+                <td>${m.manufacturer || '-'}</td>
                 <td>${m.firmware || '-'}</td>
-                <td>${m.category}</td>
+                <td>${m.category || '-'}</td>
                 <td><span class="badge ${m.status === 'Active' ? 'bg-success' : 'bg-secondary'}">${m.status}</span></td>
                 <td>${m.installTsUtc ? new Date(m.installTsUtc).toLocaleDateString() : '-'}</td>
                 <td>
-                    <button class="btn btn-sm btn-outline-primary me-1" onclick="editMeter('${m.meterSerialNo}')"><i class="bi bi-pencil"></i></button>
-                    <button class="btn btn-sm btn-outline-danger" onclick="deleteMeter('${m.meterSerialNo}')"><i class="bi bi-trash"></i></button>
+                    <button class="btn btn-sm btn-outline-primary me-1" onclick="editMeter('${m.meterSerialNo}')">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger me-1" onclick="deleteMeter('${m.meterSerialNo}')">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                    <a href="${readingsUrl}" class="btn btn-sm btn-primary">
+                        <i class="bi bi-bar-chart-line"></i> Readings
+                    </a>
                 </td>
             </tr>
-        `).join("");
+            `;
+        }).join("");
+
         $("#meterTableBody").html(rows);
     }
 

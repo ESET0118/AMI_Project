@@ -1,6 +1,13 @@
-﻿public class MeterUploadResultDto
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+
+namespace AMI_Project.DTOs.Meters
 {
-    public string Message { get; set; } = string.Empty;
-    public int Added { get; set; }
-    public int Updated { get; set; }
+    public class MeterUploadResultDto
+    {
+        [Required(ErrorMessage = "CSV file is required.")]
+        [FromForm(Name = "file")] // 👈 allows uploading as `file`
+        public IFormFile CsvFile { get; set; } = null!;
+    }
 }

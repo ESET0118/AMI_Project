@@ -1,0 +1,6 @@
+MeterSerialNo,IpAddress,Iccid,Imsi,Manufacturer,Firmware,Category,ConsumerId
+MTR005,192.168.1.10,8.9911E+18,4.04102E+14,Siemens,FW1.2,Residential,1001
+MTR006,192.168.1.11,8.9911E+18,4.04102E+14,ABB,FW2.1,Commercial,1002
+MTR007,192.168.1.12,8.9911E+18,4.04102E+14,Schneider,FW1.5,Industrial,1003
+MTR008,192.168.1.13,8.9911E+18,4.04102E+14,L&T,FW1.7,Residential,1004
+MTR009,192.168.1.14,8.9911E+18,4.04102E+14,Secure,FW1.3,Commercial,1005

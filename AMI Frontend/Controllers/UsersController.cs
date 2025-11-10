@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace AMI_Frontend.Controllers
 {
@@ -25,7 +26,7 @@ namespace AMI_Frontend.Controllers
                 var token = HttpContext.Session.GetString("JWTToken");
                 if (string.IsNullOrEmpty(token))
                 {
-                    return Unauthorized(new { Message = "JWT token is missing. Please login again." });
+                    return Unauthorized(new { message = "JWT token is missing. Please login again." });
                 }
 
                 var client = _httpClientFactory.CreateClient();
@@ -37,15 +38,15 @@ namespace AMI_Frontend.Controllers
                 if (!response.IsSuccessStatusCode)
                 {
                     var error = await response.Content.ReadAsStringAsync();
-                    return StatusCode((int)response.StatusCode, error);
+                    return StatusCode((int)response.StatusCode, new { message = error });
                 }
 
-                var content = await response.Content.ReadAsStringAsync();
-                return Content(content, "application/json");
+                var jsonData = await response.Content.ReadFromJsonAsync<object>();
+                return Json(jsonData);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { Message = ex.Message });
+                return StatusCode(500, new { message = ex.Message });
             }
         }
     }

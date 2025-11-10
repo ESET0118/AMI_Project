@@ -45,9 +45,11 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],      // from appsettings.json
-        ValidAudience = builder.Configuration["Jwt:Audience"],  // from appsettings.json
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])
+        )
     };
 });
 
@@ -60,7 +62,7 @@ builder.Services.AddEndpointsApiExplorer();
 // ----------------------
 // CORS
 // ----------------------
-builder.Services.ConfigureCors(); // Uses "AllowFrontend"
+builder.Services.ConfigureCors();
 
 // ----------------------
 // Build App

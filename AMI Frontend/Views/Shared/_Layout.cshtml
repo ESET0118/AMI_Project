@@ -45,7 +45,6 @@
                 color: #eafaf2;
             }
 
-                /* Sidebar */
                 body.dark-mode .sidebar {
                     background: var(--sidebar-dark);
                     box-shadow: 2px 0 15px rgba(0, 255, 180, 0.05);
@@ -61,7 +60,6 @@
                             background: rgba(0, 255, 180, 0.2);
                         }
 
-                /* Topbar */
                 body.dark-mode .topbar {
                     background: rgba(20, 35, 40, 0.9);
                     color: #eafaf2;
@@ -78,7 +76,6 @@
                         color: #fff;
                     }
 
-                /* Cards, tables, modals, forms */
                 body.dark-mode .card,
                 body.dark-mode .table,
                 body.dark-mode .modal-content,
@@ -90,20 +87,17 @@
                     transition: all 0.3s ease;
                 }
 
-                    /* Green glow hover for cards/tables */
                     body.dark-mode .card:hover,
                     body.dark-mode .table:hover {
                         box-shadow: 0 0 15px rgba(0, 255, 150, 0.6), 0 0 25px rgba(0, 255, 150, 0.3);
                     }
 
-                    /* Table headers */
                     body.dark-mode .table thead {
                         background-color: rgba(0, 255, 180, 0.15) !important;
                         color: #eafaf2 !important;
                         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
                     }
 
-                    /* Table rows */
                     body.dark-mode .table tbody tr {
                         color: #e2e2e2 !important;
                         background-color: rgba(255, 255, 255, 0.03);
@@ -117,7 +111,6 @@
                     background-color: rgba(0, 255, 150, 0.1);
                 }
 
-                /* Text and links */
                 body.dark-mode a,
                 body.dark-mode .text-muted {
                     color: #9dd9c3 !important;
@@ -135,7 +128,6 @@
                     color: #eafaf2 !important;
                 }
 
-                /* Buttons */
                 body.dark-mode .btn-outline-secondary {
                     color: #eafaf2;
                     border-color: rgba(255, 255, 255, 0.3);
@@ -165,7 +157,6 @@
                         color: #fff;
                     }
 
-                /* Inputs */
                 body.dark-mode input.form-control,
                 body.dark-mode select.form-select,
                 body.dark-mode textarea.form-control {
@@ -178,7 +169,6 @@
                     color: rgba(255, 255, 255, 0.6);
                 }
 
-                /* Modal header/footer */
                 body.dark-mode .modal-header {
                     background-color: rgba(0, 255, 150, 0.1);
                     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -189,7 +179,6 @@
                     border-top: 1px solid rgba(255, 255, 255, 0.1);
                 }
 
-                /* Scrollbar */
                 body.dark-mode ::-webkit-scrollbar {
                     width: 8px;
                 }
@@ -240,17 +229,15 @@
             animation: flow 2s linear infinite;
             filter: drop-shadow(0 0 6px rgba(0, 255, 150, 0.9));
         }
+
         @@keyframes flow {
-            0%
+            0% {
+                background-position: 200% 0;
+            }
 
-        {
-            background-position: 200% 0;
-        }
-
-        100% {
-            background-position: -200% 0;
-        }
-
+            100% {
+                background-position: -200% 0;
+            }
         }
 
         /* Sidebar */
@@ -368,29 +355,26 @@
         }
 
         @@media (max-width: 991px) {
-            .sidebar
+            .sidebar {
+                left: -250px;
+            }
 
-        {
-            left: -250px;
-        }
+                .sidebar.active {
+                    left: 0;
+                    z-index: 1030;
+                }
 
-        .sidebar.active {
-            left: 0;
-            z-index: 1030;
-        }
+            .topbar {
+                margin-left: 0;
+            }
 
-        .topbar {
-            margin-left: 0;
-        }
+            .main-content {
+                margin-left: 0;
+            }
 
-        .main-content {
-            margin-left: 0;
-        }
-
-        .sidebar-toggle {
-            display: block !important;
-        }
-
+            .sidebar-toggle {
+                display: block !important;
+            }
         }
 
         .sidebar-toggle {
@@ -424,7 +408,7 @@
             <a class="nav-link" href="/Tariff/Index"><i class="bi bi-cash"></i> Tariff</a>
             <a class="nav-link" href="/TariffSlabs/Index"><i class="bi bi-layers"></i> Tariff Slabs</a>
             <a class="nav-link" href="/TODRules/Index"><i class="bi bi-clock-history"></i> TOD Rules</a>
-            <a class="nav-link" href="/MetersCsv/Upload"><i class="bi bi-upload"></i> Upload Meter</a>
+            <a class="nav-link" href="/UploadMeter"><i class="bi bi-upload"></i> Upload Meter</a>
         </nav>
     </div>
 
@@ -492,5 +476,8 @@
             localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
         });
     </script>
+
+    @RenderSection("Scripts", required: false)
+
 </body>
 </html>

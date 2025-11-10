@@ -10,14 +10,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Microsoft.OpenApi.Any;
-using Microsoft.OpenApi.Models;
 using AMI_Project.Helpers;
 
 namespace AMI.Extensions
 {
     public static class ServiceExtensions
     {
+        // -------------------------------------------------
+        // 🌐 CORS CONFIGURATION
+        // -------------------------------------------------
         public static void ConfigureCors(this IServiceCollection services)
         {
             services.AddCors(options =>
@@ -33,6 +34,9 @@ namespace AMI.Extensions
             });
         }
 
+        // -------------------------------------------------
+        // 💾 SQL CONTEXT CONFIGURATION
+        // -------------------------------------------------
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
         {
             var connectionString = config.GetConnectionString("DefaultConnection");
@@ -48,6 +52,9 @@ namespace AMI.Extensions
                 }));
         }
 
+        // -------------------------------------------------
+        // 📘 SWAGGER CONFIGURATION
+        // -------------------------------------------------
         public static void ConfigureSwagger(this IServiceCollection services)
         {
             services.AddEndpointsApiExplorer();
@@ -91,6 +98,9 @@ namespace AMI.Extensions
             });
         }
 
+        // -------------------------------------------------
+        // 🧩 SERVICE & REPOSITORY REGISTRATION
+        // -------------------------------------------------
         public static void RegisterServices(this IServiceCollection services)
         {
             // Repositories
@@ -100,8 +110,10 @@ namespace AMI.Extensions
             services.AddScoped<ITariffRepository, TariffRepository>();
             services.AddScoped<ITariffSlabRepository, TariffSlabRepository>();
             services.AddScoped<IBillRepository, BillRepository>();
-            services.AddScoped<IUserServices, UserServices>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+
+            // ✅ Add new repository for MeterReading
+            services.AddScoped<IMeterReadingRepository, MeterReadingRepository>();
 
             // Services
             services.AddScoped<IConsumerService, ConsumerService>();
@@ -111,7 +123,12 @@ namespace AMI.Extensions
             services.AddScoped<IBillingService, BillingService>();
             services.AddScoped<IMeterCsvService, MeterCsvService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserServices, UserServices>();
 
+            // ✅ Add new service for MeterReading
+            services.AddScoped<IMeterReadingService, MeterReadingService>();
+
+            // AutoMapper
             services.AddAutoMapper(typeof(MappingProfile));
         }
     }
