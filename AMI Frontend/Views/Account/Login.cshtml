@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Login";
-    Layout = null; // remove this line if you already use a shared _Layout.cshtml
+    Layout = null; // keep null for standalone login page
 }
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -35,7 +35,7 @@
                 <p>New user? <a href="/Account/Register" class="text-decoration-none fw-semibold text-success">Register here</a></p>
             </div>
 
-            <p class="error-message text-center mt-2">@ViewBag.Error</p>
+            <p class="error-message text-center mt-2" id="errorMsg">@ViewBag.Error</p>
         </div>
     </div>
 </div>
@@ -45,7 +45,13 @@
     body {
         background: linear-gradient(135deg, #00b3d8 0%, #00d084 100%);
         font-family: "Inter", system-ui, sans-serif;
+        transition: background 0.3s ease, color 0.3s ease;
     }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #eafaf2;
+        }
 
     .left-panel {
         background: linear-gradient(160deg, #00b3d8, #00d084);
@@ -75,62 +81,70 @@
     }
 
     @@media (max-width: 768px) {
-        .left-panel {
-            display: none;
-        }
+        .left-panel
 
-        .right-panel {
-            padding: 2rem 1.5rem;
-        }
+    {
+        display: none;
+    }
+
+    .right-panel {
+        padding: 2rem 1.5rem;
+    }
+
     }
 </style>
 
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $("#loginForm").submit(function (e) {
-        e.preventDefault();
+    $(document).ready(function () {
+        // Handle login form submit
+        $("#loginForm").submit(function (e) {
+            e.preventDefault();
+            $("#errorMsg").text("");
 
-        $.ajax({
-            url: "https://localhost:7199/api/auth/login",
-            method: "POST",
-            contentType: "application/json",
-            data: JSON.stringify({
-                email: $("#email").val(),
-                password: $("#password").val()
-            }),
-            success: function (response) {
-                // response has token and user
-                const token = response.token;
-                if (!token) {
-                    alert("Token not received from server.");
-                    console.log(response);
-                    return;
-                }
-
-                // Store token in localStorage
-                localStorage.setItem("jwtToken", token);
-
-                // Send token to MVC session
-                $.ajax({
-                    url: "/Account/SaveToken",
-                    method: "POST",
-                    contentType: "application/json",
-                    data: JSON.stringify({ token }),
-                    success: function () {
-                        window.location.href = "/Dashboard/Index";
-                    },
-                    error: function () {
-                        alert("Failed to save token to session.");
+            $.ajax({
+                url: "https://localhost:7199/api/auth/login",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    email: $("#email").val(),
+                    password: $("#password").val()
+                }),
+                success: function (response) {
+                    const token = response.token;
+                    if (!token) {
+                        $("#errorMsg").text("Token not received from server.");
+                        console.log(response);
+                        return;
                     }
-                });
-            },
-            error: function (xhr) {
-                alert("Login failed: " + xhr.status + " " + xhr.statusText);
-            }
+
+                    // Store token in localStorage
+                    localStorage.setItem("jwtToken", token);
+
+                    // Send token to MVC session
+                    $.ajax({
+                        url: "/Account/SaveToken",
+                        method: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({ token }),
+                        success: function () {
+                            window.location.href = "/Dashboard/Index";
+                        },
+                        error: function () {
+                            $("#errorMsg").text("Failed to save token to session.");
+                        }
+                    });
+                },
+                error: function (xhr) {
+                    $("#errorMsg").text("Login failed: " + xhr.responseJSON?.message || xhr.statusText);
+                }
+            });
         });
+
+        // Dark mode toggle based on localStorage
+        if (localStorage.getItem("theme") === "dark") {
+            document.body.classList.add("dark-mode");
+        }
     });
 </script>
-
-

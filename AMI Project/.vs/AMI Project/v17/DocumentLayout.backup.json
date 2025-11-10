@@ -90,8 +90,7 @@
               "RelativeToolTip": "Controllers\\UserController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T06:42:06.074Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T06:42:06.074Z"
             },
             {
               "$type": "Document",
@@ -103,8 +102,7 @@
               "RelativeToolTip": "Repositories\\IMeterRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T06:06:44.011Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T06:06:44.011Z"
             },
             {
               "$type": "Document",
@@ -116,8 +114,7 @@
               "RelativeToolTip": "Repositories\\MeterRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T06:06:24.147Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T06:06:24.147Z"
             },
             {
               "$type": "Document",
@@ -129,8 +126,7 @@
               "RelativeToolTip": "Controllers\\MeterCsvController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T06:05:54.698Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T06:05:54.698Z"
             },
             {
               "$type": "Document",
@@ -142,8 +138,7 @@
               "RelativeToolTip": "Services\\MeterCsvService.cs",
               "ViewState": "AgIAAEIAAAAAAAAAAAAAAGgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T06:05:19.224Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T06:05:19.224Z"
             },
             {
               "$type": "Document",
@@ -155,8 +150,7 @@
               "RelativeToolTip": "DTOs\\Meters\\MeterUploadResultDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T06:03:56.619Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T06:03:56.619Z"
             },
             {
               "$type": "Document",
@@ -168,8 +162,7 @@
               "RelativeToolTip": "Services\\Interfaces\\IMeterCsvService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T06:03:40.925Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T06:03:40.925Z"
             },
             {
               "$type": "Document",
@@ -177,8 +170,8 @@
               "Title": "ServiceExtensions.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Extensions\\ServiceExtensions.cs",
               "RelativeDocumentMoniker": "Extensions\\ServiceExtensions.cs",
-              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Extensions\\ServiceExtensions.cs*",
-              "RelativeToolTip": "Extensions\\ServiceExtensions.cs*",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Extensions\\ServiceExtensions.cs",
+              "RelativeToolTip": "Extensions\\ServiceExtensions.cs",
               "ViewState": "AgIAAGUAAAAAAAAAAAAgwH0AAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-10T05:06:44.622Z",
@@ -194,8 +187,7 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAADUAAAAAAAAAAAAYwEAAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T05:05:08.729Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T05:05:08.729Z"
             },
             {
               "$type": "Document",
@@ -207,8 +199,7 @@
               "RelativeToolTip": "DTOs\\MeterReading\\MeterReadingReadDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T05:02:51.325Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T05:02:51.325Z"
             },
             {
               "$type": "Document",
@@ -220,8 +211,7 @@
               "RelativeToolTip": "Mapping\\AutoMapperProfile.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAAYwGIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T04:58:14.568Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T04:58:14.568Z"
             },
             {
               "$type": "Document",
@@ -233,8 +223,7 @@
               "RelativeToolTip": "Repositories\\MeterReadingRepository.cs",
               "ViewState": "AgIAABUAAAAAAAAAAAAswEEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T04:57:20.905Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T04:57:20.905Z"
             },
             {
               "$type": "Document",
@@ -246,8 +235,7 @@
               "RelativeToolTip": "Repositories\\IMeterReadingRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T04:57:10.778Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T04:57:10.778Z"
             },
             {
               "$type": "Document",
@@ -259,8 +247,7 @@
               "RelativeToolTip": "Services\\Interfaces\\IMeterReadingService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T04:54:00.814Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T04:54:00.814Z"
             },
             {
               "$type": "Document",
@@ -272,8 +259,7 @@
               "RelativeToolTip": "Services\\MeterReadingService.cs",
               "ViewState": "AgIAADIAAAAAAAAAAAAAAD4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T04:53:50.249Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T04:53:50.249Z"
             },
             {
               "$type": "Document",
@@ -285,8 +271,7 @@
               "RelativeToolTip": "Controllers\\MeterReadingController.cs",
               "ViewState": "AgIAADMAAAAAAAAAAAAowAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T04:53:39.091Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T04:53:39.091Z"
             },
             {
               "$type": "Document",
@@ -298,8 +283,7 @@
               "RelativeToolTip": "Controllers\\BillingController.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAqwC8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T04:50:07.235Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T04:50:07.235Z"
             }
           ]
         }

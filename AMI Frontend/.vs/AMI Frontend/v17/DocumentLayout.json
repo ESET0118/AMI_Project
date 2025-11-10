@@ -7,6 +7,18 @@
       "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -50,11 +62,50 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Dashboard\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Dashboard\\Index.cshtml",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Dashboard\\Index.cshtml",
+              "RelativeToolTip": "Views\\Dashboard\\Index.cshtml",
+              "ViewState": "AgIAAG4AAAAAAAAAAAAIwMsAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-10T07:03:03.723Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "Views\\Account\\Login.cshtml",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Account\\Login.cshtml",
+              "RelativeToolTip": "Views\\Account\\Login.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFIAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-10T06:54:42.048Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AccountController.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "Controllers\\AccountController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-10T06:51:55.678Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "UsersController.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
@@ -62,12 +113,11 @@
               "RelativeToolTip": "Controllers\\UsersController.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAswDUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T06:41:42.855Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T06:41:42.855Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Users\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Users\\Index.cshtml",
@@ -75,12 +125,11 @@
               "RelativeToolTip": "Views\\Users\\Index.cshtml",
               "ViewState": "AgIAADoAAAAAAAAAAAAowGcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-10T06:41:31.664Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T06:41:31.664Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "MeterCsvController.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\MeterCsvController.cs",
               "RelativeDocumentMoniker": "Controllers\\MeterCsvController.cs",
@@ -88,12 +137,11 @@
               "RelativeToolTip": "Controllers\\MeterCsvController.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAAswDoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T06:10:24.557Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T06:10:24.557Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "Upload.cshtml",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\MetersCsv\\Upload.cshtml",
               "RelativeDocumentMoniker": "Views\\MetersCsv\\Upload.cshtml",
@@ -101,12 +149,11 @@
               "RelativeToolTip": "Views\\MetersCsv\\Upload.cshtml",
               "ViewState": "AgIAABcAAAAAAAAAAAAowEQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-10T06:10:14.31Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T06:10:14.31Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Meters\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Meters\\Index.cshtml",
@@ -114,12 +161,11 @@
               "RelativeToolTip": "Views\\Meters\\Index.cshtml",
               "ViewState": "AgIAAOkAAAAAAAAAAAAAwHcBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-10T05:17:51.961Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T05:17:51.961Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "MeterReadingController.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\MeterReadingController.cs",
               "RelativeDocumentMoniker": "Controllers\\MeterReadingController.cs",
@@ -127,12 +173,11 @@
               "RelativeToolTip": "Controllers\\MeterReadingController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T05:10:46.484Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T05:10:46.484Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\MeterReadings\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\MeterReadings\\Index.cshtml",
@@ -140,8 +185,7 @@
               "RelativeToolTip": "Views\\MeterReadings\\Index.cshtml",
               "ViewState": "AgIAAHgAAAAAAAAAAAAAwMEAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-10T05:10:32.9Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T05:10:32.9Z"
             },
             {
               "$type": "Document",
@@ -151,14 +195,14 @@
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
               "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAALYBAAAAAAAAAAAswOMBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAALQBAAAAAAAAAAAcwMoBAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-11-10T04:26:04.083Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "TODRulesController.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\TODRulesController.cs",
               "RelativeDocumentMoniker": "Controllers\\TODRulesController.cs",
@@ -166,12 +210,11 @@
               "RelativeToolTip": "Controllers\\TODRulesController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAYwA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T04:21:35.077Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T04:21:35.077Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\TODRules\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\TODRules\\Index.cshtml",

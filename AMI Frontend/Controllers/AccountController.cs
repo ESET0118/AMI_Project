@@ -27,7 +27,6 @@ namespace AMI_Frontend.Controllers
                 HttpContext.Session.SetString("JWTToken", tokenElement.GetString() ?? "");
                 return Ok(new { message = "Token saved successfully" });
             }
-
             return BadRequest(new { message = "Token missing" });
         }
 
