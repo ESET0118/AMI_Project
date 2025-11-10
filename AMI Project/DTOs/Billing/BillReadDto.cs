@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace AMI_Project.DTOs.Billing
+﻿namespace AMI_Project.DTOs.Billing
 {
     public class BillReadDto
     {
-        public long BillId { get; set; }
-        public long ConsumerId { get; set; }
-        public string? MeterSerialNo { get; set; }
-        public DateOnly BillingPeriodStart { get; set; }
-        public DateOnly BillingPeriodEnd { get; set; }
-        public decimal UnitsConsumed { get; set; }
+        public long BillId { get; set; } // Optional if not saved to DB
+        public string MeterId { get; set; }
+        public long MeterReadingId { get; set; }
+        public decimal BaseAmount { get; set; }
+        public decimal TaxAmount { get; set; }
         public decimal TotalAmount { get; set; }
-        public int TariffId { get; set; }
-        public DateTime BillGeneratedAt { get; set; }
-
-        public List<BillDetailReadDto>? BillDetails { get; set; }
+        public List<BillDetailReadDto> BillDetails { get; set; } = new();
     }
 }

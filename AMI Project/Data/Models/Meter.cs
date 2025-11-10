@@ -51,5 +51,7 @@ public partial class Meter
     public virtual Consumer? Consumer { get; set; }
 
     [InverseProperty("MeterSerialNoNavigation")]
+    [JsonIgnore] // prevent serialization
+
     public virtual ICollection<MeterReading> MeterReadings { get; set; } = new List<MeterReading>();
 }

@@ -61,5 +61,10 @@ namespace AMI_Project.Repositories
                 await _context.SaveChangesAsync(ct);
             }
         }
+
+        public async Task SaveChangesAsync(CancellationToken ct)
+        {
+            await _context.SaveChangesAsync(ct);
+        }
     }
 }

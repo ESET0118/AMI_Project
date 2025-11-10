@@ -68,141 +68,18 @@
         }
       }
     },
-    "/api/Billing": {
+    "/api/Bill/{meterSerialNo}": {
       "get": {
         "tags": [
-          "Billing"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/BillReadDto"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/BillReadDto"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/BillReadDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Billing"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/BillCreateDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/BillCreateDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/BillCreateDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/BillReadDto"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BillReadDto"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BillReadDto"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Billing/{id}": {
-      "get": {
-        "tags": [
-          "Billing"
+          "Bill"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "meterSerialNo",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/BillReadDto"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BillReadDto"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BillReadDto"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Billing"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
             }
           }
         ],
@@ -1304,47 +1181,6 @@
         },
         "additionalProperties": false
       },
-      "BillCreateDto": {
-        "type": "object",
-        "properties": {
-          "consumerId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "meterSerialNo": {
-            "type": "string",
-            "nullable": true
-          },
-          "billingPeriodStart": {
-            "type": "string",
-            "format": "date"
-          },
-          "billingPeriodEnd": {
-            "type": "string",
-            "format": "date"
-          },
-          "unitsConsumed": {
-            "type": "number",
-            "format": "double"
-          },
-          "totalAmount": {
-            "type": "number",
-            "format": "double"
-          },
-          "tariffId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "billDetails": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/BillDetailCreateDto"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "BillDetail": {
         "type": "object",
         "properties": {
@@ -1378,105 +1214,6 @@
           },
           "tariffSlab": {
             "$ref": "#/components/schemas/TariffSlab"
-          }
-        },
-        "additionalProperties": false
-      },
-      "BillDetailCreateDto": {
-        "type": "object",
-        "properties": {
-          "tariffSlabId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "units": {
-            "type": "number",
-            "format": "double"
-          },
-          "rate": {
-            "type": "number",
-            "format": "double"
-          },
-          "amount": {
-            "type": "number",
-            "format": "double"
-          }
-        },
-        "additionalProperties": false
-      },
-      "BillDetailReadDto": {
-        "type": "object",
-        "properties": {
-          "billDetailId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "units": {
-            "type": "number",
-            "format": "double"
-          },
-          "rate": {
-            "type": "number",
-            "format": "double"
-          },
-          "amount": {
-            "type": "number",
-            "format": "double"
-          },
-          "tariffSlabId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "BillReadDto": {
-        "type": "object",
-        "properties": {
-          "billId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "consumerId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "meterSerialNo": {
-            "type": "string",
-            "nullable": true
-          },
-          "billingPeriodStart": {
-            "type": "string",
-            "format": "date"
-          },
-          "billingPeriodEnd": {
-            "type": "string",
-            "format": "date"
-          },
-          "unitsConsumed": {
-            "type": "number",
-            "format": "double"
-          },
-          "totalAmount": {
-            "type": "number",
-            "format": "double"
-          },
-          "tariffId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "billGeneratedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "billDetails": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/BillDetailReadDto"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1782,13 +1519,6 @@
           },
           "consumer": {
             "$ref": "#/components/schemas/Consumer"
-          },
-          "meterReadings": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MeterReading"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1835,57 +1565,6 @@
             "type": "integer",
             "format": "int64",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "MeterReading": {
-        "type": "object",
-        "properties": {
-          "meterReadingId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "meterSerialNo": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "readingDateTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "consumptionKwh": {
-            "type": "number",
-            "format": "double"
-          },
-          "voltage": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "ampere": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "powerFactor": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "frequency": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "meterSerialNoNavigation": {
-            "$ref": "#/components/schemas/Meter"
           }
         },
         "additionalProperties": false

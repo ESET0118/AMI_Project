@@ -8,5 +8,7 @@
         public DateOnly? EffectiveTo { get; set; }
         public decimal BaseRate { get; set; }
         public decimal TaxRate { get; set; }
+        public List<TariffSlabReadDto> TariffSlabs { get; set; } = new List<TariffSlabReadDto>();
+
     }
 }

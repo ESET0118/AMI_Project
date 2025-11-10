@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Login";
-    Layout = null; // keep null for standalone login page
+    Layout = null; // standalone login page
 }
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -8,13 +8,13 @@
 <div class="container d-flex align-items-center justify-content-center min-vh-100">
     <div class="login-card row shadow-lg rounded-4 overflow-hidden w-100" style="max-width: 900px;">
         <!-- Left Panel -->
-        <div class="col-md-6 left-panel d-flex flex-column justify-content-center text-white p-5">
-            <h1 class="fw-bold">Welcome Back ⚡</h1>
-            <p>Monitor, manage, and save energy efficiently with our Smart Metering System.</p>
+        <div class="col-md-6 left-panel d-flex flex-column justify-content-center p-5 text-white">
+            <h1 class="fw-bold mb-3">Welcome Back ⚡</h1>
+            <p class="lead">Monitor, manage, and save energy efficiently with our Smart Metering System.</p>
         </div>
 
         <!-- Right Panel -->
-        <div class="col-md-6 right-panel bg-white p-5">
+        <div class="col-md-6 right-panel p-5">
             <h3 class="text-center mb-4 fw-semibold">Login</h3>
 
             <form id="loginForm">
@@ -32,7 +32,10 @@
             </form>
 
             <div class="text-center mt-3">
-                <p>New user? <a href="/Account/Register" class="text-decoration-none fw-semibold text-success">Register here</a></p>
+                <p>
+                    New user?
+                    <a href="/Account/Register" class="text-decoration-none fw-semibold text-accent">Register here</a>
+                </p>
             </div>
 
             <p class="error-message text-center mt-2" id="errorMsg">@ViewBag.Error</p>
@@ -43,36 +46,92 @@
 <!-- Styles -->
 <style>
     body {
-        background: linear-gradient(135deg, #00b3d8 0%, #00d084 100%);
         font-family: "Inter", system-ui, sans-serif;
-        transition: background 0.3s ease, color 0.3s ease;
+        background: linear-gradient(135deg, #00b3d8 0%, #00d084 100%);
+        transition: all 0.4s ease-in-out;
     }
 
         body.dark-mode {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background: radial-gradient(circle at 10% 20%, #0f2027, #203a43, #2c5364);
             color: #eafaf2;
         }
+
+    .login-card {
+        background-color: transparent;
+        border: none;
+    }
 
     .left-panel {
         background: linear-gradient(160deg, #00b3d8, #00d084);
         color: #fff;
     }
 
-    .btn-energy {
-        background: linear-gradient(90deg, #00b3d8, #00d084);
-        border: none;
-        color: white;
-        transition: all 0.2s ease-in-out;
+    body.dark-mode .left-panel {
+        background: linear-gradient(160deg, #1e3c72, #2a5298);
+        box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
     }
 
-        .btn-energy:hover {
-            background: linear-gradient(90deg, #00d084, #00b3d8);
-            transform: translateY(-2px);
-        }
+    .right-panel {
+        background-color: #ffffff;
+        color: #222;
+        transition: all 0.3s ease;
+    }
+
+    body.dark-mode .right-panel {
+        background-color: #1c1c1c;
+        color: #eafaf2;
+        box-shadow: 0 0 30px rgba(0, 255, 200, 0.1);
+    }
+
+    .form-control {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        color: #222;
+        transition: all 0.3s ease;
+    }
+
+    body.dark-mode .form-control {
+        background-color: #2a2a2a;
+        border: 1px solid #444;
+        color: #eafaf2;
+    }
 
     .form-control:focus {
         border-color: #00b3d8;
         box-shadow: 0 0 0 0.25rem rgba(0,179,216,0.25);
+    }
+
+    body.dark-mode .form-control:focus {
+        border-color: #00ffc6;
+        box-shadow: 0 0 0 0.25rem rgba(0,255,198,0.25);
+    }
+
+    .btn-energy {
+        background: linear-gradient(90deg, #00b3d8, #00d084);
+        border: none;
+        color: white;
+        font-size: 1.05rem;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+    }
+
+    body.dark-mode .btn-energy {
+        background: linear-gradient(90deg, #00ffc6, #008cff);
+        color: #121212;
+        font-weight: 600;
+    }
+
+    .btn-energy:hover {
+        transform: translateY(-2px);
+        opacity: 0.9;
+    }
+
+    .text-accent {
+        color: #00b3d8;
+    }
+
+    body.dark-mode .text-accent {
+        color: #00ffc6;
     }
 
     .error-message {
@@ -98,6 +157,10 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
+        // Dark mode handling
+        const isDark = localStorage.getItem("theme") === "dark";
+        if (isDark) document.body.classList.add("dark-mode");
+
         // Handle login form submit
         $("#loginForm").submit(function (e) {
             e.preventDefault();
@@ -119,10 +182,8 @@
                         return;
                     }
 
-                    // Store token in localStorage
                     localStorage.setItem("jwtToken", token);
 
-                    // Send token to MVC session
                     $.ajax({
                         url: "/Account/SaveToken",
                         method: "POST",
@@ -137,14 +198,9 @@
                     });
                 },
                 error: function (xhr) {
-                    $("#errorMsg").text("Login failed: " + xhr.responseJSON?.message || xhr.statusText);
+                    $("#errorMsg").text("Login failed: " + (xhr.responseJSON?.message || xhr.statusText));
                 }
             });
         });
-
-        // Dark mode toggle based on localStorage
-        if (localStorage.getItem("theme") === "dark") {
-            document.body.classList.add("dark-mode");
-        }
     });
 </script>

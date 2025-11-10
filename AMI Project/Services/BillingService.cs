@@ -1,46 +1,68 @@
-using AMI_Project.DTOs.Billing;
+﻿using AMI_Project.Data;
 using AMI_Project.Models;
-using AMI_Project.Repositories.Interfaces;
 using AMI_Project.Services.Interfaces;
-using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace AMI_Project.Services
 {
     public class BillingService : IBillingService
     {
-        private readonly IBillRepository _billRepo;
-        private readonly IMapper _mapper;
+        private readonly AMIDbContext _context;
 
-        public BillingService(IBillRepository billRepo, IMapper mapper)
+        public BillingService(AMIDbContext context)
         {
-            _billRepo = billRepo;
-            _mapper = mapper;
+            _context = context;
         }
 
-        public async Task<IEnumerable<BillReadDto>> GetAllBillsAsync()
+        public decimal? GenerateBill(string meterSerialNo)
         {
-            var bills = await _billRepo.GetAllAsync();
-            return _mapper.Map<IEnumerable<BillReadDto>>(bills);
-        }
+            // 1️⃣ Fetch meter with readings and related consumer + tariff + slabs
+            var meter = _context.Meters
+                .Include(m => m.MeterReadings)
+                .Include(m => m.Consumer)
+                    .ThenInclude(c => c!.Tariff)
+                        .ThenInclude(t => t.TariffSlabs)
+                .FirstOrDefault(m => m.MeterSerialNo == meterSerialNo);
 
-        public async Task<BillReadDto?> GetBillByIdAsync(long id)
-        {
-            var bill = await _billRepo.GetByIdAsync(id);
-            return bill == null ? null : _mapper.Map<BillReadDto>(bill);
-        }
+            if (meter == null || meter.Consumer?.Tariff == null)
+                return null;
 
-        public async Task<BillReadDto> CreateBillAsync(BillCreateDto dto)
-        {
-            var bill = _mapper.Map<Bill>(dto);
-            bill.BillGeneratedAt = DateTime.UtcNow;
+            var tariff = meter.Consumer.Tariff;
+            var slabs = tariff.TariffSlabs.OrderBy(s => s.FromKwh).ToList();
 
-            var created = await _billRepo.CreateAsync(bill);
-            return _mapper.Map<BillReadDto>(created);
-        }
+            if (!slabs.Any())
+                return null; // no slabs defined
 
-        public async Task DeleteBillAsync(long id)
-        {
-            await _billRepo.DeleteAsync(id);
+            // 2️⃣ Calculate total consumption from all readings
+            decimal totalConsumption = meter.MeterReadings.Sum(r => r.ConsumptionKwh);
+
+            // 3️⃣ Calculate bill using slabs
+            decimal remainingConsumption = totalConsumption;
+            decimal billAmount = 0;
+
+            foreach (var slab in slabs)
+            {
+                if (remainingConsumption <= 0) break;
+
+                decimal slabStart = slab.FromKwh;
+                decimal slabEnd = slab.ToKwh;
+
+                decimal slabRange = slabEnd - slabStart;
+                if (slabRange <= 0) continue; // skip invalid slab
+
+                // Units applicable in this slab
+                decimal unitsInSlab = Math.Min(remainingConsumption, slabRange);
+                billAmount += unitsInSlab * slab.RatePerKwh;
+
+                remainingConsumption -= unitsInSlab;
+            }
+
+            // 4️⃣ Add base rate and tax
+            billAmount += tariff.BaseRate;
+            billAmount += billAmount * tariff.TaxRate / 100;
+
+            return Math.Round(billAmount, 2);
         }
     }
 }

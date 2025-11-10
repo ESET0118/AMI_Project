@@ -1,0 +1,6 @@
+MeterSerialNo,IpAddress,Iccid,Imsi,Manufacturer,Firmware,Category,ConsumerId,ConsumptionKwh,Voltage,Ampere,PowerFactor,Frequency
+MTR1009,192.168.1.10,8.99E+18,4.04E+14,Siemens,v1.2.3,Smart,101,120.5,230,10.5,0.95,50
+MTR1010,192.168.1.11,8.99E+18,4.04E+14,L&T,v2.0.0,Smart,,95.8,231.5,9.8,0.97,50
+MTR1011,192.168.1.12,8.99E+18,4.04E+14,Schneider,v1.5.1,Prepaid,102,200,229,12,0.92,49.9
+MTR1012,192.168.1.13,8.99E+18,4.04E+14,Secure,v1.3.0,Smart,,145.7,232.1,11.1,0.96,50.1
+MTR1013,192.168.1.14,8.99E+18,4.04E+14,Havells,v2.1.0,Smart,103,178.3,230.5,10.8,0.94,50

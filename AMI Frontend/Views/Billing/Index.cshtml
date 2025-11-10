@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "Billing";
+}
+
+<h1>Billing</h1>
+
+<div class="mb-4 p-3 border rounded">
+    <h2>Calculate Bill</h2>
+    <div id="errorMessage" class="text-danger mb-2"></div>
+
+    <input type="number" id="meterId" placeholder="Meter ID" class="form-control mb-2" />
+    <input type="date" id="fromDate" class="form-control mb-2" />
+    <input type="date" id="toDate" class="form-control mb-2" />
+    <button id="calculateBtn" class="btn btn-primary">Calculate</button>
+</div>
+
+<h2>All Bills</h2>
+<table class="table table-bordered" id="billsTable">
+    <thead>
+        <tr>
+            <th>Bill ID</th>
+            <th>Meter Serial</th>
+            <th>Consumer ID</th>
+            <th>Total Amount</th>
+            <th>Generated At</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const loadBills = () => {
+                $.ajax({
+                    url: '/api/Billing',
+                    method: 'GET',
+                    success: function(data) {
+                        const tbody = $('#billsTable tbody');
+                        tbody.empty();
+                        data.forEach(bill => {
+                            tbody.append(`
+                                <tr>
+                                    <td>${bill.billId}</td>
+                                    <td>${bill.meterSerialNo || 'N/A'}</td>
+                                    <td>${bill.consumerId || 'N/A'}</td>
+                                    <td>${bill.totalAmount}</td>
+                                    <td>${new Date(bill.billGeneratedAt).toLocaleString()}</td>
+                                </tr>
+                            `);
+                        });
+                    },
+                    error: function(err) {
+                        alert('Failed to load bills');
+                        console.error(err);
+                    }
+                });
+            };
+
+            loadBills();
+
+            $('#calculateBtn').click(function() {
+                const meterId = $('#meterId').val();
+                const fromDate = $('#fromDate').val();
+                const toDate = $('#toDate').val();
+                if (!meterId || !fromDate || !toDate) {
+                    $('#errorMessage').text("All fields are required");
+                    return;
+                } else {
+                    $('#errorMessage').text('');
+                }
+
+                $.ajax({
+                    url: `/api/Billing/calculate?meterId=${meterId}&fromDate=${fromDate}&toDate=${toDate}`,
+                    method: 'POST',
+                    success: function(bill) {
+                        alert('Bill calculated successfully');
+                        loadBills(); // Refresh table
+                    },
+                    error: function(err) {
+                        const message = err.responseJSON?.message || 'Error calculating bill';
+                        $('#errorMessage').text(message);
+                        console.error(err);
+                    }
+                });
+            });
+        });
+    </script>
+}

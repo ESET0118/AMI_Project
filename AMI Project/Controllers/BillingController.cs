@@ -1,47 +1,32 @@
-﻿using AMI_Project.DTOs.Billing;
-using AMI_Project.Services.Interfaces;
+﻿using AMI_Project.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AMI_Project.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class BillingController : ControllerBase
+    public class BillController : ControllerBase
     {
         private readonly IBillingService _billingService;
 
-        public BillingController(IBillingService billingService)
+        public BillController(IBillingService billingService)
         {
             _billingService = billingService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<BillReadDto>>> GetAll()
+        [HttpGet("{meterSerialNo}")]
+        public IActionResult GetBill(string meterSerialNo)
         {
-            var bills = await _billingService.GetAllBillsAsync();
-            return Ok(bills);
-        }
+            var billAmount = _billingService.GenerateBill(meterSerialNo);
 
-        [HttpGet("{id:long}")]
-        public async Task<ActionResult<BillReadDto>> GetById(long id)
-        {
-            var bill = await _billingService.GetBillByIdAsync(id);
-            if (bill == null) return NotFound();
-            return Ok(bill);
-        }
+            if (billAmount == null)
+                return NotFound("Meter, Tariff, or Slabs not found.");
 
-        [HttpPost]
-        public async Task<ActionResult<BillReadDto>> Create([FromBody] BillCreateDto dto)
-        {
-            var created = await _billingService.CreateBillAsync(dto);
-            return CreatedAtAction(nameof(GetById), new { id = created.BillId }, created);
-        }
-
-        [HttpDelete("{id:long}")]
-        public async Task<IActionResult> Delete(long id)
-        {
-            await _billingService.DeleteBillAsync(id);
-            return NoContent();
+            return Ok(new
+            {
+                MeterSerialNo = meterSerialNo,
+                BillAmount = billAmount
+            });
         }
     }
 }

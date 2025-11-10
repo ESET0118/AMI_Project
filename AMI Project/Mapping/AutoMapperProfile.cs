@@ -93,6 +93,12 @@ namespace AMI_Project.Mappings
             CreateMap<BillCreateDto, Bill>();
             CreateMap<BillDetail, BillDetailReadDto>();
             CreateMap<BillDetailCreateDto, BillDetail>();
+            CreateMap<Tariff, TariffReadDto>()
+                .ForMember(dest => dest.TariffSlabs, opt => opt.MapFrom(src => src.TariffSlabs));
+
+            CreateMap<TariffSlab, TariffSlabReadDto>();
+
+
         }
     }
 }

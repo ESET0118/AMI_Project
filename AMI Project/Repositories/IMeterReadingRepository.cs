@@ -1,4 +1,4 @@
-using AMI_Project.Models;
+﻿using AMI_Project.Models;
 
 namespace AMI_Project.Repositories.Interfaces
 {
@@ -10,5 +10,10 @@ namespace AMI_Project.Repositories.Interfaces
         Task<MeterReading> AddAsync(MeterReading entity, CancellationToken ct);
         Task<MeterReading> UpdateAsync(MeterReading entity, CancellationToken ct);
         Task DeleteAsync(long id, CancellationToken ct);
+
+        Task SaveChangesAsync(CancellationToken ct); // ✅ Add this
+
+
+
     }
 }
