@@ -1565,6 +1565,10 @@
             "type": "integer",
             "format": "int64",
             "nullable": true
+          },
+          "consumerName": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

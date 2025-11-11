@@ -106,6 +106,19 @@ namespace AMI_Project.Services
 
         public async Task<MeterReadDto> CreateAsync(MeterCreateDto dto, CancellationToken ct)
         {
+            // Find existing consumer by name
+            var consumer = await _context.Consumers
+                .FirstOrDefaultAsync(c => c.Name == dto.ConsumerName, ct);
+
+            // If consumer doesn't exist, create new
+            if (consumer == null)
+            {
+                consumer = new Consumer { Name = dto.ConsumerName };
+                _context.Consumers.Add(consumer);
+                await _context.SaveChangesAsync(ct);
+            }
+
+            // Create meter
             var meter = new Meter
             {
                 MeterSerialNo = dto.MeterSerialNo,
@@ -115,7 +128,7 @@ namespace AMI_Project.Services
                 Manufacturer = dto.Manufacturer,
                 Firmware = dto.Firmware,
                 Category = dto.Category,
-                ConsumerId = dto.ConsumerId,
+                ConsumerId = consumer.ConsumerId, // associate meter to consumer
                 InstallTsUtc = DateTime.UtcNow,
                 Status = "Active"
             };
@@ -126,6 +139,7 @@ namespace AMI_Project.Services
             return await GetBySerialAsync(meter.MeterSerialNo, ct)
                    ?? throw new Exception("Error creating meter");
         }
+
 
         public async Task<MeterReadDto> UpdateAsync(string serialNo, MeterUpdateDto dto, CancellationToken ct)
         {

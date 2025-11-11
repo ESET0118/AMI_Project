@@ -3,8 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|c:\\users\\hp\\desktop\\ami\\ami project\\services\\meterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|solutionrelative:services\\meterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|c:\\users\\hp\\desktop\\ami\\ami project\\dtos\\meters\\metercreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|solutionrelative:dtos\\meters\\metercreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|c:\\users\\hp\\desktop\\ami\\ami project\\services\\metercsvservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|solutionrelative:services\\metercsvservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|c:\\users\\hp\\desktop\\ami\\ami project\\services\\billingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|solutionrelative:services\\billingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|c:\\users\\hp\\desktop\\ami\\ami project\\controllers\\metercsvcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|solutionrelative:controllers\\metercsvcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|c:\\users\\hp\\desktop\\ami\\ami project\\extensions\\serviceextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|solutionrelative:extensions\\serviceextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|c:\\users\\hp\\desktop\\ami\\ami project\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|c:\\users\\hp\\desktop\\ami\\ami project\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -27,10 +51,6 @@
       "RelativeMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|solutionrelative:mapping\\automapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|c:\\users\\hp\\desktop\\ami\\ami project\\extensions\\serviceextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|solutionrelative:extensions\\serviceextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|c:\\users\\hp\\desktop\\ami\\ami project\\dtos\\billing\\billdetailcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|solutionrelative:dtos\\billing\\billdetailcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -41,18 +61,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|c:\\users\\hp\\desktop\\ami\\ami project\\controllers\\billingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|solutionrelative:controllers\\billingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|c:\\users\\hp\\desktop\\ami\\ami project\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|c:\\users\\hp\\desktop\\ami\\ami project\\controllers\\metercsvcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|solutionrelative:controllers\\metercsvcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|c:\\users\\hp\\desktop\\ami\\ami project\\services\\metercsvservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|solutionrelative:services\\metercsvservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|c:\\users\\hp\\desktop\\ami\\ami project\\services\\interfaces\\imetercsvservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -85,10 +93,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|c:\\users\\hp\\desktop\\ami\\ami project\\controllers\\meterreadingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|solutionrelative:controllers\\meterreadingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|c:\\users\\hp\\desktop\\ami\\ami project\\dtos\\meters\\metercreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|solutionrelative:dtos\\meters\\metercreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{33E82F93-80CB-408B-909F-D85227C6E8B3}|AMI Project.csproj|c:\\users\\hp\\desktop\\ami\\ami project\\services\\interfaces\\ibillingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -150,24 +154,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 16,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 0,
+              "Title": "MeterService.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Services\\MeterService.cs",
+              "RelativeDocumentMoniker": "Services\\MeterService.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Services\\MeterService.cs*",
+              "RelativeToolTip": "Services\\MeterService.cs*",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAIwIMAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-11T09:01:29.257Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
               "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Controllers\\AuthController.cs",
               "RelativeToolTip": "Controllers\\AuthController.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAAwD0AAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAQwFgAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-11T04:44:31.909Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 17,
               "Title": "Meter.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Data\\Models\\Meter.cs",
               "RelativeDocumentMoniker": "Data\\Models\\Meter.cs",
@@ -179,19 +196,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 1,
               "Title": "MeterCreateDto.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\DTOs\\Meters\\MeterCreateDto.cs",
               "RelativeDocumentMoniker": "DTOs\\Meters\\MeterCreateDto.cs",
               "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\DTOs\\Meters\\MeterCreateDto.cs",
               "RelativeToolTip": "DTOs\\Meters\\MeterCreateDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAoAAAAAAAAAAAA6wBgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T10:43:56.536Z"
+              "WhenOpened": "2025-11-10T10:43:56.536Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "BillDetailDto.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\DTOs\\Billing\\BillDetailDto.cs",
               "RelativeDocumentMoniker": "DTOs\\Billing\\BillDetailDto.cs",
@@ -203,7 +221,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "BillDto.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\DTOs\\Billing\\BillDto.cs",
               "RelativeDocumentMoniker": "DTOs\\Billing\\BillDto.cs",
@@ -215,7 +233,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 12,
               "Title": "BillDetailCreateDto.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\DTOs\\Billing\\BillDetailCreateDto.cs",
               "RelativeDocumentMoniker": "DTOs\\Billing\\BillDetailCreateDto.cs",
@@ -223,25 +241,24 @@
               "RelativeToolTip": "DTOs\\Billing\\BillDetailCreateDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T09:31:39.61Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T09:31:39.61Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
               "Title": "AuthService.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Services\\AuthService.cs",
               "RelativeDocumentMoniker": "Services\\AuthService.cs",
               "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Services\\AuthService.cs",
               "RelativeToolTip": "Services\\AuthService.cs",
-              "ViewState": "AgIAADwAAAAAAAAAAAAYwC8AAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAF0AAAAAAAAAAAAQwH8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-10T09:28:41.411Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 8,
               "Title": "IAuthService.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Services\\Interfaces\\IAuthService.cs",
               "RelativeDocumentMoniker": "Services\\Interfaces\\IAuthService.cs",
@@ -249,12 +266,11 @@
               "RelativeToolTip": "Services\\Interfaces\\IAuthService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T09:25:58.493Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T09:25:58.493Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "BillDetail.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Data\\Models\\BillDetail.cs",
               "RelativeDocumentMoniker": "Data\\Models\\BillDetail.cs",
@@ -266,7 +282,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "BillReadDto.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\DTOs\\Billing\\BillReadDto.cs",
               "RelativeDocumentMoniker": "DTOs\\Billing\\BillReadDto.cs",
@@ -278,7 +294,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "BillDetailReadDto.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\DTOs\\Billing\\BillDetailReadDto.cs",
               "RelativeDocumentMoniker": "DTOs\\Billing\\BillDetailReadDto.cs",
@@ -290,7 +306,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 13,
               "Title": "BillCreateDto.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\DTOs\\Billing\\BillCreateDto.cs",
               "RelativeDocumentMoniker": "DTOs\\Billing\\BillCreateDto.cs",
@@ -298,12 +314,11 @@
               "RelativeToolTip": "DTOs\\Billing\\BillCreateDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T09:05:42.574Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T09:05:42.574Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "TariffReadDto.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\DTOs\\Tariffs\\TariffReadDto.cs",
               "RelativeDocumentMoniker": "DTOs\\Tariffs\\TariffReadDto.cs",
@@ -315,7 +330,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "TariffSlabReadDto.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\DTOs\\Tariffs\\TariffSlabReadDto.cs",
               "RelativeDocumentMoniker": "DTOs\\Tariffs\\TariffSlabReadDto.cs",
@@ -327,7 +342,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 10,
               "Title": "BillRepository.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Repositories\\BillRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\BillRepository.cs",
@@ -335,12 +350,11 @@
               "RelativeToolTip": "Repositories\\BillRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T08:44:53.308Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T08:44:53.308Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
               "Title": "IBillRepository.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Repositories\\IBillRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\IBillRepository.cs",
@@ -348,25 +362,24 @@
               "RelativeToolTip": "Repositories\\IBillRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T08:44:40.432Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T08:44:40.432Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "BillingService.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Services\\BillingService.cs",
               "RelativeDocumentMoniker": "Services\\BillingService.cs",
               "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Services\\BillingService.cs",
               "RelativeToolTip": "Services\\BillingService.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAADMAAABCAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAQwDMAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-10T08:39:24.054Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "IBillingService.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Services\\Interfaces\\IBillingService.cs",
               "RelativeDocumentMoniker": "Services\\Interfaces\\IBillingService.cs",
@@ -378,7 +391,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "Controllers\\UserController.cs",
@@ -390,7 +403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "IMeterRepository.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Repositories\\IMeterRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\IMeterRepository.cs",
@@ -402,7 +415,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "MeterRepository.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Repositories\\MeterRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\MeterRepository.cs",
@@ -414,7 +427,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 4,
               "Title": "MeterCsvController.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Controllers\\MeterCsvController.cs",
               "RelativeDocumentMoniker": "Controllers\\MeterCsvController.cs",
@@ -427,7 +440,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 2,
               "Title": "MeterCsvService.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Services\\MeterCsvService.cs",
               "RelativeDocumentMoniker": "Services\\MeterCsvService.cs",
@@ -435,11 +448,12 @@
               "RelativeToolTip": "Services\\MeterCsvService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAGcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T06:05:19.224Z"
+              "WhenOpened": "2025-11-10T06:05:19.224Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "MeterUploadResultDto.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\DTOs\\Meters\\MeterUploadResultDto.cs",
               "RelativeDocumentMoniker": "DTOs\\Meters\\MeterUploadResultDto.cs",
@@ -451,7 +465,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "IMeterCsvService.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Services\\Interfaces\\IMeterCsvService.cs",
               "RelativeDocumentMoniker": "Services\\Interfaces\\IMeterCsvService.cs",
@@ -463,20 +477,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "ServiceExtensions.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Extensions\\ServiceExtensions.cs",
               "RelativeDocumentMoniker": "Extensions\\ServiceExtensions.cs",
               "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Extensions\\ServiceExtensions.cs",
               "RelativeToolTip": "Extensions\\ServiceExtensions.cs",
-              "ViewState": "AgIAAGcAAAAAAAAAAAA5wIcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAuwIcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-10T05:06:44.622Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -488,7 +502,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "MeterReadingReadDto.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\DTOs\\MeterReading\\MeterReadingReadDto.cs",
               "RelativeDocumentMoniker": "DTOs\\MeterReading\\MeterReadingReadDto.cs",
@@ -500,7 +514,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 11,
               "Title": "AutoMapperProfile.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Mapping\\AutoMapperProfile.cs",
               "RelativeDocumentMoniker": "Mapping\\AutoMapperProfile.cs",
@@ -508,12 +522,11 @@
               "RelativeToolTip": "Mapping\\AutoMapperProfile.cs",
               "ViewState": "AgIAAEsAAAAAAAAAAAAYwEgAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T04:58:14.568Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T04:58:14.568Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 18,
               "Title": "MeterReadingRepository.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Repositories\\MeterReadingRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\MeterReadingRepository.cs",
@@ -525,7 +538,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "IMeterReadingRepository.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Repositories\\IMeterReadingRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\IMeterReadingRepository.cs",
@@ -537,7 +550,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 21,
               "Title": "IMeterReadingService.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Services\\Interfaces\\IMeterReadingService.cs",
               "RelativeDocumentMoniker": "Services\\Interfaces\\IMeterReadingService.cs",
@@ -549,7 +562,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 16,
               "Title": "MeterReadingService.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Services\\MeterReadingService.cs",
               "RelativeDocumentMoniker": "Services\\MeterReadingService.cs",
@@ -561,7 +574,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 22,
               "Title": "MeterReadingController.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Controllers\\MeterReadingController.cs",
               "RelativeDocumentMoniker": "Controllers\\MeterReadingController.cs",
@@ -573,7 +586,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 14,
               "Title": "BillingController.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Project\\Controllers\\BillingController.cs",
               "RelativeDocumentMoniker": "Controllers\\BillingController.cs",
@@ -581,8 +594,7 @@
               "RelativeToolTip": "Controllers\\BillingController.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABgAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T04:50:07.235Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T04:50:07.235Z"
             }
           ]
         }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AMI Frontend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aeccd7de1a6eae439745f425ca17f26e45dbdf57")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+01e3ed14fac91cd6a0b71035bc8190a6e04bd1e1")]
 [assembly: System.Reflection.AssemblyProductAttribute("AMI Frontend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AMI Frontend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

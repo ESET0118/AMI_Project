@@ -2,7 +2,6 @@
     ViewBag.Title = "Meters";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    // Base URL for Meter Readings
     var meterReadingsUrlTemplate = Url.Action("Index", "MeterReadings", new { serialNo = "__SERIAL__" });
 }
 <style>
@@ -155,7 +154,7 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Consumer Name</label>
-                            <input type="text" id="consumerName" class="form-control">
+                            <input type="text" id="consumerName" class="form-control" placeholder="Enter consumer name" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">IP Address</label>
@@ -185,6 +184,14 @@
                             <label class="form-label">Install Date (UTC)</label>
                             <input type="date" id="installTsUtc" class="form-control">
                         </div>
+                        <div class="col-md-6">
+                            <label class="form-label">ICCID</label>
+                            <input type="text" id="iccid" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">IMSI</label>
+                            <input type="text" id="imsi" class="form-control">
+                        </div>
                     </div>
                 </form>
             </div>
@@ -196,43 +203,27 @@
     </div>
 </div>
 
-<!-- ✅ Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <script>
-    const apiBase = "https://localhost:7199/api/meters"; // Backend API base URL
+    const apiBase = "https://localhost:7199/api/meters";
     const meterReadingsUrlTemplate = '@meterReadingsUrlTemplate';
     let allMeters = [];
 
     $(document).ready(function () {
         loadMeters();
-
         $("#refreshMeters").click(loadMeters);
         $("#searchBtn").click(filterMeters);
         $("#statusFilter").change(filterMeters);
-
-        // Allow pressing Enter in search box
-        $("#searchSerial").on("keypress", function (e) {
-            if (e.which === 13) {
-                e.preventDefault();
-                filterMeters();
-            }
-        });
-
+        $("#searchSerial").on("keypress", e => { if(e.which === 13){ e.preventDefault(); filterMeters(); } });
         $("#addMeterBtn").click(() => openModal());
         $("#saveMeterBtn").click(saveMeter);
     });
 
     function loadMeters() {
         $("#meterTableBody").html("<tr><td colspan='9' class='text-muted text-center py-4'>Loading...</td></tr>");
-        $.get(apiBase)
-            .done(data => {
-                allMeters = data;
-                renderMeters(data.items || data);
-            })
-            .fail(() => {
-                $("#meterTableBody").html("<tr><td colspan='9' class='text-danger text-center py-4'>Error loading meters.</td></tr>");
-            });
+        $.get(`${apiBase}`)
+            .done(data => { allMeters = data.items || data; renderMeters(allMeters); })
+            .fail(() => { $("#meterTableBody").html("<tr><td colspan='9' class='text-danger text-center py-4'>Error loading meters.</td></tr>"); });
     }
 
     function renderMeters(items) {
@@ -240,11 +231,9 @@
             $("#meterTableBody").html("<tr><td colspan='9' class='text-muted text-center py-4'>No meters found.</td></tr>");
             return;
         }
-
         const rows = items.map(m => {
             const readingsUrl = meterReadingsUrlTemplate.replace('__SERIAL__', m.meterSerialNo);
-            return `
-            <tr>
+            return `<tr>
                 <td>${m.meterSerialNo}</td>
                 <td>${m.consumerName || '-'}</td>
                 <td>${m.ipAddress || '-'}</td>
@@ -254,55 +243,41 @@
                 <td><span class="badge ${m.status === 'Active' ? 'bg-success' : 'bg-secondary'}">${m.status}</span></td>
                 <td>${m.installTsUtc ? new Date(m.installTsUtc).toLocaleDateString() : '-'}</td>
                 <td>
-                    <button class="btn btn-sm btn-outline-primary me-1" onclick="editMeter('${m.meterSerialNo}')">
-                        <i class="bi bi-pencil"></i>
-                    </button>
-                    <button class="btn btn-sm btn-outline-danger me-1" onclick="deleteMeter('${m.meterSerialNo}')">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                    <a href="${readingsUrl}" class="btn btn-sm btn-primary">
-                        <i class="bi bi-bar-chart-line"></i> Readings
-                    </a>
+                    <button class="btn btn-sm btn-outline-primary me-1" onclick="editMeter('${m.meterSerialNo}')"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-danger me-1" onclick="deleteMeter('${m.meterSerialNo}')"><i class="bi bi-trash"></i></button>
+                    <a href="${readingsUrl}" class="btn btn-sm btn-primary"><i class="bi bi-bar-chart-line"></i> Readings</a>
                 </td>
-            </tr>
-            `;
+            </tr>`;
         }).join("");
-
         $("#meterTableBody").html(rows);
     }
 
     function filterMeters() {
         const term = $("#searchSerial").val();
         const status = $("#statusFilter").val();
-
-        $("#meterTableBody").html("<tr><td colspan='9' class='text-muted text-center py-4'>Searching...</td></tr>");
-
         const params = new URLSearchParams();
-        if (term) params.append("SerialNo", term);
-        if (status) params.append("Status", status);
-
+        if(term) params.append("SerialNo", term);
+        if(status) params.append("Status", status);
+        $("#meterTableBody").html("<tr><td colspan='9' class='text-muted text-center py-4'>Searching...</td></tr>");
         $.get(`${apiBase}?${params.toString()}`)
-            .done(data => {
-                allMeters = data;
-                renderMeters(data.items || data);
-            })
-            .fail(() => {
-                $("#meterTableBody").html("<tr><td colspan='9' class='text-danger text-center py-4'>Error fetching filtered data.</td></tr>");
-            });
+            .done(data => renderMeters(data.items || data))
+            .fail(() => { $("#meterTableBody").html("<tr><td colspan='9' class='text-danger text-center py-4'>Error fetching filtered data.</td></tr>"); });
     }
 
     function openModal(meter = null) {
-        if (meter) {
+        if(meter){
             $("#meterModalTitle").text("Edit Meter");
             $("#editSerialNo").val(meter.meterSerialNo);
             $("#meterSerialNo").val(meter.meterSerialNo).prop("disabled", true);
-            $("#consumerName").val(meter.consumerName);
+            $("#consumerName").val(meter.consumerName || "");
             $("#ipAddress").val(meter.ipAddress);
             $("#manufacturer").val(meter.manufacturer);
             $("#firmware").val(meter.firmware);
             $("#category").val(meter.category);
             $("#status").val(meter.status);
             $("#installTsUtc").val(meter.installTsUtc ? meter.installTsUtc.split('T')[0] : "");
+            $("#iccid").val(meter.iccid || "");
+            $("#imsi").val(meter.imsi || "");
         } else {
             $("#meterModalTitle").text("Add Meter");
             $("#meterForm")[0].reset();
@@ -320,55 +295,39 @@
 
     function saveMeter() {
         const serialNo = $("#editSerialNo").val();
+        const consumerName = $("#consumerName").val().trim();
+        if(!$("#meterSerialNo").val() || !consumerName) { alert("Serial No and Consumer Name required"); return; }
+
         const meter = {
-            meterSerialNo: $("#meterSerialNo").val(),
-            consumerName: $("#consumerName").val(),
-            ipAddress: $("#ipAddress").val(),
-            manufacturer: $("#manufacturer").val(),
-            firmware: $("#firmware").val(),
-            category: $("#category").val(),
-            status: $("#status").val(),
-            installTsUtc: $("#installTsUtc").val()
+            MeterSerialNo: $("#meterSerialNo").val(),
+            IpAddress: $("#ipAddress").val(),
+            Iccid: $("#iccid").val(),
+            Imsi: $("#imsi").val(),
+            Manufacturer: $("#manufacturer").val(),
+            Firmware: $("#firmware").val(),
+            Category: $("#category").val(),
+            ConsumerName: consumerName,
+            Status: $("#status").val(),
+            InstallTsUtc: $("#installTsUtc").val()
         };
 
-        if (serialNo) {
-            $.ajax({
-                url: `${apiBase}/${serialNo}`,
-                type: "PUT",
-                contentType: "application/json",
-                data: JSON.stringify(meter),
-                success: () => {
-                    alert("Meter updated successfully!");
-                    loadMeters();
-                    bootstrap.Modal.getInstance(document.getElementById('meterModal')).hide();
-                },
-                error: () => alert("Error updating meter.")
-            });
-        } else {
-            $.ajax({
-                url: apiBase,
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(meter),
-                success: () => {
-                    alert("Meter added successfully!");
-                    loadMeters();
-                    bootstrap.Modal.getInstance(document.getElementById('meterModal')).hide();
-                },
-                error: () => alert("Error adding meter.")
-            });
-        }
+        const ajaxOptions = {
+            url: serialNo ? `${apiBase}/${serialNo}` : apiBase,
+            type: serialNo ? "PUT" : "POST",
+            contentType: "application/json",
+            data: JSON.stringify(serialNo ? { Firmware: meter.Firmware, Status: meter.Status } : meter),
+            success: () => { alert("Meter saved successfully!"); loadMeters(); bootstrap.Modal.getInstance(document.getElementById('meterModal')).hide(); },
+            error: xhr => { const msg = xhr.responseJSON?.message || xhr.statusText; alert("Error saving meter: " + msg); }
+        };
+        $.ajax(ajaxOptions);
     }
 
     function deleteMeter(serialNo) {
-        if (!confirm("Delete this meter?")) return;
+        if(!confirm("Delete this meter?")) return;
         $.ajax({
             url: `${apiBase}/${serialNo}`,
             type: "DELETE",
-            success: () => {
-                alert("Meter deleted successfully!");
-                loadMeters();
-            },
+            success: () => { alert("Meter deleted successfully!"); loadMeters(); },
             error: () => alert("Error deleting meter.")
         });
     }

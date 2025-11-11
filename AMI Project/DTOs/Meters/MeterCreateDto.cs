@@ -22,5 +22,8 @@ public class MeterCreateDto
     public string? Firmware { get; set; }
     public string Category { get; set; } = string.Empty;
     public long? ConsumerId { get; set; }
+
+    public string ConsumerName { get; set; } = string.Empty; // Changed from ConsumerId
+
 }
 
