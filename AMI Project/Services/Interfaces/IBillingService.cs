@@ -5,6 +5,6 @@ namespace AMI_Project.Services.Interfaces
 {
     public interface IBillingService
     {
-        public decimal? GenerateBill(string meterSerialNo);
+        public BillDto? GenerateBill(string meterSerialNo);
     }
 }

@@ -1,7 +1,6 @@
 ﻿@{
     ViewBag.Title = "Meter Readings";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
     string serialNo = ViewBag.SerialNo ?? "";
 }
 
@@ -19,7 +18,6 @@
 
         .btn-gradient:hover {
             background: linear-gradient(135deg, #2575fc, #6a11cb);
-            color: #fff;
         }
 
     .btn-save {
@@ -34,6 +32,20 @@
             background: linear-gradient(135deg, #1e7e34, #28a745);
         }
 
+    .btn-pay {
+        background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        color: #fff;
+        border: none;
+        font-weight: 700;
+        transition: 0.3s;
+        box-shadow: 0 0 8px rgba(255,75,43,0.7);
+    }
+
+        .btn-pay:hover {
+            background: linear-gradient(135deg, #ff4b2b, #ff416c);
+            box-shadow: 0 0 15px rgba(255,75,43,0.9);
+        }
+
     /* Calendar title & summary */
     #calendarTitle {
         font-weight: 700;
@@ -45,7 +57,6 @@
         color: #555;
     }
 
-    /* Picker container */
     .picker-container {
         display: flex;
         flex-wrap: wrap;
@@ -60,7 +71,6 @@
             min-width: 180px;
         }
 
-    /* Month name display */
     #monthNameDisplay h3 {
         font-size: 2rem;
         font-weight: 700;
@@ -68,23 +78,67 @@
         margin-bottom: 0.5rem;
     }
 
-    /* Table inputs */
     table input.form-control-sm {
         min-width: 80px;
         text-align: center;
     }
+
+    /* Billing Modal */
+    #billModal .modal-content {
+        background: linear-gradient(145deg, #ffffff, #f3f3f3);
+        border-radius: 15px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+    }
+
+    #billModal .modal-header {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: #fff;
+        text-align: center;
+        justify-content: center;
+        border-bottom: none;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        flex-direction: column;
+    }
+
+        #billModal .modal-header h4 {
+            font-size: 2rem;
+            font-weight: 900;
+            text-shadow: 0 0 10px #fff, 0 0 20px #6a11cb;
+            margin-bottom: 0;
+        }
+
+        #billModal .modal-header small {
+            font-size: 0.9rem;
+            text-shadow: 0 0 5px #fff;
+        }
+
+    #billModal table {
+        font-size: 0.95rem;
+    }
+
+        #billModal table th, #billModal table td {
+            padding: 0.5rem;
+        }
+
+    #billModal .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    #billModal .text-center img {
+        border: 2px solid #ddd;
+        padding: 5px;
+        border-radius: 10px;
+    }
+
 </style>
 
 <div class="container py-4">
-    <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
         <h4 class="fw-bold text-primary"><i class="bi bi-bar-chart-line"></i> Meter Readings</h4>
-        <a class="btn btn-outline-secondary btn-sm" href="javascript:history.back()">
-            <i class="bi bi-arrow-left"></i> Back
-        </a>
+        <a class="btn btn-outline-secondary btn-sm" href="javascript:history.back()"><i class="bi bi-arrow-left"></i> Back</a>
     </div>
 
-    <!-- Meter & Month Picker -->
     <div class="card mb-4 shadow-sm">
         <div class="card-body picker-container">
             <div style="flex:1 1 200px;">
@@ -107,12 +161,8 @@
         </div>
     </div>
 
-    <!-- Month Name Display -->
-    <div id="monthNameDisplay" class="mb-3">
-        <h3></h3>
-    </div>
+    <div id="monthNameDisplay" class="mb-3"><h3></h3></div>
 
-    <!-- Calendar Table -->
     <div id="calendarContainer" class="card d-none shadow-sm">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap">
@@ -145,9 +195,78 @@
     </div>
 </div>
 
+<!-- Billing Modal -->
+<div class="modal fade" id="billModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Header -->
+            <div class="modal-header">
+                <h4>Esyahard Electricals</h4>
+                <small>Official Electricity Bill</small>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+                <!-- Customer & Bill Info -->
+                <table class="table table-borderless mb-3">
+                    <tbody>
+                        <tr>
+                            <th>Meter Serial:</th>
+                            <td id="modalMeterSerial"></td>
+                            <th>Month/Year:</th>
+                            <td id="modalMonthYear"></td>
+                        </tr>
+                        <tr>
+                            <th>Total Units:</th>
+                            <td id="modalTotalUnits"></td>
+                            <th>Base Rate:</th>
+                            <td>₹<span id="modalBaseRate"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Tax Rate:</th>
+                            <td id="modalTaxRate"></td>
+                            <th>Total Bill:</th>
+                            <td>₹<span id="modalBillAmount"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Slabs Table -->
+                <h6 class="fw-bold">Slabs Applied:</h6>
+                <table class="table table-sm table-striped table-bordered mb-3">
+                    <thead class="table-light">
+                        <tr><th>#</th><th>Details</th></tr>
+                    </thead>
+                    <tbody id="modalSlabsTable"></tbody>
+                </table>
+
+                <!-- QR Code -->
+                <div class="text-center mb-3">
+                    <img id="modalQrCode" alt="QR Code" style="width:140px; height:140px;" />
+                    <p class="small text-muted mt-1">Scan to view or pay online</p>
+                </div>
+
+                <!-- Pay Bill Button -->
+                <div class="text-center">
+                    <button id="payBillBtn" class="btn btn-pay btn-lg"><i class="bi bi-cash-stack"></i> Pay Bill</button>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer justify-content-center">
+                <small class="text-muted">Thank you for choosing Esyahard Electricals!</small>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
     const apiMeterReadingsBase = "https://localhost:7199/api/meterreading";
+    const apiBillBase = "https://localhost:7199/api/bill";
     const meterSerialNo = "@serialNo";
 
     $(function () {
@@ -158,17 +277,13 @@
         $("#month").val(now.getUTCMonth() + 1);
 
         updateMonthName();
-
         loadCalendar();
 
-        // Reload automatically on month/year change
-        $("#month, #year").change(function(){
-            updateMonthName();
-            loadCalendar();
-        });
-
+        $("#month, #year").change(function(){ updateMonthName(); loadCalendar(); });
         $("#bulkSaveBtn").click(bulkSave);
         $("#generateBillBtn").click(generateBill);
+
+        $("#payBillBtn").click(() => alert("Thank you! Your bill has been paid."));
     });
 
     function updateMonthName(){
@@ -202,18 +317,15 @@
             $("#calendarBody").html("<tr><td colspan='7'>No readings found.</td></tr>");
             return;
         }
-
         const rows = days.map(d => {
             const dt = new Date(d.date);
             const dayNo = dt.getUTCDate();
             const weekDay = dt.toLocaleString('en-US', { weekday: 'short', timeZone: 'UTC' });
-
             const consumption = d.consumptionKwh ?? "";
             const voltage = d.voltage ?? "";
             const ampere = d.ampere ?? "";
             const pf = d.powerFactor ?? "";
             const freq = d.frequency ?? "";
-
             return `<tr data-date="${d.date}">
                 <td>${dayNo} <small>${weekDay}</small></td>
                 <td><input class="form-control form-control-sm consumption" value="${consumption}" /></td>
@@ -224,27 +336,19 @@
                 <td><button class="btn btn-save btn-sm save-day"><i class="bi bi-save"></i> Save</button></td>
             </tr>`;
         }).join("");
-
         $("#calendarBody").html(rows);
-
-        $(".save-day").off("click").on("click", function(){
-            const $tr = $(this).closest("tr");
-            saveSingleDay($tr);
-        });
+        $(".save-day").off("click").on("click", function(){ saveSingleDay($(this).closest("tr")); });
     }
 
     function collectRowsData($tr = null){
         const year = parseInt($("#year").val());
         const month = parseInt($("#month").val());
         const readings = [];
-
         const $rows = $tr ? $tr : $("#calendarBody tr");
-
         $rows.each(function(){
             const date = $(this).data("date");
             const consumption = parseFloatOrNull($(this).find(".consumption").val());
             if(isNaN(consumption)) return;
-
             readings.push({
                 date,
                 consumptionKwh: consumption,
@@ -254,7 +358,6 @@
                 frequency: parseFloatOrNull($(this).find(".freq").val())
             });
         });
-
         return { meterSerialNo, year, month, readings };
     }
 
@@ -262,7 +365,6 @@
         const payload = collectRowsData($tr);
         const $btn = $tr.find(".save-day");
         $btn.prop("disabled", true).text("Saving...");
-
         $.ajax({
             url: `${apiMeterReadingsBase}/meter/${encodeURIComponent(meterSerialNo)}/bulk?year=${payload.year}&month=${payload.month}`,
             type: "POST",
@@ -277,9 +379,7 @@
     function bulkSave(){
         const payload = collectRowsData();
         if(payload.readings.length === 0) return alert("No readings to save.");
-
         $("#bulkSaveBtn").prop("disabled", true).text("Saving...");
-
         $.ajax({
             url: `${apiMeterReadingsBase}/meter/${encodeURIComponent(meterSerialNo)}/bulk?year=${payload.year}&month=${payload.month}`,
             type: "POST",
@@ -294,14 +394,24 @@
     function generateBill(){
         const year = $("#year").val();
         const month = $("#month").val();
+        $.get(`${apiBillBase}/${encodeURIComponent(meterSerialNo)}`)
+            .done(data => {
+                $("#modalMeterSerial").text(data.meterSerialNo);
+                $("#modalMonthYear").text(`${month}/${year}`);
+                $("#modalBillAmount").text(data.billAmount.toFixed(2));
+                $("#modalTotalUnits").text(data.totalUnits.toFixed(2));
+                $("#modalBaseRate").text(data.baseRate.toFixed(2));
+                $("#modalTaxRate").text(data.taxRate + "%");
 
-        $.get(`${apiMeterReadingsBase}/meter/${encodeURIComponent(meterSerialNo)}/monthly?year=${year}&month=${month}`)
-            .done(monthly => alert(`Monthly total for ${month}/${year}: ${monthly.totalConsumptionKwh} kWh`))
-            .fail(() => alert("Error fetching monthly total."));
+                // Slabs table
+                const slabs = (data.slabsApplied || "").split(',').map((s,i)=>`<tr><td>${i+1}</td><td>${s.trim()}</td></tr>`).join('');
+                $("#modalSlabsTable").html(slabs || "<tr><td colspan='2'>-</td></tr>");
+
+                $("#modalQrCode").attr("src", data.qrCodeUrl);
+                new bootstrap.Modal(document.getElementById('billModal')).show();
+            })
+            .fail(() => alert("Error fetching bill."));
     }
 
-    function parseFloatOrNull(v){
-        const n = parseFloat(v);
-        return isNaN(n) ? null : n;
-    }
+    function parseFloatOrNull(v){ const n = parseFloat(v); return isNaN(n) ? null : n; }
 </script>

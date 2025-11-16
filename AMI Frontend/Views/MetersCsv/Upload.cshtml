@@ -8,7 +8,7 @@
         <h4 class="fw-bold">Upload Meter Data</h4>
     </div>
 
-    <div class="card shadow-sm border-0 rounded-4 p-4" style="max-width: 500px;">
+    <div class="card shadow-sm border-0 rounded-4 p-4 mb-5" style="max-width: 600px;">
         <form id="uploadForm" enctype="multipart/form-data" method="post">
             <div class="mb-3">
                 <label for="meterFile" class="form-label">Select Excel/CSV File</label>
@@ -19,50 +19,123 @@
 
         <div id="uploadStatus" class="mt-3 text-muted"></div>
     </div>
-</div>
+
+    <!-- Example CSV Table -->
+    <div class="card shadow-sm border-0 rounded-4 p-4" style="width: 100%;">
+        <h5 class="fw-bold mb-3">Example CSV Format</h5>
+        <p class="text-muted">Your CSV/Excel file should contain the following columns (headers are case-insensitive):</p>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover w-100 text-center" id="exampleTable">
+                <thead class="table-light">
+                    <tr>
+                        <th class="required-column">MeterSerialNo <br /><small>(string, required)</small></th>
+                        <th>IpAddress <br /><small>(string, optional)</small></th>
+                        <th>Iccid <br /><small>(string, optional)</small></th>
+                        <th>Imsi <br /><small>(string, optional)</small></th>
+                        <th>Manufacturer <br /><small>(string, optional)</small></th>
+                        <th>Firmware <br /><small>(string, optional)</small></th>
+                        <th>Category <br /><small>(string, optional)</small></th>
+                        <th>ConsumerId <br /><small>(long, optional, must exist in DB)</small></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="required-column">MT1001</td>
+                        <td>192.168.0.10</td>
+                        <td>8945601234567890123</td>
+                        <td>123456789012345</td>
+                        <td>ABB</td>
+                        <td>FW1.0</td>
+                        <td>Residential</td>
+                        <td>101</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <style>
+        /* Highlight required columns */
+        .required-column {
+            background-color: #ffe0e0; /* light red/pink */
+            font-weight: bold;
+        }
+
+        /* Highlight invalid cell dynamically */
+        .cell-error {
+            background-color: #ff4d4d !important;
+            color: #fff;
+            font-weight: bold;
+        }
+    </style>
 
 @section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#uploadForm").submit(function (e) {
-                e.preventDefault();
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $("#uploadForm").submit(function (e) {
+                    e.preventDefault();
 
-                const fileInput = $("#meterFile")[0].files[0];
-                if (!fileInput) {
-                    $("#uploadStatus").text("❌ Please select a file.");
-                    return;
-                }
-
-                const formData = new FormData();
-                formData.append("file", fileInput);
-
-                $("#uploadStatus").text("Uploading...");
-
-                $.ajax({
-                    url: "/UploadMeter/Upload",
-                    type: "POST",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                        try {
-                            const json = typeof data === "string" ? JSON.parse(data) : data;
-                            $("#uploadStatus").text("✅ " + (json.message || "Upload successful!"));
-                        } catch {
-                            $("#uploadStatus").text("✅ Upload successful!");
-                        }
-                    },
-                    error: function (xhr) {
-                        let msg = "❌ Upload failed. Please try again.";
-                        try {
-                            const json = JSON.parse(xhr.responseText);
-                            if (json.message) msg = "❌ " + json.message;
-                        } catch { }
-                        $("#uploadStatus").text(msg);
+                    const fileInput = $("#meterFile")[0].files[0];
+                    if (!fileInput) {
+                        $("#uploadStatus").text("❌ Please select a file.");
+                        return;
                     }
+
+                    const formData = new FormData();
+                    formData.append("file", fileInput);
+
+                    $("#uploadStatus").text("Uploading...");
+
+                    // Clear previous errors
+                    $("#exampleTable tbody tr td").removeClass("cell-error");
+
+                    $.ajax({
+                        url: "/UploadMeter/Upload",
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            try {
+                                const json = typeof data === "string" ? JSON.parse(data) : data;
+                                $("#uploadStatus").text("✅ " + (json.message || "Upload successful!"));
+
+                                // Highlight warnings in example table
+                                if (json.warnings && json.warnings.length > 0) {
+                                    json.warnings.forEach(warning => {
+                                        // Example: "Meter 'MT1001': ConsumerId 999 does not exist. Setting ConsumerId = null."
+                                        const regex = /Meter\s'([^']+)':\s(.+)\./;
+                                        const match = warning.match(regex);
+                                        if (match) {
+                                            const meterSerial = match[1];
+                                            const fieldInfo = match[2]; // e.g. "ConsumerId 999 does not exist"
+                                            const field = fieldInfo.split(' ')[0]; // get column name
+                                            // Highlight the column in example table
+                                            const colIndex = $("#exampleTable thead th").filter(function () {
+                                                return $(this).text().includes(field);
+                                            }).index();
+                                            if (colIndex >= 0) {
+                                                $("#exampleTable tbody tr td").eq(colIndex).addClass("cell-error");
+                                            }
+                                        }
+                                    });
+                                }
+
+                            } catch {
+                                $("#uploadStatus").text("✅ Upload successful!");
+                            }
+                        },
+                        error: function (xhr) {
+                            let msg = "❌ Upload failed. Please try again.";
+                            try {
+                                const json = JSON.parse(xhr.responseText);
+                                if (json.message) msg = "❌ " + json.message;
+                            } catch { }
+                            $("#uploadStatus").text(msg);
+                        }
+                    });
                 });
             });
-        });
-    </script>
+        </script>
 }

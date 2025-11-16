@@ -1,4 +1,5 @@
-﻿using AMI_Project.Services.Interfaces;
+﻿// BillController.cs
+using AMI_Project.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AMI_Project.Controllers
@@ -17,16 +18,12 @@ namespace AMI_Project.Controllers
         [HttpGet("{meterSerialNo}")]
         public IActionResult GetBill(string meterSerialNo)
         {
-            var billAmount = _billingService.GenerateBill(meterSerialNo);
+            var bill = _billingService.GenerateBill(meterSerialNo);
 
-            if (billAmount == null)
+            if (bill == null)
                 return NotFound("Meter, Tariff, or Slabs not found.");
 
-            return Ok(new
-            {
-                MeterSerialNo = meterSerialNo,
-                BillAmount = billAmount
-            });
+            return Ok(bill);
         }
     }
 }

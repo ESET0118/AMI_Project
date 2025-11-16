@@ -1,4 +1,5 @@
-﻿using AMI_Project.Data;
+﻿// BillingService.cs
+using AMI_Project.Data;
 using AMI_Project.Models;
 using AMI_Project.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +16,8 @@ namespace AMI_Project.Services
             _context = context;
         }
 
-        public decimal? GenerateBill(string meterSerialNo)
+        public BillDto? GenerateBill(string meterSerialNo)
         {
-            // 1️⃣ Fetch meter with readings and related consumer + tariff + slabs
-
             var meter = _context.Meters
                 .Include(m => m.MeterReadings)
                 .Include(m => m.Consumer)
@@ -33,37 +32,52 @@ namespace AMI_Project.Services
             var slabs = tariff.TariffSlabs.OrderBy(s => s.FromKwh).ToList();
 
             if (!slabs.Any())
-                return null; // no slabs defined
+                return null;
 
-            // 2️⃣ Calculate total consumption from all readings
             decimal totalConsumption = meter.MeterReadings.Sum(r => r.ConsumptionKwh);
-
-            // 3️⃣ Calculate bill using slabs
-            decimal remainingConsumption = totalConsumption;
+            decimal remaining = totalConsumption;
             decimal billAmount = 0;
+            var slabsApplied = new List<string>();
 
             foreach (var slab in slabs)
             {
-                if (remainingConsumption <= 0) break;
+                if (remaining <= 0) break;
 
                 decimal slabStart = slab.FromKwh;
                 decimal slabEnd = slab.ToKwh;
-
                 decimal slabRange = slabEnd - slabStart;
-                if (slabRange <= 0) continue; // skip invalid slab
+                if (slabRange <= 0) continue;
 
-                // Units applicable in this slab
-                decimal unitsInSlab = Math.Min(remainingConsumption, slabRange);
-                billAmount += unitsInSlab * slab.RatePerKwh;
-
-                remainingConsumption -= unitsInSlab;
+                decimal units = Math.Min(remaining, slabRange);
+                billAmount += units * slab.RatePerKwh;
+                slabsApplied.Add($"{units} kWh @ {slab.RatePerKwh}/kWh");
+                remaining -= units;
             }
 
-            // 4️⃣ Add base rate and tax
             billAmount += tariff.BaseRate;
             billAmount += billAmount * tariff.TaxRate / 100;
 
-            return Math.Round(billAmount, 2);
+            return new BillDto
+            {
+                MeterSerialNo = meterSerialNo,
+                BillAmount = Math.Round(billAmount, 2),
+                TotalUnits = totalConsumption,
+                BaseRate = tariff.BaseRate,
+                TaxRate = tariff.TaxRate,
+                SlabsApplied = string.Join(", ", slabsApplied),
+                QrCodeUrl = $"https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=Bill-{meterSerialNo}"
+            };
         }
+    }
+
+    public class BillDto
+    {
+        public string MeterSerialNo { get; set; } = "";
+        public decimal BillAmount { get; set; }
+        public decimal TotalUnits { get; set; }
+        public decimal BaseRate { get; set; }
+        public decimal TaxRate { get; set; }
+        public string SlabsApplied { get; set; } = "";
+        public string? QrCodeUrl { get; set; }
     }
 }
