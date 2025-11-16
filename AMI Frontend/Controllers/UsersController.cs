@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
-using System.Text.Json;
 
 namespace AMI_Frontend.Controllers
 {
@@ -14,40 +13,34 @@ namespace AMI_Frontend.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-        // Renders the Razor page
         public IActionResult Index() => View();
 
-        // Proxy endpoint for Razor JS to call backend API
-        [HttpGet("/Users/GetAll")]
-        public async Task<IActionResult> GetAll()
+        [HttpPut("/Users/Update/{id}")]
+        public async Task<IActionResult> UpdateUser(long id, [FromBody] object dto)
         {
-            try
-            {
-                var token = HttpContext.Session.GetString("JWTToken");
-                if (string.IsNullOrEmpty(token))
-                {
-                    return Unauthorized(new { message = "JWT token is missing. Please login again." });
-                }
+            var token = HttpContext.Session.GetString("JWTToken");
+            if (string.IsNullOrEmpty(token))
+                return Unauthorized(new { message = "JWT token missing" });
 
-                var client = _httpClientFactory.CreateClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", token);
+            var client = _httpClientFactory.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                var response = await client.GetAsync(_apiBaseUrl);
+            var response = await client.PutAsJsonAsync($"{_apiBaseUrl}/{id}", dto);
+            return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
+        }
 
-                if (!response.IsSuccessStatusCode)
-                {
-                    var error = await response.Content.ReadAsStringAsync();
-                    return StatusCode((int)response.StatusCode, new { message = error });
-                }
+        [HttpDelete("/Users/Delete/{id}")]
+        public async Task<IActionResult> DeleteUser(long id)
+        {
+            var token = HttpContext.Session.GetString("JWTToken");
+            if (string.IsNullOrEmpty(token))
+                return Unauthorized(new { message = "JWT token missing" });
 
-                var jsonData = await response.Content.ReadFromJsonAsync<object>();
-                return Json(jsonData);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = ex.Message });
-            }
+            var client = _httpClientFactory.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await client.DeleteAsync($"{_apiBaseUrl}/{id}");
+            return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
         }
     }
 }

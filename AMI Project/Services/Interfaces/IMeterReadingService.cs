@@ -10,5 +10,8 @@ namespace AMI_Project.Services.Interfaces
         Task<MeterReadingReadDto> CreateAsync(MeterReadingCreateDto dto, CancellationToken ct);
         Task<MeterReadingReadDto?> UpdateAsync(long id, MeterReadingUpdateDto dto, CancellationToken ct);
         Task DeleteAsync(long id, CancellationToken ct);
+        Task<MeterReadingCalendarDto> GetCalendarForMonthAsync(string serialNo, int year, int month, CancellationToken ct);
+        Task<IEnumerable<MeterReadingReadDto>> CreateBulkAsync(BulkMeterReadingCreateDto dto, CancellationToken ct);
+        Task<MonthlyMeterReadingDto> GetMonthlyAsync(string serialNo, int year, int month, CancellationToken ct);
     }
 }

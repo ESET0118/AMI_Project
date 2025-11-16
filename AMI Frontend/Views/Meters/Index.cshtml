@@ -4,8 +4,11 @@
 
     var meterReadingsUrlTemplate = Url.Action("Index", "MeterReadings", new { serialNo = "__SERIAL__" });
 }
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
 <style>
-    /* Gradient Buttons */
+    /* Gradient Buttons & Modal Styles */
     .btn-primary {
         background: linear-gradient(135deg, #4e73df, #224abe);
         border: none;
@@ -136,7 +139,7 @@
     </div>
 </div>
 
-<!-- Add/Edit Modal -->
+<!-- Add/Edit Modal (unchanged) -->
 <div class="modal fade" id="meterModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content rounded-4 shadow">
@@ -299,16 +302,16 @@
         if(!$("#meterSerialNo").val() || !consumerName) { alert("Serial No and Consumer Name required"); return; }
 
         const meter = {
-            MeterSerialNo: $("#meterSerialNo").val(),
-            IpAddress: $("#ipAddress").val(),
-            Iccid: $("#iccid").val(),
-            Imsi: $("#imsi").val(),
-            Manufacturer: $("#manufacturer").val(),
-            Firmware: $("#firmware").val(),
-            Category: $("#category").val(),
+            MeterSerialNo: $("#meterSerialNo").val().trim(),
+            IpAddress: $("#ipAddress").val().trim() || null,
+            Iccid: $("#iccid").val().trim() || null,
+            Imsi: $("#imsi").val().trim() || null,
+            Manufacturer: $("#manufacturer").val().trim() || null,
+            Firmware: $("#firmware").val().trim() || null,
+            Category: $("#category").val().trim() || null,
             ConsumerName: consumerName,
             Status: $("#status").val(),
-            InstallTsUtc: $("#installTsUtc").val()
+            InstallTsUtc: $("#installTsUtc").val() ? new Date($("#installTsUtc").val()).toISOString() : null
         };
 
         const ajaxOptions = {
@@ -316,8 +319,15 @@
             type: serialNo ? "PUT" : "POST",
             contentType: "application/json",
             data: JSON.stringify(serialNo ? { Firmware: meter.Firmware, Status: meter.Status } : meter),
-            success: () => { alert("Meter saved successfully!"); loadMeters(); bootstrap.Modal.getInstance(document.getElementById('meterModal')).hide(); },
-            error: xhr => { const msg = xhr.responseJSON?.message || xhr.statusText; alert("Error saving meter: " + msg); }
+            success: () => {
+                alert("Meter saved successfully!");
+                loadMeters();
+                bootstrap.Modal.getInstance(document.getElementById('meterModal')).hide();
+            },
+            error: xhr => {
+                const msg = xhr.responseJSON?.message || xhr.responseText || xhr.statusText;
+                alert("Error saving meter: " + msg);
+            }
         };
         $.ajax(ajaxOptions);
     }

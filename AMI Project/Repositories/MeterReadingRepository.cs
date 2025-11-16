@@ -1,7 +1,13 @@
 using AMI_Project.Data;
+using AMI_Project.Data.Models;
 using AMI_Project.Models;
 using AMI_Project.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AMI_Project.Repositories
 {
@@ -38,6 +44,17 @@ namespace AMI_Project.Repositories
                 .ToListAsync(ct);
         }
 
+        public async Task<IEnumerable<MeterReading>> GetByMeterSerialNoForMonthAsync(string serialNo, int year, int month, CancellationToken ct)
+        {
+            var start = new DateTime(year, month, 1, 0, 0, 0, DateTimeKind.Utc);
+            var end = start.AddMonths(1);
+            return await _context.MeterReadings
+                .AsNoTracking()
+                .Where(r => r.MeterSerialNo == serialNo && r.ReadingDateTime >= start && r.ReadingDateTime < end)
+                .OrderBy(r => r.ReadingDateTime)
+                .ToListAsync(ct);
+        }
+
         public async Task<MeterReading> AddAsync(MeterReading entity, CancellationToken ct)
         {
             await _context.MeterReadings.AddAsync(entity, ct);
@@ -45,11 +62,25 @@ namespace AMI_Project.Repositories
             return entity;
         }
 
+        public async Task<IEnumerable<MeterReading>> AddRangeAsync(IEnumerable<MeterReading> entities, CancellationToken ct)
+        {
+            await _context.MeterReadings.AddRangeAsync(entities, ct);
+            await _context.SaveChangesAsync(ct);
+            return entities.ToList();
+        }
+
         public async Task<MeterReading> UpdateAsync(MeterReading entity, CancellationToken ct)
         {
             _context.MeterReadings.Update(entity);
             await _context.SaveChangesAsync(ct);
             return entity;
+        }
+
+        public async Task<IEnumerable<MeterReading>> UpdateRangeAsync(IEnumerable<MeterReading> entities, CancellationToken ct)
+        {
+            _context.MeterReadings.UpdateRange(entities);
+            await _context.SaveChangesAsync(ct);
+            return entities.ToList();
         }
 
         public async Task DeleteAsync(long id, CancellationToken ct)
@@ -62,9 +93,32 @@ namespace AMI_Project.Repositories
             }
         }
 
-        public async Task SaveChangesAsync(CancellationToken ct)
+        // Monthly entity operations
+        public async Task<MonthlyMeterReading?> GetMonthlyAsync(string serialNo, int year, int month, CancellationToken ct)
         {
+            return await _context.MonthlyMeterReadings
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.MeterSerialNo == serialNo && m.Year == year && m.Month == month, ct);
+        }
+
+        public async Task<MonthlyMeterReading> UpsertMonthlyAsync(MonthlyMeterReading entity, CancellationToken ct)
+        {
+            var existing = await _context.MonthlyMeterReadings
+                .FirstOrDefaultAsync(m => m.MeterSerialNo == entity.MeterSerialNo && m.Year == entity.Year && m.Month == entity.Month, ct);
+
+            if (existing == null)
+            {
+                await _context.MonthlyMeterReadings.AddAsync(entity, ct);
+            }
+            else
+            {
+                existing.TotalConsumptionKwh = entity.TotalConsumptionKwh;
+                _context.MonthlyMeterReadings.Update(existing);
+                entity.MonthlyMeterReadingId = existing.MonthlyMeterReadingId;
+            }
+
             await _context.SaveChangesAsync(ct);
+            return entity;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace AMI_Project.Models
     {
         [Key]
         public long UserId { get; set; }
-
+        
         [Required, StringLength(256)]
         public string Email { get; set; } = null!;
 

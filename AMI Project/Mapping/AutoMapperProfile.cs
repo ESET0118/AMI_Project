@@ -1,4 +1,5 @@
-﻿using AMI_Project.DTOs.Auth;
+﻿using AMI_Project.Data.Models;
+using AMI_Project.DTOs.Auth;
 using AMI_Project.DTOs.Billing;
 using AMI_Project.DTOs.Consumers;
 using AMI_Project.DTOs.Meter;
@@ -66,6 +67,13 @@ namespace AMI_Project.Mappings
 
             CreateMap<MeterReadingUpdateDto, MeterReading>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+            CreateMap<MeterReading, MeterReadingReadDto>().ReverseMap();
+            CreateMap<MeterReadingCreateDto, MeterReading>();
+            CreateMap<MeterReading, DailyMeterReadingDto>()
+                .ForMember(d => d.Date, opt => opt.MapFrom(s => s.ReadingDateTime.Date));
+            CreateMap<MonthlyMeterReading, MonthlyMeterReadingDto>().ReverseMap();
+
 
             // -------------------------------------------------
             // 🏢 ORG UNIT

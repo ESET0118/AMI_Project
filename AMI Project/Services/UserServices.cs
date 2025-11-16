@@ -15,7 +15,6 @@ namespace AMI_Project.Services
             return await _context.Users.Include(u => u.Roles).ToListAsync(ct);
         }
 
-
         public async Task<User?> GetByEmailAsync(string email, CancellationToken ct)
             => await _context.Users.Include(u => u.Roles)
                                    .FirstOrDefaultAsync(u => u.Email == email, ct);
@@ -32,5 +31,15 @@ namespace AMI_Project.Services
 
         public async Task SaveChangesAsync(CancellationToken ct)
             => await _context.SaveChangesAsync(ct);
+
+        public void Delete(User user)
+        {
+            _context.Users.Remove(user);
+        }
+
+        public void Update(User user)
+        {
+            _context.Users.Update(user);
+        }
     }
 }

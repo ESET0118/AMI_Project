@@ -600,7 +600,7 @@
         }
       }
     },
-    "/api/MeterReading/meter/{serialNo}": {
+    "/api/MeterReading/meter/{serialNo}/calendar": {
       "get": {
         "tags": [
           "MeterReading"
@@ -613,8 +613,119 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "month",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MeterReading/meter/{serialNo}/monthly": {
+      "get": {
+        "tags": [
+          "MeterReading"
+        ],
+        "parameters": [
+          {
+            "name": "serialNo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "month",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MeterReading/meter/{serialNo}/bulk": {
+      "post": {
+        "tags": [
+          "MeterReading"
+        ],
+        "parameters": [
+          {
+            "name": "serialNo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "month",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BulkMeterReadingCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BulkMeterReadingCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BulkMeterReadingCreateDto"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -1064,26 +1175,60 @@
             "description": "OK"
           }
         }
-      },
-      "post": {
+      }
+    },
+    "/api/Users/{id}": {
+      "get": {
         "tags": [
           "Users"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/UserUpdateDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/UserUpdateDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/UserUpdateDto"
               }
             }
           }
@@ -1093,10 +1238,8 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/api/Users/{id}": {
-      "get": {
+      },
+      "delete": {
         "tags": [
           "Users"
         ],
@@ -1214,6 +1357,38 @@
           },
           "tariffSlab": {
             "$ref": "#/components/schemas/TariffSlab"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BulkMeterReadingCreateDto": {
+        "required": [
+          "meterSerialNo",
+          "month",
+          "readings",
+          "year"
+        ],
+        "type": "object",
+        "properties": {
+          "meterSerialNo": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "month": {
+            "maximum": 12,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "readings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SingleDayMeterReadingDto"
+            }
           }
         },
         "additionalProperties": false
@@ -1519,6 +1694,13 @@
           },
           "consumer": {
             "$ref": "#/components/schemas/Consumer"
+          },
+          "monthlyMeterReadings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MonthlyMeterReading"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1660,6 +1842,35 @@
           "status": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MonthlyMeterReading": {
+        "type": "object",
+        "properties": {
+          "monthlyMeterReadingId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "meterSerialNo": {
+            "type": "string",
+            "nullable": true
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "month": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalConsumptionKwh": {
+            "type": "number",
+            "format": "double"
+          },
+          "meterSerialNoNavigation": {
+            "$ref": "#/components/schemas/Meter"
           }
         },
         "additionalProperties": false
@@ -1850,6 +2061,50 @@
             "items": {
               "$ref": "#/components/schemas/User"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SingleDayMeterReadingDto": {
+        "required": [
+          "consumptionKwh",
+          "date"
+        ],
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "consumptionKwh": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "voltage": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "ampere": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "powerFactor": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "frequency": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "meterReadingId": {
+            "type": "integer",
+            "format": "int64",
             "nullable": true
           }
         },
@@ -2084,6 +2339,31 @@
             "items": {
               "$ref": "#/components/schemas/Role"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserUpdateDto": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "format": "tel",
+            "nullable": true
+          },
+          "emailConfirmed": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
             "nullable": true
           }
         },

@@ -18,6 +18,7 @@ namespace AMI_Project.Services
         public decimal? GenerateBill(string meterSerialNo)
         {
             // 1️⃣ Fetch meter with readings and related consumer + tariff + slabs
+
             var meter = _context.Meters
                 .Include(m => m.MeterReadings)
                 .Include(m => m.Consumer)

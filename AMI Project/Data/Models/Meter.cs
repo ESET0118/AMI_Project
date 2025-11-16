@@ -1,9 +1,10 @@
-﻿using System;
+﻿using AMI_Project.Data.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using Microsoft.EntityFrameworkCore;
 
 namespace AMI_Project.Models;
 
@@ -54,4 +55,7 @@ public partial class Meter
     [JsonIgnore] // prevent serialization
 
     public virtual ICollection<MeterReading> MeterReadings { get; set; } = new List<MeterReading>();
+
+    [InverseProperty("MeterSerialNoNavigation")]
+    public virtual ICollection<MonthlyMeterReading> MonthlyMeterReadings { get; set; } = new List<MonthlyMeterReading>();
 }

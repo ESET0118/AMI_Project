@@ -1,67 +1,110 @@
-﻿using AMI_Project.Models;
+﻿using AMI_Project.Data;
+using AMI_Project.DTOs.Users;
+using AMI_Project.Models;
 using AMI_Project.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AMI_Project.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize] // Protect all endpoints with JWT
     public class UsersController : ControllerBase
     {
         private readonly IUserServices _userService;
+        private readonly AMIDbContext _context;
 
-        public UsersController(IUserServices userService)
+        public UsersController(IUserServices userService, AMIDbContext context)
         {
             _userService = userService;
+            _context = context;
         }
 
-        // GET: api/users
+        // ✅ GET: api/users
         [HttpGet]
-        public async Task<IActionResult> GetUsers(CancellationToken ct)
+        public async Task<IActionResult> GetAll(CancellationToken ct)
         {
-            var users = await _userService.GetAllUsersAsync(ct); // We'll add this method
-            var result = users.Select(u => new
+            var users = await _userService.GetAllUsersAsync(ct);
+
+            // Map to DTO to avoid circular reference issues
+            var userDtos = users.Select(u => new
             {
-                u.UserId,
-                u.Email,
-                u.DisplayName,
-                Role = u.Roles.Select(r => r.Name).FirstOrDefault() ?? "N/A",
-                u.CreatedAt
+                userId = u.UserId,
+                email = u.Email,
+                displayName = u.DisplayName,
+                role = u.Roles.FirstOrDefault()?.Name ?? "User",
+                createdAt = u.CreatedAt
             });
 
-            return Ok(result);
+            return Ok(userDtos);
         }
 
-        // GET: api/users/{id}
-        [HttpGet("{id:long}")]
-        public async Task<IActionResult> GetUser(long id, CancellationToken ct)
+        // ✅ GET: api/users/{id}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(long id, CancellationToken ct)
         {
             var user = await _userService.GetByIdAsync(id, ct);
-            if (user == null) return NotFound();
+            if (user == null)
+                return NotFound(new { message = "User not found" });
 
-            return Ok(new
+            var dto = new
             {
-                user.UserId,
-                user.Email,
-                user.DisplayName,
-                Role = user.Roles.Select(r => r.Name).FirstOrDefault() ?? "N/A",
-                user.CreatedAt
-            });
+                userId = user.UserId,
+                email = user.Email,
+                displayName = user.DisplayName,
+                role = user.Roles.FirstOrDefault()?.Name ?? "User",
+                createdAt = user.CreatedAt
+            };
+
+            return Ok(dto);
         }
 
-        // POST: api/users
-        [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] User user, CancellationToken ct)
+        // ✅ PUT: api/users/{id}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(long id, [FromBody] UserUpdateDto dto, CancellationToken ct)
         {
-            if (await _userService.EmailExistsAsync(user.Email, ct))
-                return BadRequest(new { Message = "Email already exists." });
+            var user = await _context.Users
+                .Include(u => u.Roles)
+                .FirstOrDefaultAsync(u => u.UserId == id, ct);
 
-            await _userService.AddAsync(user, ct);
+            if (user == null)
+                return NotFound(new { message = "User not found" });
+
+            if (!string.IsNullOrWhiteSpace(dto.DisplayName))
+                user.DisplayName = dto.DisplayName;
+
+            if (!string.IsNullOrWhiteSpace(dto.Phone))
+                user.Phone = dto.Phone;
+
+            if (dto.EmailConfirmed.HasValue)
+                user.EmailConfirmed = dto.EmailConfirmed.Value;
+
+            if (!string.IsNullOrWhiteSpace(dto.Role))
+            {
+                user.Roles.Clear();
+                var role = await _context.Roles.FirstOrDefaultAsync(r => r.Name == dto.Role, ct);
+                if (role != null)
+                    user.Roles.Add(role);
+            }
+
+            _userService.Update(user);
             await _userService.SaveChangesAsync(ct);
 
-            return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
+            return Ok(new { message = "User updated successfully." });
+        }
+
+        // ✅ DELETE: api/users/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(long id, CancellationToken ct)
+        {
+            var user = await _userService.GetByIdAsync(id, ct);
+            if (user == null)
+                return NotFound(new { message = "User not found" });
+
+            _userService.Delete(user);
+            await _userService.SaveChangesAsync(ct);
+
+            return Ok(new { message = "User deleted successfully." });
         }
     }
 }
