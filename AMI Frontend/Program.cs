@@ -15,9 +15,12 @@
             builder.Services.AddHttpClient();
 
             // ✅ Add Session for storing JWTs or user info
+            builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromHours(1);
+                options.IdleTimeout = TimeSpan.FromMinutes(30); // Session timeout
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });

@@ -71,6 +71,34 @@ namespace AMI_Project.Services
                 TariffName = c.Tariff?.Name
             };
         }
+        // GET BY NAME
+        public async Task<ConsumerReadDto?> GetByNameAsync(string name, CancellationToken ct)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return null;
+
+            // Use repository method to get consumer by name
+            var c = await _repo.GetByNameAsync(name.Trim(), ct);
+            if (c == null) return null;
+
+            var meterCount = c.Meters?.Count ?? 0;
+
+            return new ConsumerReadDto
+            {
+                ConsumerId = c.ConsumerId,
+                Name = c.Name,
+                Address = c.Address,
+                Phone = c.Phone,
+                Email = c.Email,
+                Status = c.Status,
+                Lat = c.Lat,
+                Lon = c.Lon,
+                CreatedAt = c.CreatedAt,
+                MeterCount = meterCount,
+                OrgUnitName = c.OrgUnit?.Name,
+                TariffName = c.Tariff?.Name
+            };
+        }
 
         // CREATE
         public async Task<ConsumerReadDto> CreateAsync(ConsumerCreateDto dto, string createdBy, CancellationToken ct)

@@ -68,10 +68,59 @@
         }
       }
     },
-    "/api/Bill/{meterSerialNo}": {
+    "/api/Billing": {
       "get": {
         "tags": [
-          "Bill"
+          "Billing"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Billing/calculate": {
+      "post": {
+        "tags": [
+          "Billing"
+        ],
+        "parameters": [
+          {
+            "name": "meterId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Billing/{meterSerialNo}": {
+      "get": {
+        "tags": [
+          "Billing"
         ],
         "parameters": [
           {
@@ -124,6 +173,28 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Consumer/consumer/{consumerName}": {
+      "get": {
+        "tags": [
+          "Consumer"
+        ],
+        "parameters": [
+          {
+            "name": "consumerName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -215,7 +286,7 @@
         }
       }
     },
-    "/api/Dashboard": {
+    "/api/Dashboard/summary": {
       "get": {
         "tags": [
           "Dashboard"
@@ -225,24 +296,37 @@
             "description": "OK"
           }
         }
-      },
-      "post": {
+      }
+    },
+    "/api/Dashboard/dailyUsage": {
+      "get": {
         "tags": [
           "Dashboard"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { }
-            },
-            "text/json": {
-              "schema": { }
-            },
-            "application/*+json": {
-              "schema": { }
-            }
+        "responses": {
+          "200": {
+            "description": "OK"
           }
-        },
+        }
+      }
+    },
+    "/api/Dashboard/topMeters": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Dashboard/recentReadings": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -426,6 +510,28 @@
         "parameters": [
           {
             "name": "serialNo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/meters/consumer/{consumerName}": {
+      "get": {
+        "tags": [
+          "Meter"
+        ],
+        "parameters": [
+          {
+            "name": "consumerName",
             "in": "path",
             "required": true,
             "schema": {

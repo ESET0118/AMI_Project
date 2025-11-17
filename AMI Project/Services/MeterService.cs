@@ -103,6 +103,28 @@ namespace AMI_Project.Services
                 ConsumerName = meter.Consumer?.Name
             };
         }
+        public async Task<IEnumerable<MeterReadDto>> GetByConsumerNameAsync(string consumerName, CancellationToken ct)
+        {
+            if (string.IsNullOrWhiteSpace(consumerName))
+                return Enumerable.Empty<MeterReadDto>();
+
+            return await _context.Meters
+                .Include(m => m.Consumer)
+                .Where(m => m.Consumer != null && m.Consumer.Name.Contains(consumerName))
+                .Select(m => new MeterReadDto
+                {
+                    MeterSerialNo = m.MeterSerialNo,
+                    ConsumerName = m.Consumer!.Name,
+                    IpAddress = m.IpAddress,
+                    Manufacturer = m.Manufacturer,
+                    Firmware = m.Firmware,
+                    Category = m.Category,
+                    Status = m.Status,
+                    InstallTsUtc = m.InstallTsUtc
+                })
+                .ToListAsync(ct);
+        }
+
 
         public async Task<MeterReadDto> CreateAsync(MeterCreateDto dto, CancellationToken ct)
         {

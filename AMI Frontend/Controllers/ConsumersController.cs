@@ -14,6 +14,12 @@ namespace AMI_Frontend.Controllers
 
         public IActionResult Index() => View();
 
+        [HttpGet("User")]
+        public IActionResult User()
+        {
+            return View("User");   // Loads Views/Consumers/User.cshtml
+        }
+
         [HttpGet("/api/consumers")]
         public async Task<IActionResult> GetConsumers()
         {

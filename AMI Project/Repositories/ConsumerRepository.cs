@@ -30,6 +30,14 @@ namespace AMI_Project.Repositories
                 .Include(c => c.Tariff)
                 .FirstOrDefaultAsync(c => c.ConsumerId == id, ct);
         }
+        public async Task<Consumer?> GetByNameAsync(string name, CancellationToken ct = default)
+        {
+            return await _context.Consumers
+                .Include(c => c.Meters)
+                .Include(c => c.OrgUnit)
+                .Include(c => c.Tariff)
+                .FirstOrDefaultAsync(c => c.Name == name, ct);
+        }
 
         public async Task<Consumer> AddAsync(Consumer consumer, CancellationToken ct)
         {

@@ -40,6 +40,19 @@ namespace AMI_Project.Controllers
                 return NotFound($"Meter with Serial No {serialNo} not found.");
             return Ok(meter);
         }
+        // GET: /api/meters/consumer/{consumerName}
+        [HttpGet("consumer/{consumerName}")]
+        public async Task<IActionResult> GetMetersByConsumer(string consumerName, CancellationToken ct)
+        {
+            if (string.IsNullOrWhiteSpace(consumerName))
+                return BadRequest("Consumer name cannot be empty.");
+
+            var meters = await _meterService.GetByConsumerNameAsync(consumerName, ct);
+            if (meters == null || !meters.Any())
+                return NotFound($"No meters found for consumer '{consumerName}'.");
+
+            return Ok(meters);
+        }
 
         // POST: /api/meters
         [HttpPost]

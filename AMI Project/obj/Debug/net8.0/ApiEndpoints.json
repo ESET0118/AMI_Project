@@ -32,9 +32,19 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AMI_Project.Controllers.BillController",
-    "Method": "GetBill",
-    "RelativePath": "api/Bill/{meterSerialNo}",
+    "ContainingType": "AMI_Project.Controllers.BillingController",
+    "Method": "GetAllBills",
+    "RelativePath": "api/Billing",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AMI_Project.Controllers.BillingController",
+    "Method": "GetBillByMeter",
+    "RelativePath": "api/Billing/{meterSerialNo}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -43,6 +53,32 @@
         "Name": "meterSerialNo",
         "Type": "System.String",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AMI_Project.Controllers.BillingController",
+    "Method": "Calculate",
+    "RelativePath": "api/Billing/calculate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "meterId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "fromDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "toDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -127,9 +163,25 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "AMI_Project.Controllers.ConsumerController",
+    "Method": "GetMetersByConsumer",
+    "RelativePath": "api/Consumer/consumer/{consumerName}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "consumerName",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "AMI_Project.Controllers.DashboardController",
-    "Method": "Get",
-    "RelativePath": "api/Dashboard",
+    "Method": "GetDailyUsage",
+    "RelativePath": "api/Dashboard/dailyUsage",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -138,18 +190,32 @@
   },
   {
     "ContainingType": "AMI_Project.Controllers.DashboardController",
-    "Method": "Post",
-    "RelativePath": "api/Dashboard",
-    "HttpMethod": "POST",
+    "Method": "GetRecentReadings",
+    "RelativePath": "api/Dashboard/recentReadings",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "value",
-        "Type": "System.Object",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AMI_Project.Controllers.DashboardController",
+    "Method": "GetSummary",
+    "RelativePath": "api/Dashboard/summary",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AMI_Project.Controllers.DashboardController",
+    "Method": "GetTopMeters",
+    "RelativePath": "api/Dashboard/topMeters",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -453,6 +519,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AMI_Project.Controllers.MeterController",
+    "Method": "GetMetersByConsumer",
+    "RelativePath": "api/meters/consumer/{consumerName}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "consumerName",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

@@ -2,6 +2,9 @@
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using Microsoft.AspNetCore.Http;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 
 namespace AMI_Frontend.Controllers
 {
@@ -16,38 +19,116 @@ namespace AMI_Frontend.Controllers
         }
 
         public IActionResult Login() => View();
-
         public IActionResult Register() => View();
 
-        [HttpPost]
-        public async Task<IActionResult> SaveToken([FromBody] JsonElement data)
-        {
-            if (data.TryGetProperty("token", out var tokenElement))
-            {
-                HttpContext.Session.SetString("JWTToken", tokenElement.GetString() ?? "");
-                return Ok(new { message = "Token saved successfully" });
-            }
-            return BadRequest(new { message = "Token missing" });
-        }
 
+            // GET: /Account/ConsumerLogin
+            [HttpGet]
+            public IActionResult ConsumerLogin()
+            {
+                return View(); // will return Views/Account/ConsumerLogin.cshtml
+            }
+
+        // LoginUser receives { email, password } JSON and proxies to API, returns token + roles[]
         [HttpPost]
-        public async Task<IActionResult> LoginUser(string email, string password)
+        public async Task<IActionResult> LoginUser([FromBody] LoginDto login)
         {
             var client = _httpClientFactory.CreateClient();
-            var json = JsonSerializer.Serialize(new { email, password });
+            var json = JsonSerializer.Serialize(new { email = login.Email, password = login.Password });
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var response = await client.PostAsync($"{_apiBaseUrl}/api/auth/login", content);
 
             if (!response.IsSuccessStatusCode)
-                return BadRequest("Login failed");
+            {
+                var errorMsg = await response.Content.ReadAsStringAsync();
+                return BadRequest(new { message = "Login failed: " + errorMsg });
+            }
 
             var responseBody = await response.Content.ReadAsStringAsync();
-            var jsonDoc = JsonDocument.Parse(responseBody);
-            var token = jsonDoc.RootElement.GetProperty("token").GetString();
+            using var doc = JsonDocument.Parse(responseBody);
+            var root = doc.RootElement;
 
+            // token must exist
+            string token = "";
+            if (root.TryGetProperty("token", out var tokenProp) && tokenProp.ValueKind == JsonValueKind.String)
+                token = tokenProp.GetString() ?? "";
+
+            // try to extract roles from response.user.Roles (handles strings or objects)
+            var roles = new List<string>();
+            if (root.TryGetProperty("user", out var userProp))
+            {
+                if (userProp.TryGetProperty("Roles", out var rolesProp) && rolesProp.ValueKind == JsonValueKind.Array)
+                {
+                    foreach (var r in rolesProp.EnumerateArray())
+                    {
+                        if (r.ValueKind == JsonValueKind.String)
+                        {
+                            var s = r.GetString();
+                            if (!string.IsNullOrWhiteSpace(s)) roles.Add(s);
+                        }
+                        else if (r.ValueKind == JsonValueKind.Object)
+                        {
+                            // common shape: { "Name": "Admin" } or { "name": "Admin" }
+                            if (r.TryGetProperty("Name", out var nameProp) && nameProp.ValueKind == JsonValueKind.String)
+                            {
+                                var s = nameProp.GetString();
+                                if (!string.IsNullOrWhiteSpace(s)) roles.Add(s);
+                            }
+                            else if (r.TryGetProperty("name", out var nameLowerProp) && nameLowerProp.ValueKind == JsonValueKind.String)
+                            {
+                                var s = nameLowerProp.GetString();
+                                if (!string.IsNullOrWhiteSpace(s)) roles.Add(s);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // If no roles found in user object, decode JWT and extract role claims
+            if (!roles.Any() && !string.IsNullOrWhiteSpace(token))
+            {
+                try
+                {
+                    var handler = new JwtSecurityTokenHandler();
+                    var jwt = handler.ReadJwtToken(token);
+
+                    // Role claim types may be: ClaimTypes.Role, "role", "roles", or "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+                    var claimRoles = jwt.Claims
+                        .Where(c => string.Equals(c.Type, "role", StringComparison.OrdinalIgnoreCase)
+                                 || string.Equals(c.Type, "roles", StringComparison.OrdinalIgnoreCase)
+                                 || string.Equals(c.Type, "http://schemas.microsoft.com/ws/2008/06/identity/claims/role", StringComparison.OrdinalIgnoreCase)
+                                 || c.Type.EndsWith("/role", StringComparison.OrdinalIgnoreCase) // fallback
+                                 ).Select(c => c.Value)
+                        .Where(v => !string.IsNullOrWhiteSpace(v))
+                        .ToList();
+
+                    if (claimRoles.Any()) roles.AddRange(claimRoles);
+                }
+                catch
+                {
+                    // ignore decode errors and continue; roles remains empty
+                }
+            }
+
+            // Normalize roles (trim + as-is)
+            roles = roles.Select(r => r.Trim()).Where(r => !string.IsNullOrWhiteSpace(r)).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+
+            // Save JWT (and roles) into session so server-side pages can use it
             HttpContext.Session.SetString("JWTToken", token ?? "");
-            return Ok(new { token });
+            HttpContext.Session.SetString("UserRoles", string.Join(",", roles));
+
+            return Ok(new
+            {
+                token,
+                roles
+            });
         }
+    }
+
+    public class LoginDto
+    {
+        public string Email { get; set; } = "";
+        public string Password { get; set; } = "";
     }
 }

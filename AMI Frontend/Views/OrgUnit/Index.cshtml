@@ -200,12 +200,15 @@
     let allUnits = [];
     let selectedUnitId = null;
 
+
     $(document).ready(async function () {
         await loadAllUnits();
         populateZones();
         populateDTRDirect();
         setupHandlers();
     });
+
+
 
     // 🔹 Load all OrgUnits once
     async function loadAllUnits() {
@@ -282,6 +285,26 @@
             $("#selectedHierarchy").text("None selected");
             $("#actionButtons").hide();
         });
+
+            // 🔹 Hide Add button if role is not Admin
+    function getUserRole() {
+        const token = localStorage.getItem("jwtToken");
+        if (!token) return null;
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return payload["role"] || payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+    }
+
+    $(document).ready(async function () {
+        const userRole = getUserRole();
+        if (userRole !== "Admin") {
+            $("#addOrgUnitBtn").hide();
+        }
+
+        await loadAllUnits();
+        populateZones();
+        populateDTRDirect();
+        setupHandlers();
+    });
 
         // Add
         $("#addOrgUnitBtn").click(function () {

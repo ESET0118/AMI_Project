@@ -3,6 +3,8 @@ using System.Net.Http.Headers;
 
 namespace AMI_Frontend.Controllers
 {
+    [Route("Users")]
+
     public class UsersController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
@@ -13,7 +15,13 @@ namespace AMI_Frontend.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-        public IActionResult Index() => View();
+            [HttpGet("")]
+            [HttpGet("Index")]
+            public IActionResult Index() => View();
+
+        [HttpGet("User")]
+        public IActionResult UserRedirect() => RedirectToAction("Index");
+
 
         [HttpPut("/Users/Update/{id}")]
         public async Task<IActionResult> UpdateUser(long id, [FromBody] object dto)

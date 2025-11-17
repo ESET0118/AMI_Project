@@ -8,6 +8,8 @@ namespace AMI_Project.Services.Interfaces
     {
         Task<PagedResult<MeterReadDto>> GetMetersAsync(MeterFilterDto filter, CancellationToken ct);
         Task<MeterReadDto?> GetBySerialAsync(string serialNo, CancellationToken ct);
+        Task<IEnumerable<MeterReadDto>> GetByConsumerNameAsync(string consumerName, CancellationToken ct);
+
         Task<MeterReadDto> CreateAsync(MeterCreateDto dto, CancellationToken ct);
         Task<MeterReadDto> UpdateAsync(string serialNo, MeterUpdateDto dto, CancellationToken ct);
         Task<PagedResult<MeterReadDto>> GetAllMetersAsync(CancellationToken ct);

@@ -1,5 +1,6 @@
 ﻿using AMI_Project.DTOs.Consumers;
 using AMI_Project.Services;
+using AMI_Project.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,6 +27,17 @@ namespace AMI_Project.Controllers
             var result = await _service.GetAllAsync(ct);
             return Ok(result);
         }
+        // GET: /api/meters/consumer/{consumerName}
+        [HttpGet("consumer/{consumerName}")]
+        public async Task<IActionResult> GetMetersByConsumer(string consumerName, CancellationToken ct)
+        {
+            var meters = await _service.GetByNameAsync(consumerName, ct);
+            if (meters == null)
+                return NotFound($"No meters found for consumer '{consumerName}'.");
+
+            return Ok(meters);
+        }
+
 
         // -------------------------
         // GET: api/consumer/{id}

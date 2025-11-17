@@ -3,8 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\meterscsv\\upload.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\meterscsv\\upload.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\shared\\_navuser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\shared\\_navuser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\dashboard\\consumer.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\dashboard\\consumer.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\dashboard\\user.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\dashboard\\user.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\billing\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\billing\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\meterreadings\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -15,32 +31,84 @@
       "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\meters\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\controllers\\meterreadingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:controllers\\meterreadingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\users\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\users\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\consumers\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\consumers\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\account\\consumerlogin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\account\\consumerlogin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\controllers\\billingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:controllers\\billingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\controllers\\consumerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:controllers\\consumerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\tariff\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\tariff\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\users\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\users\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\ami frontend.csproj.backup.tmp||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:ami frontend.csproj.backup.tmp||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\todrules\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\todrules\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\tariffslabs\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\tariffslabs\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\orgunit\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\orgunit\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\models\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:models\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\meterscsv\\upload.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\meterscsv\\upload.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\controllers\\meterreadingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:controllers\\meterreadingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\controllers\\meterscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -51,22 +119,6 @@
       "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:controllers\\metercsvcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\controllers\\billingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:controllers\\billingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\billing\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\billing\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\ami frontend.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:ami frontend.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
@@ -75,8 +127,8 @@
       "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:controllers\\todrulescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|c:\\users\\hp\\desktop\\ami\\ami frontend\\views\\todrules\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{333FC8EE-FE9B-4CDE-B9F9-B0458FD145F8}|AMI Frontend.csproj|solutionrelative:views\\todrules\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Consumers\\User.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Views\\Consumers\\User.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -86,11 +138,190 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 12,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Consumer.cshtml",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Dashboard\\Consumer.cshtml",
+              "RelativeDocumentMoniker": "Views\\Dashboard\\Consumer.cshtml",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Dashboard\\Consumer.cshtml",
+              "RelativeToolTip": "Views\\Dashboard\\Consumer.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-16T19:55:07.487Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ConsumerLogin.cshtml",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Account\\ConsumerLogin.cshtml",
+              "RelativeDocumentMoniker": "Views\\Account\\ConsumerLogin.cshtml",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Account\\ConsumerLogin.cshtml",
+              "RelativeToolTip": "Views\\Account\\ConsumerLogin.cshtml",
+              "ViewState": "AgIAAGYAAAAAAAAAAAAAwHAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-16T19:31:37.876Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T16:44:32.316Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "AMI Frontend.csproj.Backup.tmp",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\AMI Frontend.csproj.Backup.tmp",
+              "RelativeDocumentMoniker": "AMI Frontend.csproj.Backup.tmp",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\AMI Frontend.csproj.Backup.tmp",
+              "RelativeToolTip": "AMI Frontend.csproj.Backup.tmp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-11-16T17:10:24.895Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "Controllers\\UsersController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T16:41:09.564Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\TariffSlabs\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\TariffSlabs\\Index.cshtml",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\TariffSlabs\\Index.cshtml",
+              "RelativeToolTip": "Views\\TariffSlabs\\Index.cshtml",
+              "ViewState": "AgIAAJYAAAAAAAAAAAAkwOcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-16T16:33:23.08Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\OrgUnit\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\OrgUnit\\Index.cshtml",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\OrgUnit\\Index.cshtml",
+              "RelativeToolTip": "Views\\OrgUnit\\Index.cshtml",
+              "ViewState": "AgIAABYBAAAAAAAAAAAkwDMBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-16T16:30:01.45Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ConsumersController.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\ConsumersController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ConsumersController.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\ConsumersController.cs",
+              "RelativeToolTip": "Controllers\\ConsumersController.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAwA4AAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T15:50:22.203Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "User.cshtml",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Consumers\\User.cshtml",
+              "RelativeDocumentMoniker": "Views\\Consumers\\User.cshtml",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Consumers\\User.cshtml",
+              "RelativeToolTip": "Views\\Consumers\\User.cshtml",
+              "ViewState": "AgIAAHQAAAAAAAAAAAAAwIEAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-16T15:49:13.407Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "_NavUser.cshtml",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Shared\\_NavUser.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_NavUser.cshtml",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Shared\\_NavUser.cshtml*",
+              "RelativeToolTip": "Views\\Shared\\_NavUser.cshtml*",
+              "ViewState": "AgIAAKYBAAAAAAAAAAAAALoBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-16T15:35:23.209Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "User.cshtml",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Dashboard\\User.cshtml",
+              "RelativeDocumentMoniker": "Views\\Dashboard\\User.cshtml",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Dashboard\\User.cshtml",
+              "RelativeToolTip": "Views\\Dashboard\\User.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-16T15:31:14.085Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "LoginViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Models\\LoginViewModel.cs",
+              "RelativeDocumentMoniker": "Models\\LoginViewModel.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Models\\LoginViewModel.cs",
+              "RelativeToolTip": "Models\\LoginViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T09:21:47.915Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Register.cshtml",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Account\\Register.cshtml",
+              "RelativeDocumentMoniker": "Views\\Account\\Register.cshtml",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Account\\Register.cshtml",
+              "RelativeToolTip": "Views\\Account\\Register.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-16T09:25:50.672Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 10,
+              "Title": "DashboardController.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\DashboardController.cs",
+              "RelativeDocumentMoniker": "Controllers\\DashboardController.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\DashboardController.cs",
+              "RelativeToolTip": "Controllers\\DashboardController.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAIwCcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T08:04:51.228Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
               "Title": "MetersController.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\MetersController.cs",
               "RelativeDocumentMoniker": "Controllers\\MetersController.cs",
@@ -102,19 +333,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 15,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Tariff\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Tariff\\Index.cshtml",
               "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Tariff\\Index.cshtml",
               "RelativeToolTip": "Views\\Tariff\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwBAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-11T04:26:58.82Z"
+              "WhenOpened": "2025-11-11T04:26:58.82Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 29,
               "Title": "AMI Frontend.csproj",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\AMI Frontend.csproj",
               "RelativeDocumentMoniker": "AMI Frontend.csproj",
@@ -122,7 +354,8 @@
               "RelativeToolTip": "AMI Frontend.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-11-10T10:01:37.741Z"
+              "WhenOpened": "2025-11-10T10:01:37.741Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -132,97 +365,92 @@
               "RelativeDocumentMoniker": "Controllers\\BillingController.cs",
               "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\BillingController.cs",
               "RelativeToolTip": "Controllers\\BillingController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T08:42:51.828Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Billing\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Billing\\Index.cshtml",
-              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Billing\\Index.cshtml",
-              "RelativeToolTip": "Views\\Billing\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-10T08:41:42.765Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Consumers\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Consumers\\Index.cshtml",
-              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Consumers\\Index.cshtml",
-              "RelativeToolTip": "Views\\Consumers\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACoBAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-10T07:21:07.945Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Dashboard\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Dashboard\\Index.cshtml",
-              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Dashboard\\Index.cshtml",
-              "RelativeToolTip": "Views\\Dashboard\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADIAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-10T07:03:03.723Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "Login.cshtml",
-              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Account\\Login.cshtml",
-              "RelativeDocumentMoniker": "Views\\Account\\Login.cshtml",
-              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Account\\Login.cshtml",
-              "RelativeToolTip": "Views\\Account\\Login.cshtml",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAAALcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-10T06:54:42.048Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "AccountController.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\AccountController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AccountController.cs",
-              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\AccountController.cs",
-              "RelativeToolTip": "Controllers\\AccountController.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAmwCsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T06:51:55.678Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "UsersController.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\UsersController.cs",
-              "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
-              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\UsersController.cs",
-              "RelativeToolTip": "Controllers\\UsersController.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAxwC4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T06:41:42.855Z"
+              "WhenOpened": "2025-11-10T08:42:51.828Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Users\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Users\\Index.cshtml",
-              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Users\\Index.cshtml",
-              "RelativeToolTip": "Views\\Users\\Index.cshtml",
-              "ViewState": "AgIAALgAAAAAAAAAAAAiwLwAAAAFAAAAAAAAAA==",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Billing\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Billing\\Index.cshtml",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Billing\\Index.cshtml",
+              "RelativeToolTip": "Views\\Billing\\Index.cshtml",
+              "ViewState": "AgIAAGEAAAAAAAAAAAAAwIYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-10T06:41:31.664Z"
+              "WhenOpened": "2025-11-10T08:41:42.765Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Consumers\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Consumers\\Index.cshtml",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Consumers\\Index.cshtml",
+              "RelativeToolTip": "Views\\Consumers\\Index.cshtml",
+              "ViewState": "AgIAAAwBAAAAAAAAAAAAwFABAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-10T07:21:07.945Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 11,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Dashboard\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Dashboard\\Index.cshtml",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Dashboard\\Index.cshtml",
+              "RelativeToolTip": "Views\\Dashboard\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-10T07:03:03.723Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "Views\\Account\\Login.cshtml",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Account\\Login.cshtml",
+              "RelativeToolTip": "Views\\Account\\Login.cshtml",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAiwFgAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-10T06:54:42.048Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AccountController.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "Controllers\\AccountController.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAswB0AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-10T06:51:55.678Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Users\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Users\\Index.cshtml",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Users\\Index.cshtml",
+              "RelativeToolTip": "Views\\Users\\Index.cshtml",
+              "ViewState": "AgIAAF4AAAAAAAAAAAAkwI8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-10T06:41:31.664Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
               "Title": "MeterCsvController.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\MeterCsvController.cs",
               "RelativeDocumentMoniker": "Controllers\\MeterCsvController.cs",
@@ -234,32 +462,32 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 25,
               "Title": "Upload.cshtml",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\MetersCsv\\Upload.cshtml",
               "RelativeDocumentMoniker": "Views\\MetersCsv\\Upload.cshtml",
-              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\MetersCsv\\Upload.cshtml*",
-              "RelativeToolTip": "Views\\MetersCsv\\Upload.cshtml*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAI4AAAAAAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\MetersCsv\\Upload.cshtml",
+              "RelativeToolTip": "Views\\MetersCsv\\Upload.cshtml",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAADYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-10T06:10:14.31Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T06:10:14.31Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Meters\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Meters\\Index.cshtml",
               "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Meters\\Index.cshtml",
               "RelativeToolTip": "Views\\Meters\\Index.cshtml",
-              "ViewState": "AgIAADgBAAAAAAAAAAAuwFgBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADYBAAAAAAAAAAAiwFgBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-10T05:17:51.961Z"
+              "WhenOpened": "2025-11-10T05:17:51.961Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 26,
               "Title": "MeterReadingController.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\MeterReadingController.cs",
               "RelativeDocumentMoniker": "Controllers\\MeterReadingController.cs",
@@ -271,32 +499,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\MeterReadings\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\MeterReadings\\Index.cshtml",
               "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\MeterReadings\\Index.cshtml",
               "RelativeToolTip": "Views\\MeterReadings\\Index.cshtml",
-              "ViewState": "AgIAAH4BAAAAAAAAAAAwwKEBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAA4BAAAAAAAAAAAAwDMBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-11-10T05:10:32.9Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 3,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
               "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAOIBAAAHAAAAAAAAAA==",
+              "ViewState": "AgIAAL0BAAAAAAAAAAAAwMkBAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-10T04:26:04.083Z"
+              "WhenOpened": "2025-11-10T04:26:04.083Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 30,
               "Title": "TODRulesController.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Controllers\\TODRulesController.cs",
               "RelativeDocumentMoniker": "Controllers\\TODRulesController.cs",
@@ -308,15 +537,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\TODRules\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\TODRules\\Index.cshtml",
               "ToolTip": "C:\\Users\\HP\\Desktop\\AMI\\AMI Frontend\\Views\\TODRules\\Index.cshtml",
               "RelativeToolTip": "Views\\TODRules\\Index.cshtml",
-              "ViewState": "AgIAALcAAAAAAAAAAADwv8cAAAAGAAAAAAAAAA==",
+              "ViewState": "AgIAAH8AAAAAAAAAAAAkwKkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-10T04:16:58.651Z"
+              "WhenOpened": "2025-11-10T04:16:58.651Z",
+              "EditorCaption": ""
             }
           ]
         }

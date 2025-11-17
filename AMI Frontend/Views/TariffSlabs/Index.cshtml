@@ -207,6 +207,30 @@
         });
     }
 
+        // 🔹 Get user role from JWT
+    function getUserRole() {
+        const token = localStorage.getItem("jwtToken");
+        if (!token) return null;
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return payload["role"] || payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+    }
+
+    $(document).ready(function () {
+        const role = getUserRole();
+
+        // Hide add button if not admin
+        if (role !== "Admin") {
+            $("#addSlabBtn").hide();          // Hide Add button
+            $(document).on("mouseenter", ".editBtn, .deleteBtn", function () {
+                $(this).hide();              // Hide all edit/delete buttons on hover
+            });
+            $(".editBtn, .deleteBtn").hide(); // Also hide any already rendered buttons
+        }
+
+        loadSlabs();
+    });
+
+
     // 🟣 Add new slab
     $("#addSlabBtn").click(() => {
         $("#slabForm")[0].reset();

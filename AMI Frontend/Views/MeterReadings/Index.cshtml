@@ -1,156 +1,32 @@
 ﻿@{
-    ViewBag.Title = "Meter Readings";
+    ViewBag.Title = "Meter Readings & Billing";
     Layout = "~/Views/Shared/_Layout.cshtml";
     string serialNo = ViewBag.SerialNo ?? "";
 }
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-<style>
-    /* Buttons */
-    .btn-gradient {
-        background: linear-gradient(135deg, #6a11cb, #2575fc);
-        color: #fff;
-        border: none;
-        font-weight: 600;
-        transition: 0.3s;
-    }
-
-        .btn-gradient:hover {
-            background: linear-gradient(135deg, #2575fc, #6a11cb);
-        }
-
-    .btn-save {
-        background: linear-gradient(135deg, #28a745, #1e7e34);
-        color: #fff;
-        border: none;
-        font-weight: 600;
-        transition: 0.2s;
-    }
-
-        .btn-save:hover {
-            background: linear-gradient(135deg, #1e7e34, #28a745);
-        }
-
-    .btn-pay {
-        background: linear-gradient(135deg, #ff416c, #ff4b2b);
-        color: #fff;
-        border: none;
-        font-weight: 700;
-        transition: 0.3s;
-        box-shadow: 0 0 8px rgba(255,75,43,0.7);
-    }
-
-        .btn-pay:hover {
-            background: linear-gradient(135deg, #ff4b2b, #ff416c);
-            box-shadow: 0 0 15px rgba(255,75,43,0.9);
-        }
-
-    /* Calendar title & summary */
-    #calendarTitle {
-        font-weight: 700;
-        font-size: 1.6rem;
-    }
-
-    #monthlySummary {
-        font-size: 1rem;
-        color: #555;
-    }
-
-    .picker-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-        align-items: center;
-    }
-
-        .picker-container > div {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            min-width: 180px;
-        }
-
-    #monthNameDisplay h3 {
-        font-size: 2rem;
-        font-weight: 700;
-        text-align: center;
-        margin-bottom: 0.5rem;
-    }
-
-    table input.form-control-sm {
-        min-width: 80px;
-        text-align: center;
-    }
-
-    /* Billing Modal */
-    #billModal .modal-content {
-        background: linear-gradient(145deg, #ffffff, #f3f3f3);
-        border-radius: 15px;
-        box-shadow: 0 5px 25px rgba(0,0,0,0.2);
-    }
-
-    #billModal .modal-header {
-        background: linear-gradient(135deg, #6a11cb, #2575fc);
-        color: #fff;
-        text-align: center;
-        justify-content: center;
-        border-bottom: none;
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
-        flex-direction: column;
-    }
-
-        #billModal .modal-header h4 {
-            font-size: 2rem;
-            font-weight: 900;
-            text-shadow: 0 0 10px #fff, 0 0 20px #6a11cb;
-            margin-bottom: 0;
-        }
-
-        #billModal .modal-header small {
-            font-size: 0.9rem;
-            text-shadow: 0 0 5px #fff;
-        }
-
-    #billModal table {
-        font-size: 0.95rem;
-    }
-
-        #billModal table th, #billModal table td {
-            padding: 0.5rem;
-        }
-
-    #billModal .table-striped tbody tr:nth-of-type(odd) {
-        background-color: rgba(255, 255, 255, 0.05);
-    }
-
-    #billModal .text-center img {
-        border: 2px solid #ddd;
-        padding: 5px;
-        border-radius: 10px;
-    }
-
-</style>
-
 <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-        <h4 class="fw-bold text-primary"><i class="bi bi-bar-chart-line"></i> Meter Readings</h4>
+        <h4 class="fw-bold text-primary"><i class="bi bi-bar-chart-line"></i> Meter Readings & Billing</h4>
         <a class="btn btn-outline-secondary btn-sm" href="javascript:history.back()"><i class="bi bi-arrow-left"></i> Back</a>
     </div>
 
+    <!-- Picker -->
     <div class="card mb-4 shadow-sm">
-        <div class="card-body picker-container">
+        <div class="card-body d-flex flex-wrap gap-3 align-items-end">
             <div style="flex:1 1 200px;">
-                <label class="mb-0 fw-semibold">Meter Serial:</label>
-                <input type="text" class="form-control" value="@serialNo" readonly />
+                <label class="fw-semibold">Meter Serial:</label>
+                <input type="text" class="form-control" id="meterSerial" value="@serialNo" readonly />
             </div>
+
             <div style="flex:1 1 120px;">
-                <label class="mb-0 fw-semibold">Year:</label>
+                <label class="fw-semibold">Year:</label>
                 <input type="number" id="year" class="form-control" />
             </div>
+
             <div style="flex:1 1 120px;">
-                <label class="mb-0 fw-semibold">Month:</label>
+                <label class="fw-semibold">Month:</label>
                 <select id="month" class="form-select">
                     @for (int i = 1; i <= 12; i++)
                     {
@@ -158,21 +34,19 @@
                     }
                 </select>
             </div>
+
+            <div class="d-flex gap-2">
+                <button id="bulkSaveBtn" class="btn btn-save"><i class="bi bi-save"></i> Save All</button>
+                <button id="generateBillBtn" class="btn btn-gradient"><i class="bi bi-receipt"></i> Generate Bill</button>
+            </div>
         </div>
     </div>
 
     <div id="monthNameDisplay" class="mb-3"><h3></h3></div>
 
+    <!-- Calendar -->
     <div id="calendarContainer" class="card d-none shadow-sm">
         <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap">
-                <h5 id="calendarTitle" class="mb-0"></h5>
-                <div class="d-flex gap-2">
-                    <button id="bulkSaveBtn" class="btn btn-save"><i class="bi bi-save"></i> Save All</button>
-                    <button id="generateBillBtn" class="btn btn-gradient"><i class="bi bi-receipt"></i> Generate Bill</button>
-                </div>
-            </div>
-
             <div id="monthlySummary" class="mb-3"></div>
 
             <div class="table-responsive">
@@ -199,16 +73,13 @@
 <div class="modal fade" id="billModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
-            <!-- Header -->
             <div class="modal-header">
                 <h4>Esyahard Electricals</h4>
                 <small>Official Electricity Bill</small>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
 
-            <!-- Body -->
             <div class="modal-body">
-                <!-- Customer & Bill Info -->
                 <table class="table table-borderless mb-3">
                     <tbody>
                         <tr>
@@ -232,7 +103,6 @@
                     </tbody>
                 </table>
 
-                <!-- Slabs Table -->
                 <h6 class="fw-bold">Slabs Applied:</h6>
                 <table class="table table-sm table-striped table-bordered mb-3">
                     <thead class="table-light">
@@ -241,19 +111,16 @@
                     <tbody id="modalSlabsTable"></tbody>
                 </table>
 
-                <!-- QR Code -->
                 <div class="text-center mb-3">
                     <img id="modalQrCode" alt="QR Code" style="width:140px; height:140px;" />
                     <p class="small text-muted mt-1">Scan to view or pay online</p>
                 </div>
 
-                <!-- Pay Bill Button -->
                 <div class="text-center">
                     <button id="payBillBtn" class="btn btn-pay btn-lg"><i class="bi bi-cash-stack"></i> Pay Bill</button>
                 </div>
             </div>
 
-            <!-- Footer -->
             <div class="modal-footer justify-content-center">
                 <small class="text-muted">Thank you for choosing Esyahard Electricals!</small>
             </div>
@@ -266,11 +133,11 @@
 
 <script>
     const apiMeterReadingsBase = "https://localhost:7199/api/meterreading";
-    const apiBillBase = "https://localhost:7199/api/bill";
-    const meterSerialNo = "@serialNo";
+    const apiBillBase = "https://localhost:7199/api/Billing";
 
-    $(function () {
-        if(!meterSerialNo){ alert("No meter selected!"); return; }
+    $(function() {
+        const meterSerialNo = $("#meterSerial").val();
+        if(!meterSerialNo) { alert("No meter selected!"); return; }
 
         const now = new Date();
         $("#year").val(now.getUTCFullYear());
@@ -279,20 +146,20 @@
         updateMonthName();
         loadCalendar();
 
-        $("#month, #year").change(function(){ updateMonthName(); loadCalendar(); });
+        $("#month, #year").change(() => { updateMonthName(); loadCalendar(); });
         $("#bulkSaveBtn").click(bulkSave);
         $("#generateBillBtn").click(generateBill);
-
         $("#payBillBtn").click(() => alert("Thank you! Your bill has been paid."));
     });
 
-    function updateMonthName(){
+    function updateMonthName() {
         const monthIndex = parseInt($("#month").val()) - 1;
         const monthName = new Date(0, monthIndex).toLocaleString('en-US', { month: 'long' });
         $("#monthNameDisplay h3").text(monthName);
     }
 
     function loadCalendar() {
+        const meterSerialNo = $("#meterSerial").val();
         const year = parseInt($("#year").val());
         const month = parseInt($("#month").val());
 
@@ -300,47 +167,43 @@
         $("#calendarBody").html("<tr><td colspan='7'>Loading...</td></tr>");
 
         $.get(`${apiMeterReadingsBase}/meter/${encodeURIComponent(meterSerialNo)}/calendar?year=${year}&month=${month}`)
-        .done(data => {
-            $("#calendarContainer").removeClass("d-none");
-            $("#calendarTitle").text(`${data.meterSerialNo} — ${data.month}/${data.year}`);
-            $("#monthlySummary").text(`Monthly total: ${data.monthlyTotalKwh ?? 0} kWh — Monthly record exists: ${data.hasMonthlyRecord}`);
-            renderCalendar(data.days);
-        })
-        .fail(err => {
-            console.error(err);
-            $("#calendarBody").html("<tr><td colspan='7' class='text-danger'>Error loading calendar.</td></tr>");
-        });
+            .done(data => {
+                $("#calendarContainer").removeClass("d-none");
+                $("#monthlySummary").text(`Monthly total: ${data.monthlyTotalKwh ?? 0} kWh — Monthly record exists: ${data.hasMonthlyRecord}`);
+                renderCalendar(data.days);
+            })
+            .fail(() => {
+                $("#calendarBody").html("<tr><td colspan='7' class='text-danger'>Error loading calendar.</td></tr>");
+            });
     }
 
-    function renderCalendar(days){
-        if(!days || days.length === 0){
+    function renderCalendar(days) {
+        if(!days || days.length === 0) {
             $("#calendarBody").html("<tr><td colspan='7'>No readings found.</td></tr>");
             return;
         }
+
         const rows = days.map(d => {
             const dt = new Date(d.date);
             const dayNo = dt.getUTCDate();
             const weekDay = dt.toLocaleString('en-US', { weekday: 'short', timeZone: 'UTC' });
-            const consumption = d.consumptionKwh ?? "";
-            const voltage = d.voltage ?? "";
-            const ampere = d.ampere ?? "";
-            const pf = d.powerFactor ?? "";
-            const freq = d.frequency ?? "";
             return `<tr data-date="${d.date}">
                 <td>${dayNo} <small>${weekDay}</small></td>
-                <td><input class="form-control form-control-sm consumption" value="${consumption}" /></td>
-                <td><input class="form-control form-control-sm voltage" value="${voltage}" /></td>
-                <td><input class="form-control form-control-sm ampere" value="${ampere}" /></td>
-                <td><input class="form-control form-control-sm pf" value="${pf}" /></td>
-                <td><input class="form-control form-control-sm freq" value="${freq}" /></td>
+                <td><input class="form-control form-control-sm consumption" value="${d.consumptionKwh ?? ""}" /></td>
+                <td><input class="form-control form-control-sm voltage" value="${d.voltage ?? ""}" /></td>
+                <td><input class="form-control form-control-sm ampere" value="${d.ampere ?? ""}" /></td>
+                <td><input class="form-control form-control-sm pf" value="${d.powerFactor ?? ""}" /></td>
+                <td><input class="form-control form-control-sm freq" value="${d.frequency ?? ""}" /></td>
                 <td><button class="btn btn-save btn-sm save-day"><i class="bi bi-save"></i> Save</button></td>
             </tr>`;
         }).join("");
+
         $("#calendarBody").html(rows);
         $(".save-day").off("click").on("click", function(){ saveSingleDay($(this).closest("tr")); });
     }
 
-    function collectRowsData($tr = null){
+    function collectRowsData($tr = null) {
+        const meterSerialNo = $("#meterSerial").val();
         const year = parseInt($("#year").val());
         const month = parseInt($("#month").val());
         const readings = [];
@@ -366,7 +229,7 @@
         const $btn = $tr.find(".save-day");
         $btn.prop("disabled", true).text("Saving...");
         $.ajax({
-            url: `${apiMeterReadingsBase}/meter/${encodeURIComponent(meterSerialNo)}/bulk?year=${payload.year}&month=${payload.month}`,
+            url: `${apiMeterReadingsBase}/meter/${encodeURIComponent(payload.meterSerialNo)}/bulk?year=${payload.year}&month=${payload.month}`,
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(payload),
@@ -376,12 +239,12 @@
         });
     }
 
-    function bulkSave(){
+    function bulkSave() {
         const payload = collectRowsData();
         if(payload.readings.length === 0) return alert("No readings to save.");
         $("#bulkSaveBtn").prop("disabled", true).text("Saving...");
         $.ajax({
-            url: `${apiMeterReadingsBase}/meter/${encodeURIComponent(meterSerialNo)}/bulk?year=${payload.year}&month=${payload.month}`,
+            url: `${apiMeterReadingsBase}/meter/${encodeURIComponent(payload.meterSerialNo)}/bulk?year=${payload.year}&month=${payload.month}`,
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(payload),
@@ -391,11 +254,15 @@
         });
     }
 
-    function generateBill(){
+    function generateBill() {
+        const meterSerialNo = $("#meterSerial").val();
         const year = $("#year").val();
         const month = $("#month").val();
-        $.get(`${apiBillBase}/${encodeURIComponent(meterSerialNo)}`)
-            .done(data => {
+
+        if(!meterSerialNo) { alert("Meter serial is required"); return; }
+
+        $.get(`${apiBillBase}/${encodeURIComponent(meterSerialNo)}?year=${year}&month=${month}`)
+            .done(function(data) {
                 $("#modalMeterSerial").text(data.meterSerialNo);
                 $("#modalMonthYear").text(`${month}/${year}`);
                 $("#modalBillAmount").text(data.billAmount.toFixed(2));
@@ -403,15 +270,38 @@
                 $("#modalBaseRate").text(data.baseRate.toFixed(2));
                 $("#modalTaxRate").text(data.taxRate + "%");
 
-                // Slabs table
                 const slabs = (data.slabsApplied || "").split(',').map((s,i)=>`<tr><td>${i+1}</td><td>${s.trim()}</td></tr>`).join('');
                 $("#modalSlabsTable").html(slabs || "<tr><td colspan='2'>-</td></tr>");
 
                 $("#modalQrCode").attr("src", data.qrCodeUrl);
                 new bootstrap.Modal(document.getElementById('billModal')).show();
             })
-            .fail(() => alert("Error fetching bill."));
+            .fail(function(xhr) {
+                alert("Error fetching bill: " + (xhr.responseJSON?.message || xhr.responseText || xhr.statusText));
+            });
     }
 
     function parseFloatOrNull(v){ const n = parseFloat(v); return isNaN(n) ? null : n; }
 </script>
+
+<style>
+    .btn-gradient {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: #fff;
+        border: none;
+        font-weight: 600;
+    }
+
+    .btn-save {
+        background: linear-gradient(135deg, #28a745, #1e7e34);
+        color: #fff;
+        border: none;
+        font-weight: 600;
+    }
+
+    .btn-pay {
+        background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        color: #fff;
+        font-weight: 700;
+    }
+</style>

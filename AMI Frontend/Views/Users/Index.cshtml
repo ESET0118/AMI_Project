@@ -1,6 +1,6 @@
-﻿@{
-    ViewBag.Title = "Users";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿﻿@{
+ViewBag.Title = "Users";
+Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container-fluid py-4">
@@ -73,9 +73,21 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
     const apiBase = "https://localhost:7199/api/users"; // API URL
+
+    // 🔹 Get user role from JWT stored in localStorage
+    function getUserRole() {
+        const token = localStorage.getItem("jwtToken");
+        if (!token) return null;
+
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            return payload["role"] || payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+        } catch {
+            return null;
+        }
+    }
 
     function loadUsers() {
         $("#userTableBody").html("<tr><td colspan='6' class='text-center text-muted py-4'>Loading...</td></tr>");
@@ -89,29 +101,48 @@
                     return;
                 }
 
+                const role = getUserRole(); // current logged-in user role
                 let rows = "";
-                data.forEach(u => {
-                    rows += `
-                        <tr>
-                            <td>${u.userId}</td>
-                            <td>${u.email}</td>
-                            <td>${u.displayName || "-"}</td>
-                            <td><span class="badge ${u.role === 'Admin' ? 'bg-primary' : 'bg-secondary'}">${u.role}</span></td>
-                            <td>${new Date(u.createdAt).toLocaleDateString()}</td>
-                            <td class="text-center">
-                                <button class="btn btn-sm btn-outline-primary me-2 edit-btn"
-                                    data-id="${u.userId}"
-                                    data-email="${u.email}"
-                                    data-name="${u.displayName}"
-                                    data-role="${u.role}">
-                                    <i class="bi bi-pencil-square"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-danger delete-btn" data-id="${u.userId}">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </td>
-                        </tr>`;
-                });
+
+    data.forEach(u => {
+        const role = getUserRole(); // current logged-in user role
+        let actionButtons = "";
+
+        if (role === "Admin") {
+            // Admins see edit + delete buttons
+            actionButtons = `
+                <button class="btn btn-sm btn-outline-primary me-2 edit-btn"
+                    data-id="${u.userId}"
+                    data-email="${u.email}"
+                    data-name="${u.displayName}"
+                    data-role="${u.role}">
+                    <i class="bi bi-pencil-square"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger delete-btn" data-id="${u.userId}">
+                    <i class="bi bi-trash"></i>
+                </button>`;
+        } else {
+            // Non-admin users see a view-only icon
+            actionButtons = `
+                <button class="btn btn-sm btn-outline-secondary view-btn" title="View User">
+                    <i class="bi bi-eye"></i>
+                </button>`;
+        }
+
+        rows += `
+            <tr>
+                <td>${u.userId}</td>
+                <td>${u.email}</td>
+                <td>${u.displayName || "-"}</td>
+                <td><span class="badge ${u.role === 'Admin' ? 'bg-primary' : 'bg-secondary'}">${u.role}</span></td>
+                <td>${new Date(u.createdAt).toLocaleDateString()}</td>
+                <td class="text-center">
+                    ${actionButtons}
+                </td>
+            </tr>`;
+    });
+
+
                 $("#userTableBody").html(rows);
             },
             error: function (xhr) {
@@ -173,9 +204,11 @@
         });
     });
 
-    $(document).ready(loadUsers);
-    $("#refreshUsers").click(loadUsers);
+    $(document).ready(() => {
+        loadUsers();
+    });
 </script>
+
 
 
 <style>

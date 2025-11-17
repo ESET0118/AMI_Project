@@ -103,6 +103,70 @@
             container.append(card);
         });
     }
+        // 🔹 Get user role from JWT
+    function getUserRole() {
+        const token = localStorage.getItem("jwtToken");
+        if (!token) return null;
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return payload["role"] || payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+    }
+
+    $(document).ready(() => {
+        const role = getUserRole();
+
+        // Hide Add button for non-admins
+        if (role !== "Admin") {
+            $("#addRuleBtn").hide();          // Hide the Add Rule button
+        }
+
+        renderTODCards();
+
+        // After rendering, hide Edit/Delete buttons for non-admins
+        if (role !== "Admin") {
+            $(document).on("mouseenter", ".tod-card", function () {
+                $(this).find(".btn-outline-primary, .btn-outline-danger").hide();
+            });
+        }
+    });
+
+    // --- Modified renderTODCards to optionally hide buttons for non-admins ---
+    function renderTODCards() {
+        const container = $("#todCardsContainer");
+        container.empty();
+
+        if (todRules.length === 0) {
+            container.html('<div class="col-12 text-center text-muted py-5">No TOD rules available.</div>');
+            return;
+        }
+
+        const role = getUserRole();
+
+        todRules.forEach(rule => {
+            const showButtons = role === "Admin";
+            const card = `
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card border-0 shadow-sm rounded-4 tod-card h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="fw-bold text-success mb-0">Rule #${rule.ruleId}</h6>
+                                <span class="badge bg-light text-dark fw-normal px-3 py-2">×${rule.multiplier}</span>
+                            </div>
+                            <div class="small text-muted"><i class="bi bi-clock"></i> ${rule.startTime} → ${rule.endTime}</div>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 text-end">
+                            ${showButtons ? `
+                            <button class="btn btn-sm btn-outline-primary me-2" onclick="openEdit(${rule.ruleId})">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteRule(${rule.ruleId})">
+                                <i class="bi bi-trash"></i>
+                            </button>` : ''}
+                        </div>
+                    </div>
+                </div>`;
+            container.append(card);
+        });
+    }
 
     // --- Add Rule ---
     $("#addRuleBtn").click(() => {
