@@ -1,9 +1,10 @@
 ﻿using AMI_Project.Data;
 using AMI_Project.DTOs.Meter;
+using AMI_Project.Helpers;
 using AMI_Project.Models;
 using AMI_Project.Services.Interfaces;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using AMI_Project.Helpers;
 
 namespace AMI_Project.Services
 {
@@ -126,21 +127,18 @@ namespace AMI_Project.Services
         }
 
 
-        public async Task<MeterReadDto> CreateAsync(MeterCreateDto dto, CancellationToken ct)
+        // Example in your MeterService.cs
+        public async Task CreateAsync(MeterCreateDto dto, CancellationToken ct)
         {
-            // Find existing consumer by name
+            // Find consumer by name (case-insensitive)
             var consumer = await _context.Consumers
-                .FirstOrDefaultAsync(c => c.Name == dto.ConsumerName, ct);
+                .FirstOrDefaultAsync(c => c.Name.ToLower() == dto.ConsumerName.Trim().ToLower(), ct);
 
-            // If consumer doesn't exist, create new
             if (consumer == null)
-            {
-                consumer = new Consumer { Name = dto.ConsumerName };
-                _context.Consumers.Add(consumer);
-                await _context.SaveChangesAsync(ct);
-            }
+                throw new ApplicationException("Consumer does not exist.");
 
-            // Create meter
+            if (string.IsNullOrWhiteSpace(dto.MeterSerialNo))
+                throw new ApplicationException("Meter Serial Number is required.");
             var meter = new Meter
             {
                 MeterSerialNo = dto.MeterSerialNo,
@@ -150,17 +148,33 @@ namespace AMI_Project.Services
                 Manufacturer = dto.Manufacturer,
                 Firmware = dto.Firmware,
                 Category = dto.Category,
-                ConsumerId = consumer.ConsumerId, // associate meter to consumer
-                InstallTsUtc = DateTime.UtcNow,
-                Status = "Active"
+                ConsumerId = consumer.ConsumerId, // use found consumer's ID
+                Status = "Active",
+                InstallTsUtc = DateTime.UtcNow
             };
 
-            _context.Meters.Add(meter);
-            await _context.SaveChangesAsync(ct);
 
-            return await GetBySerialAsync(meter.MeterSerialNo, ct)
-                   ?? throw new Exception("Error creating meter");
+
+            _context.Meters.Add(meter);
+
+            try
+            {
+                await _context.SaveChangesAsync(ct);
+            }
+            catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
+            {
+                if (sqlEx.Number == 2627 || sqlEx.Number == 2601)
+                {
+                    if (sqlEx.Message.Contains("PK__Meter__") || sqlEx.Message.Contains("MeterSerialNo"))
+                        throw new ApplicationException("Serial number already exists.");
+                    if (sqlEx.Message.Contains("IX_Meter_IpAddress") || sqlEx.Message.Contains("IpAddress"))
+                        throw new ApplicationException("IP Address must be unique.");
+                }
+                throw;
+            }
         }
+
+
 
 
         public async Task<MeterReadDto> UpdateAsync(string serialNo, MeterUpdateDto dto, CancellationToken ct)

@@ -139,7 +139,7 @@
     </div>
 </div>
 
-<!-- Add/Edit Modal (unchanged) -->
+<!-- Add/Edit Modal -->
 <div class="modal fade" id="meterModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content rounded-4 shadow">
@@ -196,6 +196,8 @@
                             <input type="text" id="imsi" class="form-control">
                         </div>
                     </div>
+                    <!-- Error container -->
+                    <div id="meterFormErrors" class="text-danger mt-3"></div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -228,32 +230,37 @@
             .done(data => { allMeters = data.items || data; renderMeters(allMeters); })
             .fail(() => { $("#meterTableBody").html("<tr><td colspan='9' class='text-danger text-center py-4'>Error loading meters.</td></tr>"); });
     }
-
     function renderMeters(items) {
         if (!items || items.length === 0) {
             $("#meterTableBody").html("<tr><td colspan='9' class='text-muted text-center py-4'>No meters found.</td></tr>");
             return;
         }
-        const rows = items.map(m => {
-            const readingsUrl = meterReadingsUrlTemplate.replace('__SERIAL__', m.meterSerialNo);
-            return `<tr>
-                <td>${m.meterSerialNo}</td>
-                <td>${m.consumerName || '-'}</td>
-                <td>${m.ipAddress || '-'}</td>
-                <td>${m.manufacturer || '-'}</td>
-                <td>${m.firmware || '-'}</td>
-                <td>${m.category || '-'}</td>
-                <td><span class="badge ${m.status === 'Active' ? 'bg-success' : 'bg-secondary'}">${m.status}</span></td>
-                <td>${m.installTsUtc ? new Date(m.installTsUtc).toLocaleDateString() : '-'}</td>
-                <td>
-                    <button class="btn btn-sm btn-outline-primary me-1" onclick="editMeter('${m.meterSerialNo}')"><i class="bi bi-pencil"></i></button>
-                    <button class="btn btn-sm btn-outline-danger me-1" onclick="deleteMeter('${m.meterSerialNo}')"><i class="bi bi-trash"></i></button>
-                    <a href="${readingsUrl}" class="btn btn-sm btn-primary"><i class="bi bi-bar-chart-line"></i> Readings</a>
-                </td>
-            </tr>`;
-        }).join("");
-        $("#meterTableBody").html(rows);
+
+        const rows = items
+            .filter(m => m.meterSerialNo && m.meterSerialNo.trim() !== "") // skip empty serials
+            .map(m => {
+                const readingsUrl = meterReadingsUrlTemplate.replace('__SERIAL__', m.meterSerialNo);
+                return `<tr>
+                    <td>${m.meterSerialNo}</td>
+                    <td>${m.consumerName || '-'}</td>
+                    <td>${m.ipAddress || '-'}</td>
+                    <td>${m.manufacturer || '-'}</td>
+                    <td>${m.firmware || '-'}</td>
+                    <td>${m.category || '-'}</td>
+                    <td><span class="badge ${m.status === 'Active' ? 'bg-success' : 'bg-secondary'}">${m.status}</span></td>
+                    <td>${m.installTsUtc ? new Date(m.installTsUtc).toLocaleDateString() : '-'}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary me-1" onclick="editMeter('${m.meterSerialNo}')"><i class="bi bi-pencil"></i></button>
+                        <button class="btn btn-sm btn-outline-danger me-1" onclick="deleteMeter('${m.meterSerialNo}')"><i class="bi bi-trash"></i></button>
+                        <a href="${readingsUrl}" class="btn btn-sm btn-primary"><i class="bi bi-bar-chart-line"></i> Readings</a>
+                    </td>
+                </tr>`;
+            })
+            .join("");
+
+        $("#meterTableBody").html(rows || "<tr><td colspan='9' class='text-muted text-center py-4'>No meters found.</td></tr>");
     }
+
 
     function filterMeters() {
         const term = $("#searchSerial").val();
@@ -268,6 +275,7 @@
     }
 
     function openModal(meter = null) {
+        const errorContainer = $("#meterFormErrors").html("");
         if(meter){
             $("#meterModalTitle").text("Edit Meter");
             $("#editSerialNo").val(meter.meterSerialNo);
@@ -293,52 +301,72 @@
     function editMeter(serialNo) {
         $.get(`${apiBase}/${serialNo}`)
             .done(meter => openModal(meter))
-            .fail(() => alert("Error fetching meter data."));
+            .fail(() => $("#meterFormErrors").html("Error fetching meter data."));
     }
 
-    function saveMeter() {
+        function saveMeter() {
         const serialNo = $("#editSerialNo").val();
         const consumerName = $("#consumerName").val().trim();
-        if(!$("#meterSerialNo").val() || !consumerName) { alert("Serial No and Consumer Name required"); return; }
+        const errorContainer = $("#meterFormErrors");
+        errorContainer.html(""); // Clear previous errors
 
-        const meter = {
-            MeterSerialNo: $("#meterSerialNo").val().trim(),
-            IpAddress: $("#ipAddress").val().trim() || null,
-            Iccid: $("#iccid").val().trim() || null,
-            Imsi: $("#imsi").val().trim() || null,
-            Manufacturer: $("#manufacturer").val().trim() || null,
-            Firmware: $("#firmware").val().trim() || null,
-            Category: $("#category").val().trim() || null,
-            ConsumerName: consumerName,
-            Status: $("#status").val(),
-            InstallTsUtc: $("#installTsUtc").val() ? new Date($("#installTsUtc").val()).toISOString() : null
-        };
+        if(!$("#meterSerialNo").val() || !consumerName) {
+            errorContainer.text("Serial Number and Consumer Name are required.");
+            return;
+        }
 
-        const ajaxOptions = {
+    const meter = {
+        MeterSerialNo: $("#meterSerialNo").val().trim(),
+        IpAddress: $("#ipAddress").val().trim() || null,
+        Iccid: $("#iccid").val().trim() || null,
+        Imsi: $("#imsi").val().trim() || null,
+        Manufacturer: $("#manufacturer").val().trim() || null,
+        Firmware: $("#firmware").val().trim() || null,
+        Category: $("#category").val().trim() || null,
+        ConsumerName: $("#consumerName").val().trim(), // send name
+        Status: $("#status").val(),
+        InstallTsUtc: $("#installTsUtc").val() ? new Date($("#installTsUtc").val()).toISOString() : null
+    };
+
+
+        $.ajax({
             url: serialNo ? `${apiBase}/${serialNo}` : apiBase,
             type: serialNo ? "PUT" : "POST",
             contentType: "application/json",
             data: JSON.stringify(serialNo ? { Firmware: meter.Firmware, Status: meter.Status } : meter),
             success: () => {
-                alert("Meter saved successfully!");
                 loadMeters();
                 bootstrap.Modal.getInstance(document.getElementById('meterModal')).hide();
             },
             error: xhr => {
-                const msg = xhr.responseJSON?.message || xhr.responseText || xhr.statusText;
-                alert("Error saving meter: " + msg);
+                let msg = "An error occurred";
+                try {
+                    const response = xhr.responseJSON || {};
+                    // If backend sends ModelState errors
+                    if (response.errors) {
+                        const firstField = Object.keys(response.errors)[0];
+                        msg = response.errors[firstField][0];
+                    }
+                    // If backend sends custom message
+                    else if(response.message) {
+                        msg = response.message;
+                    }
+                } catch(e) {
+                    msg = xhr.statusText || "An unexpected error occurred";
+                }
+                errorContainer.text(msg); // Show only a concise message
             }
-        };
-        $.ajax(ajaxOptions);
+        });
     }
+
 
     function deleteMeter(serialNo) {
         if(!confirm("Delete this meter?")) return;
         $.ajax({
             url: `${apiBase}/${serialNo}`,
             type: "DELETE",
-            success: () => { alert("Meter deleted successfully!"); loadMeters(); },
-            error: () => alert("Error deleting meter.")
+            success: () => { loadMeters(); },
+            error: () => $("#meterFormErrors").html("Error deleting meter.")
         });
     }
 </script>

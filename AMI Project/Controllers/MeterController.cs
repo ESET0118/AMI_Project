@@ -58,8 +58,18 @@ namespace AMI_Project.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMeter([FromBody] MeterCreateDto dto, CancellationToken ct)
         {
-            var created = await _meterService.CreateAsync(dto, ct);
-            return CreatedAtAction(nameof(GetMeterBySerial), new { serialNo = created.MeterSerialNo }, created);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                await _meterService.CreateAsync(dto, ct);
+                return Ok(new { message = "Meter created successfully." });
+            }
+            catch (ApplicationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         // PUT: /api/meters/{serialNo}

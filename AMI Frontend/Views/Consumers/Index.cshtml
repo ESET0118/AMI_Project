@@ -150,10 +150,6 @@
 
     const userRole = getUserRole();
 
-    // Initialize selectpickers
-    $('#tariffSelect').selectpicker({ dropupAuto: false, container: '#consumerModal' });
-    $('#orgUnitSelect').selectpicker({ dropupAuto: false, container: '#consumerModal' });
-
     // Load Org Units dynamically
     function loadOrgUnits(callback) {
         $.get(`${apiBase}/orgunit`, d => {
@@ -204,16 +200,30 @@
             error: () => $("#consumerTableBody").html("<tr><td colspan='7' class='text-center text-danger py-4'>Failed to load consumers.</td></tr>")
         });
     }
+        function loadTariffs(callback) {
+        $.get(`${apiBase}/tariffs`, function(data) {
+            $("#tariffSelect").empty();
+            data.forEach(t => {
+                $("#tariffSelect").append(`<option value="${t.tariffId}">${t.name}</option>`);
+            });
+            $('#tariffSelect').selectpicker('refresh');
+            if (callback) callback();
+        });
+    }
 
     // Open modal for adding consumer
     $("#addConsumerBtn").click(() => {
         $("#consumerForm")[0].reset();
         $("#consumerId").val("");
         $("#consumerModalTitle").text("➕ Add New Consumer");
+
         loadOrgUnits();
-        $('#tariffSelect').selectpicker('refresh');
+        loadTariffs();  // ✅ Load tariffs dynamically
+        $('#tariffSelect, #orgUnitSelect').selectpicker('refresh');
+
         $("#consumerModal").modal("show");
     });
+
 
     // Open modal for editing
     function openEditModal(id) {
@@ -227,10 +237,13 @@
                 $("#consumerPhone").val(c.phone);
                 $("#consumerAddress").val(c.address);
 
-                loadOrgUnits(() => {
-                    $('#orgUnitSelect').selectpicker('val', c.orgUnitId);
-                    $('#tariffSelect').selectpicker('val', c.tariffId);
-                });
+    loadOrgUnits(() => {
+        loadTariffs(() => {
+            $('#orgUnitSelect').selectpicker('val', c.orgUnitId);
+            $('#tariffSelect').selectpicker('val', c.tariffId);
+        });
+    });
+
 
                 $("#consumerModalTitle").text("✏️ Edit Consumer");
                 $("#consumerModal").modal("show");
@@ -286,6 +299,15 @@
     $(document).ready(function () {
         const token = localStorage.getItem("jwtToken");
         if (!token) return window.location.href = "/Account/Login";
+
+        // Initialize selectpickers for modal
+        $('#tariffSelect, #orgUnitSelect').selectpicker({ dropupAuto: false, container: '#consumerModal' });
+
+        // Refresh dropdown positions when modal shown
+        $('#consumerModal').on('shown.bs.modal', function () {
+            $('#tariffSelect, #orgUnitSelect').selectpicker('refresh');
+        });
+
         loadConsumers();
         $("#refreshConsumers").click(loadConsumers);
     });
@@ -332,5 +354,9 @@
 
     .bootstrap-select .dropdown-menu {
         z-index: 2000 !important;
+    }
+
+    .modal-dialog {
+        position: relative;
     }
 </style>

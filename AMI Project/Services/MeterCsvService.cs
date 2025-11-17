@@ -46,18 +46,18 @@ namespace AMI_Project.Services
 
                 await foreach (var record in records.WithCancellation(ct))
                 {
-                    long? consumerId = null;
-
-                    if (record.ConsumerId != null)
+                    // Skip if MeterSerialNo is missing
+                    if (string.IsNullOrWhiteSpace(record.MeterSerialNo))
                     {
-                        if (validConsumerIds.Contains(record.ConsumerId.Value))
-                        {
-                            consumerId = record.ConsumerId;
-                        }
-                        else
-                        {
-                            warnings.Add($"Meter '{record.MeterSerialNo}': ConsumerId {record.ConsumerId} does not exist. Setting ConsumerId = null.");
-                        }
+                        warnings.Add($"Meter with IP '{record.IpAddress}' or ICCID '{record.Iccid}' could not be added: missing MeterSerialNo.");
+                        continue;
+                    }
+
+                    // Skip if ConsumerId is missing or invalid
+                    if (!record.ConsumerId.HasValue || !validConsumerIds.Contains(record.ConsumerId.Value))
+                    {
+                        warnings.Add($"Meter '{record.MeterSerialNo}' could not be added: ConsumerId is missing or does not exist.");
+                        continue;
                     }
 
                     var meter = new Meter
@@ -69,14 +69,14 @@ namespace AMI_Project.Services
                         Manufacturer = record.Manufacturer,
                         Firmware = record.Firmware,
                         Category = record.Category,
-                        ConsumerId = consumerId
+                        ConsumerId = record.ConsumerId
                     };
 
                     meters.Add(meter);
                 }
             }
 
-            // Save to database
+            // Save valid meters to database
             foreach (var m in meters)
                 await _meterRepository.AddAsync(m, ct);
 
