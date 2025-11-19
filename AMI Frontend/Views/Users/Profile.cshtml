@@ -1,0 +1,134 @@
+﻿@{
+    ViewBag.Title = "My Profile";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+
+            <!-- Profile Card -->
+            <div class="card shadow-lg rounded-4 text-center p-4" id="profileCard">
+                <div class="profile-pic-wrapper mx-auto mb-3">
+                    <!-- Default silhouette using Bootstrap Icon -->
+                    <svg id="profileImage" xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#00b3d8" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M13.468 12.37C12.758 11.226 11.42 10.5 9.999 10.5H6.001c-1.421 0-2.759.726-3.469 1.87A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z" />
+                        <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                        <path fill-rule="evenodd" d="M8 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1z" />
+                    </svg>
+                </div>
+
+                <div id="profileBody">
+                    <div class="spinner-border text-success" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        const token = localStorage.getItem("jwtToken");
+        const userId = window.location.pathname.split("/").pop();
+
+        if (!token || !userId) {
+            window.location.href = "/Account/Login";
+            return;
+        }
+
+        $.ajax({
+            url: `https://localhost:7199/api/users/${userId}`,
+            method: "GET",
+            headers: { "Authorization": `Bearer ${token}` },
+            success: function (user) {
+                if (user.profileImageUrl) {
+                    const imgTag = `<img id="profileImage" src="${user.profileImageUrl}" class="rounded-circle shadow" width="100" height="100" alt="Profile Picture">`;
+                    $(".profile-pic-wrapper").html(imgTag);
+                }
+
+                const profileHtml = `
+                    <h4 class="fw-bold mb-1">${user.displayName}</h4>
+                    <p class="text-muted mb-2">${user.email}</p>
+
+                    <div class="row text-start mt-3 justify-content-center">
+                        <div class="col-sm-5 fw-semibold">User ID:</div>
+                        <div class="col-sm-7">${user.userId}</div>
+
+                        <div class="col-sm-5 fw-semibold mt-1">Role:</div>
+                        <div class="col-sm-7 mt-1">${user.role}</div>
+
+                        <div class="col-sm-5 fw-semibold mt-1">Phone:</div>
+                        <div class="col-sm-7 mt-1">${user.phone || 'N/A'}</div>
+
+                        <div class="col-sm-5 fw-semibold mt-1">Email Confirmed:</div>
+                        <div class="col-sm-7 mt-1">
+                            <span class="badge ${user.emailConfirmed ? 'bg-success' : 'bg-danger'}">
+                                ${user.emailConfirmed ? 'Yes' : 'No'}
+                            </span>
+                        </div>
+
+                        <div class="col-sm-5 fw-semibold mt-1">Created At:</div>
+                        <div class="col-sm-7 mt-1">${new Date(user.createdAt).toLocaleString()}</div>
+                    </div>
+                `;
+                $("#profileBody").html(profileHtml);
+            },
+            error: function () {
+                $("#profileBody").html('<p class="text-danger">Error fetching profile information.</p>');
+            }
+        });
+    });
+</script>
+
+<style>
+    #profileCard {
+        background: linear-gradient(135deg, #e9f7ef, #d6f5ff, #c2f0e0);
+        padding-top: 40px;
+        padding-bottom: 20px;
+    }
+
+    body.dark-mode #profileCard {
+        background: linear-gradient(135deg, #203a43, #2c5364, #0f2027);
+        color: #eafaf2;
+    }
+
+    .profile-pic-wrapper {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #00d084, #00b3d8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        box-shadow: 0 8px 20px rgba(0, 208, 132, 0.15);
+    }
+
+    #profileImage {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #fff;
+        transition: transform 0.3s;
+    }
+
+        #profileImage:hover {
+            transform: scale(1.05);
+        }
+
+    .badge {
+        font-size: 0.85rem;
+        padding: 0.35em 0.6em;
+    }
+
+    #profileBody h4 {
+        font-size: 1.4rem;
+    }
+
+    #profileBody p {
+        font-size: 0.95rem;
+    }
+</style>

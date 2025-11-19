@@ -1,7 +1,7 @@
 ﻿
 
 using AMI_Project.DTOs.Tariffs;
-using AMI_Project.Models;
+using AMI_Project.Data.Models;
 using AMI_Project.Services.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;

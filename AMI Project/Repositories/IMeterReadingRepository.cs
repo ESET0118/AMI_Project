@@ -1,5 +1,5 @@
 ﻿using AMI_Project.Data.Models;
-using AMI_Project.Models;
+using AMI_Project.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading;

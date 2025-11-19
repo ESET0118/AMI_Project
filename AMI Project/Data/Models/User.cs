@@ -1,45 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
-namespace AMI_Project.Models
+namespace AMI_Project.Data.Models;
+
+public partial class User
 {
-    [Table("User")]
-    [Index("Email", Name = "UQ_User_Email", IsUnique = true)]
-    public partial class User
-    {
-        [Key]
-        public long UserId { get; set; }
-        
-        [Required, StringLength(256)]
-        public string Email { get; set; } = null!;
+    public long UserId { get; set; }
 
-        [Required]
-        public string PasswordHash { get; set; } = null!;
+    public string Email { get; set; } = null!;
 
-        [StringLength(200)]
-        public string? DisplayName { get; set; }
+    public string PasswordHash { get; set; } = null!;
 
-        [StringLength(50)]
-        public string? Phone { get; set; }
+    public string? DisplayName { get; set; }
 
-        public bool EmailConfirmed { get; set; }
+    public string? Phone { get; set; }
 
-        [Precision(3)]
-        public DateTime CreatedAt { get; set; }
+    public bool? EmailConfirmed { get; set; }
 
-        public long? ConsumerId { get; set; }
+    public DateTime? CreatedAt { get; set; }
 
-        [ForeignKey(nameof(ConsumerId))]
-        [InverseProperty("Users")]
-        public virtual Consumer? Consumer { get; set; }
+    public long? ConsumerId { get; set; }
 
-        [InverseProperty("User")]
-        public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
+    public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
 
-        // ✅ Correct many-to-many — remove [ForeignKey]
-        public virtual ICollection<Role> Roles { get; set; } = new List<Role>();
-    }
+    public virtual ICollection<Role> Roles { get; set; } = new List<Role>();
 }

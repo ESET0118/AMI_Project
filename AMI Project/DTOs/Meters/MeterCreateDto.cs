@@ -11,10 +11,10 @@ public class MeterCreateDto
     public string IpAddress { get; set; } = string.Empty;
 
     [Required]
-    public string Iccid { get; set; } = string.Empty;
+    public string ICCID { get; set; } = string.Empty;
 
     [Required]
-    public string Imsi { get; set; } = string.Empty;
+    public string IMSI { get; set; } = string.Empty;
 
     [Required]
     public string Manufacturer { get; set; } = string.Empty;

@@ -1,4 +1,4 @@
-﻿using AMI_Project.Models;
+﻿using AMI_Project.Data.Models;
 using AMI_Project.DTOs.Auth;
 using System.Collections.Generic;
 using System.Threading.Tasks;

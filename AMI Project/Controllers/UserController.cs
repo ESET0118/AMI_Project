@@ -1,6 +1,6 @@
 ﻿using AMI_Project.Data;
 using AMI_Project.DTOs.Users;
-using AMI_Project.Models;
+using AMI_Project.Data.Models;
 using AMI_Project.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -53,11 +53,14 @@ namespace AMI_Project.Controllers
                 email = user.Email,
                 displayName = user.DisplayName,
                 role = user.Roles.FirstOrDefault()?.Name ?? "User",
+                phone = user.Phone,                  // <-- add phone
+                emailConfirmed = user.EmailConfirmed ?? false, // <-- add emailConfirmed
                 createdAt = user.CreatedAt
             };
 
             return Ok(dto);
         }
+
 
         // ✅ PUT: api/users/{id}
         [HttpPut("{id}")]
@@ -106,5 +109,31 @@ namespace AMI_Project.Controllers
 
             return Ok(new { message = "User deleted successfully." });
         }
+
+        // ✅ GET: api/users/email/{email}
+        [HttpGet("email/{*email}")]
+        public async Task<IActionResult> GetByEmail(string email, CancellationToken ct)
+        {
+            var user = await _userService.GetByEmailAsync(email, ct);
+            if (user == null)
+                return NotFound(new { message = "User not found" });
+
+            var dto = new UserReadDto
+            {
+                UserId = user.UserId,
+                Email = user.Email,
+                DisplayName = user.DisplayName,
+                Phone = user.Phone,
+                EmailConfirmed = user.EmailConfirmed ?? false,
+                CreatedAt = user.CreatedAt ?? DateTime.MinValue,
+                Role = user.Roles.FirstOrDefault()?.Name ?? "User"
+            };
+
+            return Ok(dto);
+        }
+
+
+
+
     }
 }

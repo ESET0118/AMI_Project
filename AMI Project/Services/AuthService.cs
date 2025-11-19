@@ -2,7 +2,7 @@
 using AMI_Project.DTOs.Auth;
 using AMI_Project.DTOs.Users;
 using AMI_Project.Data;
-using AMI_Project.Models;
+using AMI_Project.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

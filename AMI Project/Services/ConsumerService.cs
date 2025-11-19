@@ -1,5 +1,5 @@
 ﻿using AMI_Project.DTOs.Consumers;
-using AMI_Project.Models;
+using AMI_Project.Data.Models;
 using AMI_Project.Repositories.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;

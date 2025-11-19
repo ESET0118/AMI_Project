@@ -1366,6 +1366,28 @@
           }
         }
       }
+    },
+    "/api/Users/email/{email}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1382,8 +1404,6 @@
             "format": "int64"
           },
           "meterSerialNo": {
-            "maxLength": 50,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -1410,6 +1430,22 @@
           "billGeneratedAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "isPaid": {
+            "type": "boolean"
+          },
+          "outstandingDue": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalPayable": {
+            "type": "number",
+            "format": "double"
+          },
+          "paidOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           },
           "billDetails": {
             "type": "array",
@@ -1507,26 +1543,18 @@
             "format": "int64"
           },
           "name": {
-            "maxLength": 200,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "address": {
-            "maxLength": 500,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "phone": {
-            "maxLength": 30,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "email": {
-            "maxLength": 200,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -1549,8 +1577,6 @@
             "nullable": true
           },
           "status": {
-            "maxLength": 20,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -1559,8 +1585,6 @@
             "format": "date-time"
           },
           "createdBy": {
-            "maxLength": 100,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -1570,8 +1594,6 @@
             "nullable": true
           },
           "updatedBy": {
-            "maxLength": 100,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -1594,13 +1616,6 @@
           },
           "tariff": {
             "$ref": "#/components/schemas/Tariff"
-          },
-          "users": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/User"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1735,44 +1750,30 @@
         "type": "object",
         "properties": {
           "meterSerialNo": {
-            "maxLength": 50,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "ipAddress": {
-            "maxLength": 45,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "iccid": {
-            "maxLength": 30,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "imsi": {
-            "maxLength": 30,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "manufacturer": {
-            "maxLength": 100,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "firmware": {
-            "maxLength": 50,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "category": {
-            "maxLength": 50,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -1781,8 +1782,6 @@
             "format": "date-time"
           },
           "status": {
-            "maxLength": 20,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -1800,6 +1799,13 @@
           },
           "consumer": {
             "$ref": "#/components/schemas/Consumer"
+          },
+          "meterReadings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MeterReading"
+            },
+            "nullable": true
           },
           "monthlyMeterReadings": {
             "type": "array",
@@ -1857,6 +1863,55 @@
           "consumerName": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MeterReading": {
+        "type": "object",
+        "properties": {
+          "meterReadingId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "meterSerialNo": {
+            "type": "string",
+            "nullable": true
+          },
+          "readingDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "consumptionKwh": {
+            "type": "number",
+            "format": "double"
+          },
+          "voltage": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "ampere": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "powerFactor": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "frequency": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "meterSerialNoNavigation": {
+            "$ref": "#/components/schemas/Meter"
           }
         },
         "additionalProperties": false
@@ -1989,14 +2044,10 @@
             "format": "int32"
           },
           "type": {
-            "maxLength": 20,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "name": {
-            "maxLength": 100,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -2073,54 +2124,6 @@
         },
         "additionalProperties": false
       },
-      "RefreshToken": {
-        "type": "object",
-        "properties": {
-          "refreshTokenId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "userId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "token": {
-            "maxLength": 500,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "expiresAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdByIp": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "revokedAt": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "replacedByToken": {
-            "maxLength": 500,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
-          }
-        },
-        "additionalProperties": false
-      },
       "RegisterDto": {
         "type": "object",
         "properties": {
@@ -2142,31 +2145,6 @@
           },
           "role": {
             "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Role": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "roleId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string"
-          },
-          "users": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/User"
-            },
             "nullable": true
           }
         },
@@ -2224,8 +2202,6 @@
             "format": "int32"
           },
           "name": {
-            "maxLength": 100,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -2347,6 +2323,9 @@
               "$ref": "#/components/schemas/BillDetail"
             },
             "nullable": true
+          },
+          "tariff": {
+            "$ref": "#/components/schemas/Tariff"
           }
         },
         "additionalProperties": false
@@ -2381,70 +2360,6 @@
             "minimum": 0,
             "type": "number",
             "format": "double",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "User": {
-        "required": [
-          "email",
-          "passwordHash"
-        ],
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "email": {
-            "maxLength": 256,
-            "minLength": 0,
-            "type": "string"
-          },
-          "passwordHash": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "displayName": {
-            "maxLength": 200,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "phone": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "emailConfirmed": {
-            "type": "boolean"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "consumerId": {
-            "type": "integer",
-            "format": "int64",
-            "nullable": true
-          },
-          "consumer": {
-            "$ref": "#/components/schemas/Consumer"
-          },
-          "refreshTokens": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/RefreshToken"
-            },
-            "nullable": true
-          },
-          "roles": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Role"
-            },
             "nullable": true
           }
         },

@@ -1,4 +1,4 @@
-using AMI_Project.Models;
+using AMI_Project.Data.Models;
 using System.Threading;
 
 namespace AMI_Project.Repositories.Interfaces

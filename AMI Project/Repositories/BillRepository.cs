@@ -1,5 +1,5 @@
 ﻿using AMI_Project.Data;
-using AMI_Project.Models;
+using AMI_Project.Data.Models;
 using AMI_Project.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,30 +23,65 @@ namespace AMI_Project.Repositories
 
         public async Task<IEnumerable<Bill>> GetAllAsync()
         {
-            return await _context.Bills.ToListAsync();
+            return await _context.Bills
+                .AsNoTracking()
+                .OrderByDescending(b => b.BillGeneratedAt)
+                .ToListAsync();
         }
 
         public async Task<Bill?> GetByIdAsync(long id)
         {
-            return await _context.Bills.FindAsync(id);
+            return await _context.Bills
+                .AsNoTracking()
+                .FirstOrDefaultAsync(b => b.BillId == id);
         }
 
-        // ✅ Fixed: Get Tariff via Consumer
+        public async Task<IEnumerable<Bill>> GetByMeterAsync(string meterSerialNo)
+        {
+            return await _context.Bills
+                .AsNoTracking()
+                .Where(b => b.MeterSerialNo == meterSerialNo)
+                .OrderByDescending(b => b.BillGeneratedAt)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Bill>> GetByConsumerAsync(long consumerId)
+        {
+            return await _context.Bills
+                .AsNoTracking()
+                .Where(b => b.ConsumerId == consumerId)
+                .OrderByDescending(b => b.BillGeneratedAt)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Bill>> GetUnpaidByConsumerAsync(long consumerId)
+        {
+            return await _context.Bills
+                .AsNoTracking()
+                .Where(b => b.ConsumerId == consumerId && !b.IsPaid)
+                .OrderBy(b => b.BillingPeriodEnd)
+                .ToListAsync();
+        }
+
         public async Task<Tariff?> GetTariffByConsumerIdAsync(long consumerId)
         {
-            // 1️⃣ Get the Consumer
             var consumer = await _context.Consumers
+                .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.ConsumerId == consumerId);
 
             if (consumer == null)
                 return null;
 
-            // 2️⃣ Get the Tariff for this consumer
-            var tariff = await _context.Tariffs
+            return await _context.Tariffs
                 .Include(t => t.TariffSlabs)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(t => t.TariffId == consumer.TariffId);
+        }
 
-            return tariff;
+        public async Task UpdateAsync(Bill bill)
+        {
+            _context.Bills.Update(bill);
+            await _context.SaveChangesAsync();
         }
     }
 }

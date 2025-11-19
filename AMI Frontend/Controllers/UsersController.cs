@@ -4,7 +4,6 @@ using System.Net.Http.Headers;
 namespace AMI_Frontend.Controllers
 {
     [Route("Users")]
-
     public class UsersController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
@@ -15,15 +14,22 @@ namespace AMI_Frontend.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-            [HttpGet("")]
-            [HttpGet("Index")]
-            public IActionResult Index() => View();
+        [HttpGet("")]
+        [HttpGet("Index")]
+        public IActionResult Index() => View();
 
         [HttpGet("User")]
         public IActionResult UserRedirect() => RedirectToAction("Index");
 
+        // ✅ New: Profile page for a user
+        [HttpGet("Profile/{id}")]
+        public IActionResult Profile(long id)
+        {
+            // Just return the Razor view; AJAX will fetch data
+            return View();
+        }
 
-        [HttpPut("/Users/Update/{id}")]
+        [HttpPut("Update/{id}")]
         public async Task<IActionResult> UpdateUser(long id, [FromBody] object dto)
         {
             var token = HttpContext.Session.GetString("JWTToken");
@@ -37,7 +43,7 @@ namespace AMI_Frontend.Controllers
             return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
         }
 
-        [HttpDelete("/Users/Delete/{id}")]
+        [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteUser(long id)
         {
             var token = HttpContext.Session.GetString("JWTToken");

@@ -1,6 +1,5 @@
 using AMI_Project.Data;
 using AMI_Project.Data.Models;
-using AMI_Project.Models;
 using AMI_Project.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;

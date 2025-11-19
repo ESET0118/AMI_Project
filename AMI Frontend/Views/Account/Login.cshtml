@@ -156,6 +156,8 @@
                     }
 
                     localStorage.setItem("jwtToken", token);
+                    localStorage.setItem("userEmail", $("#email").val());
+
 
                     if (roles.includes("user")) {
                         window.location.href = "/Dashboard/User";

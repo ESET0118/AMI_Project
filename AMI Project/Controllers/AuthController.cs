@@ -1,6 +1,6 @@
 ﻿using AMI_Project.Data;
 using AMI_Project.DTOs.Auth;
-using AMI_Project.Models;
+using AMI_Project.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

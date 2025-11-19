@@ -237,12 +237,12 @@
         }
 
         const rows = items
-            .filter(m => m.meterSerialNo && m.meterSerialNo.trim() !== "") // skip empty serials
+            .filter(m => m.meterSerialNo && m.meterSerialNo.trim() !== "" && m.consumerName && m.consumerName.trim() !== "") // Skip empty serials or null consumers
             .map(m => {
                 const readingsUrl = meterReadingsUrlTemplate.replace('__SERIAL__', m.meterSerialNo);
                 return `<tr>
                     <td>${m.meterSerialNo}</td>
-                    <td>${m.consumerName || '-'}</td>
+                    <td>${m.consumerName}</td>
                     <td>${m.ipAddress || '-'}</td>
                     <td>${m.manufacturer || '-'}</td>
                     <td>${m.firmware || '-'}</td>
@@ -260,6 +260,7 @@
 
         $("#meterTableBody").html(rows || "<tr><td colspan='9' class='text-muted text-center py-4'>No meters found.</td></tr>");
     }
+
 
 
     function filterMeters() {

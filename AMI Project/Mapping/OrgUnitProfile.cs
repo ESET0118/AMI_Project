@@ -1,5 +1,5 @@
 ﻿using AMI_Project.DTOs.OrgUnits;
-using AMI_Project.Models;
+using AMI_Project.Data.Models;
 using AutoMapper;
 
 namespace AMI_Project.Mappings

@@ -2,6 +2,10 @@
     Shared Layout for AMI Frontend
     Includes responsive sidebar, navbar, and content section
 *@
+
+@inject IHttpContextAccessor HttpContextAccessor
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -388,96 +392,123 @@
 </head>
 
 <body>
-    <!-- Energy Header -->
-    <header class="energy-header">
-        <span>🌱 Smart AMI Dashboard — Empowering Green Energy Monitoring</span>
-        <div class="energy-flow"></div>
-    </header>
 
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="px-3 mb-4">
-            <h4 class="fw-bold text-white">⚡ AMI System</h4>
-        </div>
-        <nav class="nav flex-column">
-            <a class="nav-link" href="/Dashboard/Index"><i class="bi bi-speedometer2"></i> Dashboard</a>
-            <a class="nav-link" href="/Users/Index"><i class="bi bi-people"></i> Users</a>
-            <a class="nav-link" href="/Consumers/Index"><i class="bi bi-person-vcard"></i> Consumers</a>
-            <a class="nav-link" href="/Meters/Index"><i class="bi bi-cpu"></i> Meters</a>
-            <a class="nav-link" href="/OrgUnit/Index"><i class="bi bi-diagram-3"></i> Org Unit</a>
-            <a class="nav-link" href="/Tariff/Index"><i class="bi bi-cash"></i> Tariff</a>
-            <a class="nav-link" href="/TariffSlabs/Index"><i class="bi bi-layers"></i> Tariff Slabs</a>
-            <a class="nav-link" href="/TODRules/Index"><i class="bi bi-clock-history"></i> TOD Rules</a>
-            <a class="nav-link" href="/UploadMeter"><i class="bi bi-upload"></i> Upload Meter</a>
-        </nav>
-    </div>
+        <!-- Energy Header -->
+        <header class="energy-header">
+            <span>🌱 Smart AMI Dashboard — Empowering Green Energy Monitoring</span>
+            <div class="energy-flow"></div>
+        </header>
 
-    <!-- Top Navbar -->
-    <div class="topbar d-flex align-items-center justify-content-between">
-        <div class="d-flex align-items-center gap-3">
-            <button class="sidebar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
-            <h5 class="fw-semibold mb-0">AMI Dashboard</h5>
-        </div>
-        <div class="d-flex align-items-center gap-3">
-            <div class="theme-toggle">
-                <input type="checkbox" id="themeSwitch" hidden>
-                <label for="themeSwitch" class="toggle-label">🌞 <span></span> 🌙</label>
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="px-3 mb-4">
+                <h4 class="fw-bold text-white">⚡ AMI System</h4>
             </div>
-            <span id="userName" class="text-muted me-3">Welcome, User</span>
-            <button id="logoutBtn" class="logout-btn">Logout</button>
+            <nav class="nav flex-column">
+                <a class="nav-link" href="/Dashboard/Index"><i class="bi bi-speedometer2"></i> Dashboard</a>
+                <a class="nav-link" href="/Users/Index"><i class="bi bi-people"></i> Users</a>
+                <a class="nav-link" href="/Consumers/Index"><i class="bi bi-person-vcard"></i> Consumers</a>
+                <a class="nav-link" href="/Meters/Index"><i class="bi bi-cpu"></i> Meters</a>
+                <a class="nav-link" href="/OrgUnit/Index"><i class="bi bi-diagram-3"></i> Org Unit</a>
+                <a class="nav-link" href="/Tariff/Index"><i class="bi bi-cash"></i> Tariff</a>
+                <a class="nav-link" href="/TariffSlabs/Index"><i class="bi bi-layers"></i> Tariff Slabs</a>
+                <a class="nav-link" href="/TODRules/Index"><i class="bi bi-clock-history"></i> TOD Rules</a>
+                <a class="nav-link" href="/UploadMeter"><i class="bi bi-upload"></i> Upload Meter</a>
+            </nav>
         </div>
-    </div>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        @RenderBody()
-    </main>
+        <!-- Top Navbar -->
+        <div class="topbar d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-3">
+                <button class="sidebar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
+                <h5 class="fw-semibold mb-0">AMI Dashboard</h5>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <div class="theme-toggle">
+                    <input type="checkbox" id="themeSwitch" hidden>
+                    <label for="themeSwitch" class="toggle-label">🌞 <span></span> 🌙</label>
+                </div>
+                <a href="#" id="userName" class="text-muted me-3 text-decoration-none">Welcome, User</a>
+                <button id="logoutBtn" class="logout-btn">Logout</button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            @RenderBody()
+        </main>
 
     <script>
-        // Sidebar toggle
-        $("#sidebarToggle").click(function () {
-            $("#sidebar").toggleClass("active");
-        });
+        $(document).ready(function () {
+            // Sidebar toggle
+            $("#sidebarToggle").click(function () {
+                $("#sidebar").toggleClass("active");
+            });
 
-        // Highlight active tab
-        $(function () {
+            // Highlight active tab
             const path = window.location.pathname.toLowerCase();
             $(".sidebar .nav-link").each(function () {
                 if (path.includes($(this).attr("href").toLowerCase())) {
                     $(this).addClass("active");
                 }
             });
-        });
 
-        // Display user name (mock)
-        $(document).ready(function () {
+            // Fetch user info
             const token = localStorage.getItem("jwtToken");
-            if (!token) {
+            const email = localStorage.getItem("userEmail");
+            const $userName = $("#userName");
+
+            if (!token || !email) {
                 window.location.href = "/Account/Login";
-            } else {
-                $("#userName").text("Welcome, Energy User");
+                return;
             }
-        });
 
-        // Logout
-        $("#logoutBtn").click(function () {
-            localStorage.removeItem("jwtToken");
-            window.location.href = "/Account/Login";
-        });
+            // Make sure email is properly encoded
+            const encodedEmail = encodeURIComponent(email);
 
-        // Dark Mode Toggle with Persistence
-        const toggle = document.getElementById("themeSwitch");
-        if (localStorage.getItem("theme") === "dark") {
-            document.body.classList.add("dark-mode");
-            toggle.checked = true;
-        }
-        toggle.addEventListener("change", () => {
-            document.body.classList.toggle("dark-mode");
-            localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
+            $.ajax({
+                url: `https://localhost:7199/api/Users/email/${encodedEmail}`, // Use the working backend URL
+                method: "GET",
+                headers: { "Authorization": `Bearer ${token}` },
+                success: function (user) {
+                    if (user && user.displayName) {
+                        $userName.text(`Welcome, ${user.displayName}`);
+                        $userName.attr("href", `/Users/Profile/${user.userId}`);
+                    } else {
+                        $userName.text("Welcome, User");
+                    }
+                },
+                error: function (xhr) {
+                    console.error("Error fetching user info:", xhr);
+                    $userName.text("Welcome, User");
+                }
+            });
+
+            // Logout
+            $("#logoutBtn").click(function () {
+                localStorage.removeItem("jwtToken");
+                localStorage.removeItem("userEmail");
+                window.location.href = "/Account/Login";
+            });
+
+            // Dark Mode
+            const toggle = document.getElementById("themeSwitch");
+            if (localStorage.getItem("theme") === "dark") {
+                document.body.classList.add("dark-mode");
+                toggle.checked = true;
+            }
+            toggle.addEventListener("change", () => {
+                document.body.classList.toggle("dark-mode");
+                localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
+            });
         });
     </script>
 
-    @RenderSection("Scripts", required: false)
 
-</body>
+
+        @RenderSection("Scripts", required: false)
+
+    </body>
+</html>
+
 </html>

@@ -1,4 +1,4 @@
-﻿using AMI_Project.Models;
+﻿using AMI_Project.Data.Models;
 
 namespace AMI_Project.Services.Interfaces
 {

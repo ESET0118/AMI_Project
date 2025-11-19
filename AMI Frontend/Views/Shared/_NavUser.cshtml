@@ -425,12 +425,7 @@
                 <input type="checkbox" id="themeSwitch" hidden>
                 <label for="themeSwitch" class="toggle-label">🌞 <span></span> 🌙</label>
             </div>
-            <span id="userName" class="text-muted me-3">
-                @{
-                    var username = HttpContextAccessor.HttpContext?.Session.GetString("Username") ?? "Energy User";
-                }
-                Welcome, @username
-            </span>
+            <a href="#" id="userName" class="text-muted me-3 text-decoration-none">Welcome, User</a>
 
             <form method="post" action="/Account/Login" style="display:inline;">
                 <button type="submit" class="logout-btn">Logout</button>
@@ -459,6 +454,38 @@
             });
         });
 
+        // Fetch user info from backend
+        $(document).ready(function () {
+            const token = localStorage.getItem("jwtToken");
+            const email = localStorage.getItem("userEmail"); // should be stored after login
+            const $userName = $("#userName");
+
+            if (!token || !email) {
+                window.location.href = "/Account/Login";
+                return;
+            }
+
+            const encodedEmail = encodeURIComponent(email);
+
+            $.ajax({
+                url: `https://localhost:7199/api/Users/email/${encodedEmail}`,
+                method: "GET",
+                headers: { "Authorization": `Bearer ${token}` },
+                success: function (user) {
+                    if (user && user.displayName) {
+                        $userName.text(`Welcome, ${user.displayName}`);
+                        $userName.attr("href", `/Users/Profile/${user.userId}`);
+                    } else {
+                        $userName.text("Welcome, User");
+                    }
+                },
+                error: function (xhr) {
+                    console.error("Error fetching user info:", xhr);
+                    $userName.text("Welcome, User");
+                }
+            });
+        });
+
         // Dark Mode Toggle with Persistence
         const toggle = document.getElementById("themeSwitch");
         if (localStorage.getItem("theme") === "dark") {
@@ -470,6 +497,7 @@
             localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
         });
     </script>
+
 
     @RenderSection("Scripts", required: false)
 </body>

@@ -757,7 +757,7 @@
     "Parameters": [
       {
         "Name": "slab",
-        "Type": "AMI_Project.Models.TariffSlab",
+        "Type": "AMI_Project.Data.Models.TariffSlab",
         "IsRequired": true
       }
     ],
@@ -794,7 +794,7 @@
       },
       {
         "Name": "slab",
-        "Type": "AMI_Project.Models.TariffSlab",
+        "Type": "AMI_Project.Data.Models.TariffSlab",
         "IsRequired": true
       }
     ],
@@ -874,6 +874,22 @@
       {
         "Name": "id",
         "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AMI_Project.Controllers.UsersController",
+    "Method": "GetByEmail",
+    "RelativePath": "api/Users/email/{email}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

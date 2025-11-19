@@ -1,6 +1,6 @@
 using AMI_Project.Data.Models;
 using AMI_Project.DTOs.MeterReadings;
-using AMI_Project.Models;
+using AMI_Project.Data.Models;
 using AMI_Project.Repositories.Interfaces;
 using AMI_Project.Services.Interfaces;
 using AutoMapper;

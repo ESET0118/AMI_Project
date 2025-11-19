@@ -1,7 +1,7 @@
 ﻿using AMI_Project.Data;
 using AMI_Project.DTOs.Meter;
 using AMI_Project.Helpers;
-using AMI_Project.Models;
+using AMI_Project.Data.Models;
 using AMI_Project.Services.Interfaces;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -26,8 +26,8 @@ namespace AMI_Project.Services
                 {
                     MeterSerialNo = m.MeterSerialNo,
                     IpAddress = m.IpAddress,
-                    Iccid = m.Iccid,
-                    Imsi = m.Imsi,
+                    ICCID = m.ICCID,
+                    IMSI = m.IMSI,
                     Manufacturer = m.Manufacturer,
                     Firmware = m.Firmware,
                     Category = m.Category,
@@ -68,8 +68,8 @@ namespace AMI_Project.Services
                 {
                     MeterSerialNo = m.MeterSerialNo,
                     IpAddress = m.IpAddress,
-                    Iccid = m.Iccid,
-                    Imsi = m.Imsi,
+                    ICCID = m.ICCID,
+                    IMSI = m.IMSI,
                     Manufacturer = m.Manufacturer,
                     Firmware = m.Firmware,
                     Category = m.Category,
@@ -94,8 +94,8 @@ namespace AMI_Project.Services
             {
                 MeterSerialNo = meter.MeterSerialNo,
                 IpAddress = meter.IpAddress,
-                Iccid = meter.Iccid,
-                Imsi = meter.Imsi,
+                ICCID = meter.ICCID,
+                IMSI = meter.IMSI,
                 Manufacturer = meter.Manufacturer,
                 Firmware = meter.Firmware,
                 Category = meter.Category,
@@ -143,8 +143,8 @@ namespace AMI_Project.Services
             {
                 MeterSerialNo = dto.MeterSerialNo,
                 IpAddress = dto.IpAddress,
-                Iccid = dto.Iccid,
-                Imsi = dto.Imsi,
+                ICCID = dto.ICCID,
+                IMSI = dto.IMSI,
                 Manufacturer = dto.Manufacturer,
                 Firmware = dto.Firmware,
                 Category = dto.Category,

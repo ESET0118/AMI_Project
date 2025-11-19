@@ -1,5 +1,5 @@
 ﻿using AMI_Project.DTOs.Meters;
-using AMI_Project.Models;
+using AMI_Project.Data.Models;
 using System.Threading;
 
 namespace AMI_Project.Services.Interfaces

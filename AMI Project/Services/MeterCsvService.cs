@@ -1,5 +1,5 @@
 ﻿using AMI_Project.DTOs.Meters;
-using AMI_Project.Models;
+using AMI_Project.Data.Models;
 using AMI_Project.Repositories.Interfaces;
 using AMI_Project.Services.Interfaces;
 using CsvHelper;
@@ -49,7 +49,7 @@ namespace AMI_Project.Services
                     // Skip if MeterSerialNo is missing
                     if (string.IsNullOrWhiteSpace(record.MeterSerialNo))
                     {
-                        warnings.Add($"Meter with IP '{record.IpAddress}' or ICCID '{record.Iccid}' could not be added: missing MeterSerialNo.");
+                        warnings.Add($"Meter with IP '{record.IpAddress}' or ICCID '{record.ICCID}' could not be added: missing MeterSerialNo.");
                         continue;
                     }
 
@@ -64,8 +64,8 @@ namespace AMI_Project.Services
                     {
                         MeterSerialNo = record.MeterSerialNo,
                         IpAddress = record.IpAddress,
-                        Iccid = record.Iccid,
-                        Imsi = record.Imsi,
+                        ICCID = record.ICCID, // changed from ICCID to ICCID
+                        IMSI = record.IMSI,   // changed from IMSI to IMSI
                         Manufacturer = record.Manufacturer,
                         Firmware = record.Firmware,
                         Category = record.Category,
@@ -93,8 +93,8 @@ namespace AMI_Project.Services
         {
             public string MeterSerialNo { get; set; } = string.Empty;
             public string IpAddress { get; set; } = string.Empty;
-            public string Iccid { get; set; } = string.Empty;
-            public string Imsi { get; set; } = string.Empty;
+            public string ICCID { get; set; } = string.Empty;
+            public string IMSI { get; set; } = string.Empty;
             public string Manufacturer { get; set; } = string.Empty;
             public string? Firmware { get; set; }
             public string Category { get; set; } = string.Empty;
